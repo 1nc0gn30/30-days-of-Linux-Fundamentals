@@ -33,12 +33,25 @@ To begin the course, you will need to set up your Linux environment. We recommen
 1. **Download VirtualBox**: [VirtualBox Downloads](https://www.virtualbox.org/wiki/Downloads)
 2. **Download CentOS**: [CentOS Downloads](https://www.centos.org/download/)
 3. **Create a Virtual Machine**: Follow [this guide](https://linuxsimply.com/linux-basics/os-installation/virtual-machine/centos-7-on-virtualbox/)
-   [video tutorial](https://www.youtube.com/watch?v=aMRVcjpJDjg to set up CentOS on VirtualBox.)
+- [video tutorial](https://www.youtube.com/watch?v=aMRVcjpJDjg to set up CentOS on VirtualBox.)
+- [another guide just in case](https://tech.joellemena.com/centos/how-to-setup-centos-in-virtualbox/)
+- [If for some reason you are having trouble, the most simple way to put it is]
+1. **Grab CentOS iso file**
+2. **Download Virtualbox**
+3. **Open up Virtualbox and click new**
+4. **Locate the CentOS iso file and have it as the file used for new machine**
+5. **Set the space of drive for min 20gb, RAM 2gb-16gb, CPU 2-4**
+6. **Start your new VirtualBox CentOS machine!**
+7. **Make sure to read all guides before resorting to these generalized instructions.. as these instructions are intended to help others stuck after watching/reading the tutorials** 
 
 #### Running CentOS from a USB Drive
 
 1. **Download CentOS**: [CentOS Downloads](https://www.centos.org/download/)
 2. **Create a Bootable USB**: Use [Rufus](https://rufus.ie/) or [Etcher](https://www.balena.io/etcher/) to create a bootable USB drive.
+- [tutorial Etcher](https://linuxize.com/post/how-to-create-a-bootable-centos-7-usb-stick/)
+- [video tutorial Etcher](https://www.youtube.com/watch?v=_TbYxImJO44)
+- [tutorial Rufus](https://www.wikihow.com/Boot-Linux-from-a-USB-on-Windows-10)
+- [video tutorial Rufus](https://www.youtube.com/watch?v=esBXfD3yuCE)
 
 ## How to Use This Course
 
