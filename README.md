@@ -113,10 +113,10 @@ Week 4: System Administration
 Final Days: Comprehensive Review and Projects
 Additional Resources
 
-#### For further reading and resources, check out the following links:
+#### For further reading and resources, check out the following topics:
 
-    Linux Documentation
-    CentOS Wiki
-    Linux Command Line Basics
+- [Linux Documentation](https://www.kernel.org/doc/html/latest/)
+- [CentOS Wiki](https://wiki.centos.org/)
+- [Linux Command Line Basics](https://linuxjourney.com/)
 
 <p>Embark on this exciting journey and become proficient in Linux over the next 30 days. Let's get started!</p>
