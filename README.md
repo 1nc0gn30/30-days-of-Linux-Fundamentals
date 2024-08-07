@@ -32,7 +32,7 @@ To begin the course, you will need to set up your Linux environment. We recommen
 
 1. **Download VirtualBox**: [VirtualBox Downloads](https://www.virtualbox.org/wiki/Downloads)
 2. **Download CentOS**: [CentOS Downloads](https://www.centos.org/download/)
-3. **Create a Virtual Machine**: Follow [this guide](https://www.tecmint.com/install-centos-on-virtualbox/) to set up CentOS on VirtualBox.
+3. **Create a Virtual Machine**: Follow [this guide]((https://linuxsimply.com/linux-basics/os-installation/virtual-machine/centos-7-on-virtualbox/) to set up CentOS on VirtualBox.
 
 #### Running CentOS from a USB Drive
 
