@@ -69,7 +69,7 @@ To run the lesson for each meal, use the following commands in your terminal:
 5. ./lunch-day-*
 6. ./dinner-day-*
 
-**Replace * with the day number (e.g., ./breakfast-day-1).**
+**Replace * with the day number (e.g., cd day01, cd day-01-food, ./breakfast-day-01).**
 
 To run the study guide for each meal, use the following commands in your terminal:
 
