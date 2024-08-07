@@ -47,13 +47,10 @@ Each day's study guides are divided into Breakfast, Lunch, and Dinner sections, 
 
 To run the lesson for each meal, use the following commands in your terminal:
 
-- cd 30-Days-Of-Linux
-- cd day*
-- cd day-*-food
-
-#### [execute lesson]
-
 ```sh
+cd 30-Days-Of-Linux
+cd day*
+cd day-*-food
 ./breakfast-day-*
 ./lunch-day-*
 ./dinner-day-*
@@ -62,51 +59,51 @@ Replace * with the day number (e.g., ./breakfast-day-1).
 
 To run the study guide for each meal, use the following commands in your terminal:
 
-- cd 30-Days-Of-Linux
-- cd day*
-- cd day-*-study-guides
+sh
 
-## Read Study Guides Per Day
-
-```sh
+cd 30-Days-Of-Linux
+cd day*
+cd day-*-study-guides
 cat day-*-breakfast-guide
 cat day-*-lunch-guide
 cat day-*-dinner-guide
 
 Replace * with the day number (e.g., cd day01, cd day-01-study-guides, cat day-01-breakfast-guide).
-
-## Table of Contents
+Table of Contents
 
 For a complete reference of the course content, refer to the linux-30day-journey.md file in the root directory.
-
-### Example Table of Contents
+Example Table of Contents
 
 Day 1: Getting Started
-Breakfast
-Lunch
-Dinner
+
+    Breakfast
+    Lunch
+    Dinner
+
 Day 2: File Management
-Breakfast
-Lunch
-Dinner
+
+    Breakfast
+    Lunch
+    Dinner
+
 ...
+
 Week 2: Intermediate Commands and Scripting
 ...
+
 Week 3: Advanced Topics
 ...
+
 Week 4: System Administration
 ...
+
 Final Days: Comprehensive Review and Projects
-...
-
-
-## Additional Resources
+Additional Resources
 
 For further reading and resources, check out the following links:
 
-- **[Linux Documentation](https://www.kernel.org/doc/html/latest/)
-- **[CentOS Wiki](https://wiki.centos.org/)
-- **[Linux Command Line Basics](https://linuxcommand.org/)
+    Linux Documentation
+    CentOS Wiki
+    Linux Command Line Basics
 
 Embark on this exciting journey and become proficient in Linux over the next 30 days. Let's get started!
-
