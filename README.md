@@ -47,31 +47,30 @@ Each day's study guides are divided into Breakfast, Lunch, and Dinner sections, 
 
 To run the lesson for each meal, use the following commands in your terminal:
 
-```sh
-cd 30-Days-Of-Linux
-cd day*
-cd day-*-food
-./breakfast-day-*
-./lunch-day-*
-./dinner-day-*
 
-Replace * with the day number (e.g., ./breakfast-day-1).
+1. cd 30-Days-Of-Linux
+2. cd day*
+3. cd day-*-food
+4. ./breakfast-day-*
+5. ./lunch-day-*
+6. ./dinner-day-*
+
+**Replace * with the day number (e.g., ./breakfast-day-1).**
 
 To run the study guide for each meal, use the following commands in your terminal:
 
-sh
+1. cd 30-Days-Of-Linux
+2. cd day*
+3. cd day-*-study-guides
+4. cat day-*-breakfast-guide
+5. cat day-*-lunch-guide
+6. cat day-*-dinner-guide
 
-cd 30-Days-Of-Linux
-cd day*
-cd day-*-study-guides
-cat day-*-breakfast-guide
-cat day-*-lunch-guide
-cat day-*-dinner-guide
+**Replace * with the day number (e.g., cd day01, cd day-01-study-guides, cat day-01-breakfast-guide).**
 
-Replace * with the day number (e.g., cd day01, cd day-01-study-guides, cat day-01-breakfast-guide).
-Table of Contents
+## Table of Contents
 
-For a complete reference of the course content, refer to the linux-30day-journey.md file in the root directory.
+**For a complete reference of the course content, refer to the linux-30day-journey.md file in the root directory.**
 Example Table of Contents
 
 Day 1: Getting Started
@@ -100,10 +99,10 @@ Week 4: System Administration
 Final Days: Comprehensive Review and Projects
 Additional Resources
 
-For further reading and resources, check out the following links:
+#### For further reading and resources, check out the following links:
 
     Linux Documentation
     CentOS Wiki
     Linux Command Line Basics
 
-Embark on this exciting journey and become proficient in Linux over the next 30 days. Let's get started!
+<p>Embark on this exciting journey and become proficient in Linux over the next 30 days. Let's get started!</p>
