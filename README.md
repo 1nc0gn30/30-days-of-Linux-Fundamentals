@@ -43,9 +43,15 @@ To begin the course, you will need to set up your Linux environment. We recommen
 
 Each day's study guides are divided into Breakfast, Lunch, and Dinner sections, ensuring comprehensive coverage of Linux fundamentals.
 
-### Running Study Guides
+### Running Lessons Per Day
 
-To run the study guides for each meal, use the following commands in your terminal:
+To run the lesson for each meal, use the following commands in your terminal:
+
+- cd 30-Days-Of-Linux
+- cd day*
+- cd day-*-food
+
+#### [execute lesson]
 
 ```sh
 ./breakfast-day-*
@@ -54,13 +60,27 @@ To run the study guides for each meal, use the following commands in your termin
 
 Replace * with the day number (e.g., ./breakfast-day-1).
 
+To run the study guide for each meal, use the following commands in your terminal:
+
+- cd 30-Days-Of-Linux
+- cd day*
+- cd day-*-study-guides
+
+## Read Study Guides Per Day
+
+```sh
+cat day-*-breakfast-guide
+cat day-*-lunch-guide
+cat day-*-dinner-guide
+
+Replace * with the day number (e.g., cd day01, cd day-01-study-guides, cat day-01-breakfast-guide).
+
 ## Table of Contents
 
 For a complete reference of the course content, refer to the linux-30day-journey.md file in the root directory.
 
 ### Example Table of Contents
 
-Week 1: Introduction and Basic Commands
 Day 1: Getting Started
 Breakfast
 Lunch
