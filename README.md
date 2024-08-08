@@ -1,9 +1,7 @@
 # 30 Days of Linux Fundamentals
 
-<video width="640" controls>
-  <source src="30-Days-Of-Linux-Fundamentals-Video-Logo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+<img src="30-Days-Of-Linux-Fundamentals-Logo.png" alt="Alt text" width="500" height="300">
+
 
 ## Introduction
 
