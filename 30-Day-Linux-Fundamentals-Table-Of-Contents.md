@@ -1,6 +1,6 @@
-# 30 Sections for Mastering Linux
+# **30-Day-Linux-Fundamentals**
 
-# Table Of Contents
+## Table Of Contents
 
 ### Week 1
 
