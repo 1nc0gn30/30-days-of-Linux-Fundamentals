@@ -63,22 +63,24 @@ To run the lesson for each meal, use the following commands in your terminal:
 
 
 1. cd 30-Days-Of-Linux
-2. cd day*
-3. cd day-*-food
-4. ./breakfast-day-*
-5. ./lunch-day-*
-6. ./dinner-day-*
+2. cd week-*
+3. cd day*
+4. cd day-*-food
+5. ./breakfast-day-*
+6. ./lunch-day-*
+7. ./dinner-day-*
 
 **Replace * with the day number (e.g., cd day01, cd day-01-food, ./breakfast-day-01).**
 
 To run the study guide for each meal, use the following commands in your terminal:
 
 1. cd 30-Days-Of-Linux
-2. cd day*
-3. cd day-*-study-guides
-4. cat day-*-breakfast-guide
-5. cat day-*-lunch-guide
-6. cat day-*-dinner-guide
+2. cd week-*
+3. cd day*
+4. cd day-*-study-guides
+5. cat day-*-breakfast-guide
+6. cat day-*-lunch-guide
+7. cat day-*-dinner-guide
 
 **Replace * with the day number (e.g., cd day01, cd day-01-study-guides, cat day-01-breakfast-guide).**
 
@@ -86,6 +88,8 @@ To run the study guide for each meal, use the following commands in your termina
 
 **For a complete reference of the course content, refer to the linux-30day-journey.md file in the root directory.**
 Example Table of Contents
+
+Week 1
 
 Day 1: Getting Started
 

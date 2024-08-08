@@ -2,7 +2,9 @@
 
 # Table Of Contents
 
-# Day 1 Study Guide
+### Week 1
+
+#### Day 1 Study Guide
 
 ## Breakfast
 - [Lesson on ls](#lesson-on-ls)
