@@ -1,6 +1,6 @@
 # 30 Days of Linux Fundamentals
 
-<img src="30-Days-Of-Linux-Fundamentals-Logo.png" alt="Alt text" width="500" height="300">
+<img src="30-Days-Of-Linux-Fundamentals-Logo.png" alt="30 Days Of Linux Fundamentals" width="500" height="300">
 
 
 ## Introduction
