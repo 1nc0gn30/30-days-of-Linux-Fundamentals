@@ -1,5 +1,10 @@
 # 30 Days of Linux Fundamentals
 
+<video width="640" controls>
+  <source src="30-Days-Of-Linux-Fundamentals-Video-Logo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 ## Introduction
 
 Welcome to the **30 Days of Linux Fundamentals** program! This self-paced course is designed to take you on a journey from beginner to advanced levels of Linux proficiency over four and a half weeks. Whether you're completely new to Linux or have some prior knowledge, this course is structured to enhance your understanding and skills in Linux.

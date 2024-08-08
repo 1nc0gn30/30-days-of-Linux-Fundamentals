@@ -1,4 +1,4 @@
-# **30-Day-Linux-Fundamentals**
+# **30-Days-Of-Linux-Fundamentals**
 
 ## Table Of Contents
 
