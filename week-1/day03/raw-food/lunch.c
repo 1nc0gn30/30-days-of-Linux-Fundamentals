@@ -26,7 +26,7 @@ typedef struct {
 void display_lesson(const Lesson *lesson) {
     printf("Lesson on `%s`:\n", lesson->topic);
     printf("%s\n", lesson->description);
-    printf("Examples:\n%s\n", lesson->examples);
+    printf("\n%s\n", lesson->examples);
     wait_for_enter();
 }
 

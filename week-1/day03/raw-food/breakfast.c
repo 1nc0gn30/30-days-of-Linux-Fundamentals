@@ -6,7 +6,7 @@
 void display_lesson(const char *topic, const char *description, const char *examples) {
     printf("Lesson on `%s`:\n", topic);
     printf("%s\n", description);
-    printf("Examples:\n%s\n", examples);
+    printf("\n%s\n", examples);
     printf("Press Enter to continue...\n");
     getchar(); // Wait for user to press Enter
 }

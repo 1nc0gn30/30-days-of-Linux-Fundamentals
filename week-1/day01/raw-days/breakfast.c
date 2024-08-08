@@ -12,7 +12,7 @@ struct Lesson {
 void display_lesson(const struct Lesson lesson) {
     printf("Lesson on `%s`:\n", lesson.command);
     printf("%s\n", lesson.description);
-    printf("Examples:\n%s\n", lesson.examples);
+    printf("\n%s\n", lesson.examples);
     printf("Press Enter to continue...\n");
     getchar(); // Wait for user to press Enter
 }

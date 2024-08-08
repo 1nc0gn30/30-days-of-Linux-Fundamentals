@@ -22,7 +22,7 @@ void display_lesson(const Lesson *lesson) {
     printf("\033[H\033[J"); // Clear screen
     printf("Lesson on `%s`:\n", lesson->topic);
     printf("%s\n", lesson->description);
-    printf("Examples:\n%s\n", lesson->examples);
+    printf("\n%s\n", lesson->examples);
     printf("Press Enter to continue...\n");
     getchar(); // Wait for user to press Enter
 }
@@ -94,10 +94,18 @@ int main() {
     // Questions
     Question questions[] = {
         {"What command would you use to view the configuration of all active network interfaces?", "ifconfig"},
-        {"Which command would you use to send 4 ICMP ECHO_REQUEST packets to google.com?", "ping -c 4 google.com"}
+        {"Which command would you use to send 4 ICMP ECHO_REQUEST packets to google.com?", "ping -c 4 google.com"},
+        {"What command shows the path packets take to reach a network host?", "traceroute"},
+        {"Which command displays network connections, routing tables, and interface statistics?", "netstat"},
+        {"What command can be used to test port connectivity to a remote host?", "nc -zv"},
+        {"How can you activate the 'eth0' network interface?", "ifconfig eth0 up"},
+        {"What option would you use with `ping` to set the interval between requests to 0.5 seconds?", "ping -i 0.5"},
+        {"How do you display the routing table using `netstat`?", "netstat -r"},
+        {"Which command would you use to listen on port 1234 for incoming connections?", "nc -l 1234"},
+        {"How do you check if port 80 is open on a host using `nc`?", "nc -zv google.com 80"}
     };
 
-       // Display lessons
+    // Display lessons
     for (int i = 0; i < sizeof(lessons) / sizeof(lessons[0]); i++) {
         display_lesson(&lessons[i]);
     }

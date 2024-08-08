@@ -22,7 +22,7 @@ void display_lesson(const Lesson *lesson) {
     printf("\033[H\033[J"); // Clear screen
     printf("Lesson on `%s`:\n", lesson->topic);
     printf("%s\n", lesson->description);
-    printf("Examples:\n%s\n", lesson->examples);
+    printf("\n%s\n", lesson->examples);
     printf("Press Enter to continue...\n");
     getchar(); // Wait for user to press Enter
 }
