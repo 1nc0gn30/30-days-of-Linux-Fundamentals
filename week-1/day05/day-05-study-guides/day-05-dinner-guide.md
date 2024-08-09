@@ -1,4 +1,4 @@
-## Day 5 Dinner: Advanced Processes and System Monitoring
+# Day 05 Dinner: Advanced Processes and System Monitoring
 
 Welcome to Day 5 Dinner! Tonight, we'll build upon the concepts covered in breakfast and lunch, and dive even deeper into advanced process management and system monitoring. This session will review the topics covered earlier and introduce new techniques and tools to further enhance your understanding.
 Dinner Agenda:

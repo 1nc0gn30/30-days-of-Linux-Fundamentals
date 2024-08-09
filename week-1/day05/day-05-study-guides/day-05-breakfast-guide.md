@@ -1,4 +1,4 @@
-# Day 5 Breakfast Study Guide: Processes and System Monitoring
+# Day 05 Breakfast Study Guide: Processes and System Monitoring
 
 Welcome to Day 5 Breakfast! Today we will delve into processes and system monitoring, covering essential commands and their advanced usages.
 

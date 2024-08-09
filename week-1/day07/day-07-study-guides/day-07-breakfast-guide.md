@@ -1,4 +1,4 @@
-# Day 7 Breakfast Study Guide
+# Day 07 Breakfast Study Guide
 
 ## Package Management
 

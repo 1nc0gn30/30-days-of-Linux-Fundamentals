@@ -1,4 +1,4 @@
-# Day 1 Dinner Challenge Study Guide
+# Day 01 Dinner Challenge Study Guide
 
 ## 1. Creating Symbolic Links
 

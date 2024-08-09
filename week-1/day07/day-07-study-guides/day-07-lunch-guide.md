@@ -1,4 +1,4 @@
-# Day 7 Lunch Study Guide
+# Day 07 Lunch Study Guide
 
 ## Package Management
 

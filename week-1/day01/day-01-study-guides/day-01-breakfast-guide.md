@@ -1,4 +1,4 @@
-# Day 1 Breakfast Study Guide
+# Day 01 Breakfast Study Guide
 
 Welcome to the Breakfast challenge for Day 1! This guide will help you understand and practice the essential Linux commands covered in the challenge.
 

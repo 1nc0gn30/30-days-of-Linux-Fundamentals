@@ -1,4 +1,4 @@
-# Day 1 Lunch Study Guide
+# Day 01 Lunch Study Guide
 
 Welcome to the Lunch challenge for Day 1! This guide covers additional file and directory management commands. Review each lesson and examples to understand their usage and functionality.
 

@@ -1,4 +1,4 @@
-# Day 2: Breakfast Study Guide
+# Day 02 Breakfast Study Guide
 
 Welcome to Day 2's breakfast study guide! This guide covers new commands related to file and directory attributes, process management, and permissions. Use this guide to review and reinforce your understanding of the commands introduced in the Day 2 breakfast challenge.
 

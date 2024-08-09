@@ -1,4 +1,4 @@
-# Day 2 Dinner Study Guide: Comprehensive Review and Advanced Concepts
+# Day 02 Dinner Study Guide: Comprehensive Review and Advanced Concepts
 
 ## Overview
 

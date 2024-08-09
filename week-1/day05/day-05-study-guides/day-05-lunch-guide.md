@@ -1,4 +1,4 @@
-# Day 5 Lunch Study Guide: Advanced Processes and System Monitoring
+# Day 05 Lunch Study Guide: Advanced Processes and System Monitoring
 
 Welcome to Day 5 Lunch! Today, we will dive deeper into advanced process management and system monitoring techniques. We'll cover enhanced commands, filtering and customizing output, and analyzing system logs.
 

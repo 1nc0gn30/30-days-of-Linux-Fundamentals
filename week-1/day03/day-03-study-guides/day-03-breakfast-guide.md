@@ -1,4 +1,4 @@
-# Day 3 Breakfast Study Guide: Advanced File and Directory Management
+# Day 03 Breakfast Study Guide: Advanced File and Directory Management
 
 Welcome to Day 3 Breakfast! Today, we will deepen our understanding of advanced file and directory management techniques. This guide will cover creating, copying, moving, and renaming files, as well as navigating directories with advanced options and commands.
 

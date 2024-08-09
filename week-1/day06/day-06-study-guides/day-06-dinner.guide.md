@@ -1,4 +1,4 @@
-# Day 6 Dinner: Advanced Networking Review and Further Exploration
+# Day 06 Dinner: Advanced Networking Review and Further Exploration
 
 ## Overview
 

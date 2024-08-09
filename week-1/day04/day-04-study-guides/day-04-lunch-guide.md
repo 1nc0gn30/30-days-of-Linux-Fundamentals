@@ -1,4 +1,4 @@
-## Day 4 Lunch: Advanced File Editing and Understanding Permissions
+# Day 04 Lunch: Advanced File Editing and Understanding Permissions
 
 Welcome to Day 4 Lunch! In this session, we'll take a deep dive into advanced usage of the vim and nano text editors and explore file permissions in detail. We'll dissect how permissions are represented and manipulated, giving you a robust understanding of file security and management.
 Day 4 Lunch: C Code Implementation

@@ -1,4 +1,4 @@
-## Day 3 Dinner Study Guide: Comprehensive Review and Advanced Concepts
+# Day 03 Dinner Study Guide: Comprehensive Review and Advanced Concepts
 
 # Welcome to the Day 3 dinner study guide!
 * In this session, we will review and expand upon the concepts covered in Day 3 breakfast and lunch. We'll dive deeper into file and directory management, including advanced commands and variations.

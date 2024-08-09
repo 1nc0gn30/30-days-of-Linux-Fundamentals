@@ -1,4 +1,4 @@
-# Day 7 Dinner Study Guide
+# Day 07 Dinner Study Guide
 
 ## Package Management
 

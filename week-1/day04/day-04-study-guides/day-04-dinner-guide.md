@@ -1,4 +1,4 @@
-## Day 4 Dinner Study Guide
+# Day 04 Dinner Study Guide
 1. Advanced Editing with vim - Review
 
 Commands:

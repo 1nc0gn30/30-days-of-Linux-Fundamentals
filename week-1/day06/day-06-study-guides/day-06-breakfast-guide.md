@@ -1,4 +1,4 @@
-# Day 6 Breakfast: Networking Basics
+# Day 06 Breakfast: Networking Basics
 
 ## Overview
 

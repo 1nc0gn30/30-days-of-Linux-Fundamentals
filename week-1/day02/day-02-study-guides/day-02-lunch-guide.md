@@ -1,4 +1,4 @@
-# Day 2: Lunch Study Guide
+# Day 02 Lunch Study Guide
 
 Welcome to Day 2's lunch study guide! This guide covers file compression and archiving, disk management, and network utilities. Use this guide to review and reinforce your understanding of the commands introduced in the Day 2 lunch challenge.
 

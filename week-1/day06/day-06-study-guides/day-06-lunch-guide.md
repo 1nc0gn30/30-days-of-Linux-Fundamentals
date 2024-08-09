@@ -1,4 +1,4 @@
-# Day 6 Lunch: Advanced Networking Basics
+# Day 06 Lunch: Advanced Networking Basics
 
 ## Overview
 

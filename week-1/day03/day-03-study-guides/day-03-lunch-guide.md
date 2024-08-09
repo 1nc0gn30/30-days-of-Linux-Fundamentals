@@ -1,4 +1,4 @@
-# Day 3 Lunch Study Guide: Advanced File and Directory Management
+# Day 03 Lunch Study Guide: Advanced File and Directory Management
 
 Welcome to Day 3 Lunch! Today, we will dive deeper into file and directory management with a focus on creating, copying, moving, renaming files, and navigating directories. We'll also cover some advanced tasks to help solidify your skills.
 
