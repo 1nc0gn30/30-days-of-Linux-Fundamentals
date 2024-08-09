@@ -1,4 +1,4 @@
-# Day 09 Breakfast Study Guide: Shell Scripting and Package Compilation
+# Day 08 Breakfast Study Guide: Shell Scripting and Package Compilation
 
 ## Introduction
 
