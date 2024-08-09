@@ -30,8 +30,9 @@ Make it executable: chmod +x hello.sh.
 Run it: ./hello.sh.
 Additional Resources:
 
-[The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php)
-[GNU Bash Manual](https://www.gnu.org/software/bash/manual/bash.html)
+**[The Linux Command Line by William Shotts](https://linuxcommand.org/tlcl.php)**
+
+**[GNU Bash Manual](https://www.gnu.org/software/bash/manual/bash.html)**
 
 2. Package Compilation
 Description:
@@ -54,8 +55,8 @@ sudo make install
 ```
 Additional Resources:
 
-[Linux From Scratch](https://www.linuxfromscratch.org/)
-[GNU Autotools Documentation](https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html)
+**[Linux From Scratch](https://www.linuxfromscratch.org/)**
+**[GNU Autotools Documentation](https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html)**
 
 3. Variables in Shell Scripts
 Description:
@@ -75,7 +76,7 @@ echo $my_variable
 ```
 Additional Resources:
 
-[Bash Scripting Tutorial](https://linuxconfig.org/bash-scripting-tutorial)
+**[Bash Scripting Tutorial](https://linuxconfig.org/bash-scripting-tutorial)**
 
 4. Control Structures in Shell Scripts
 Description:
@@ -103,7 +104,7 @@ done
 ```
 Additional Resources:
 
-[Advanced Bash-Scripting Guide](https://linux.die.net/abs-guide/)
+**[Advanced Bash-Scripting Guide](https://linux.die.net/abs-guide/)**
 
 5. Functions in Shell Scripts
 Description:
@@ -126,7 +127,7 @@ my_function
 ```
 Additional Resources:
 
-[Bash Reference Manual](https://www.gnu.org/software/bash/manual/bash.html#Shell-Functions)
+**[Bash Reference Manual](https://www.gnu.org/software/bash/manual/bash.html#Shell-Functions)**
 
 6. Package Configuration Options
 Description:
@@ -146,7 +147,7 @@ Copy code
 ```
 Additional Resources:
 
-[GNU Autoconf Documentation](https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html)
+**[GNU Autoconf Documentation](https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.72/autoconf.html)**
 
 ***Questions***
 
