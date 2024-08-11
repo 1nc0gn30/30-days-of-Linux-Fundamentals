@@ -2,6 +2,13 @@
 
 <img src="30-Days-Of-Linux-Fundamentals-Logo.png" alt="30 Days Of Linux Fundamentals" width="500" height="300">
 
+# Added Control Panel!!
+
+**In the root directory of 30-Days-Of-Linux-Fundamentals run**
+```bash
+./control-panel
+```
+**And choose the week, day, and lesson accordingly. At the end of each lesson while using the control-panel app you will be returned to the main menu**
 
 ## Introduction
 

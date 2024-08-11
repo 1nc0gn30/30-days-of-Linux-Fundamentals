@@ -4,6 +4,14 @@
 
 #define MAX_ANSWER_LENGTH 100
 
+// Color codes
+#define RESET "\033[0m"
+#define RED "\033[31m"
+#define GREEN "\033[32m"
+#define YELLOW "\033[33m"
+#define CYAN "\033[36m"
+#define BOLD "\033[1m"
+
 // Struct to represent a lesson
 typedef struct {
     const char *topic;
@@ -19,19 +27,19 @@ typedef struct {
 
 // Function to display a lesson and prompt user
 void display_lesson(const Lesson *lesson) {
-    printf("Lesson on `%s`:\n", lesson->topic);
+    printf(CYAN "Lesson on `%s`:\n" RESET, lesson->topic);
     printf("%s\n", lesson->description);
-    printf("\n%s\n", lesson->examples);
-    printf("Press Enter to continue...\n");
+    printf(YELLOW "\n%s\n" RESET, lesson->examples);
+    printf(GREEN "Press Enter to continue...\n" RESET);
     getchar(); // Wait for user to press Enter
 }
 
 // Function to ask a question and check the answer
 void ask_question(const Question *question) {
     char answer[MAX_ANSWER_LENGTH];
-    printf("%s\n", question->question);
-    printf("Instructions: Open a separate terminal and type the command described. Press Enter to continue after you’ve tried it.\n");
-    printf("When you are ready, press Enter to proceed...\n");
+    printf(CYAN "%s\n" RESET, question->question);
+    printf(YELLOW "Instructions: Open a separate terminal and type the command described. Press Enter to continue after you’ve tried it.\n" RESET);
+    printf(GREEN "When you are ready, press Enter to proceed...\n" RESET);
     getchar(); // Wait for user to press Enter
 
     printf("Your answer: ");
@@ -39,9 +47,9 @@ void ask_question(const Question *question) {
     answer[strcspn(answer, "\n")] = 0;
 
     if (strcmp(answer, question->correct_answer) == 0) {
-        printf("Correct!\n\n");
+        printf(GREEN "Correct!\n\n" RESET);
     } else {
-        printf("Incorrect. The correct answer is: %s\n\n", question->correct_answer);
+        printf(RED "Incorrect. The correct answer is: %s\n\n" RESET, question->correct_answer);
     }
 }
 
@@ -49,9 +57,9 @@ int main() {
     // Clear screen (for Unix-based systems)
     printf("\033[H\033[J");
 
-    printf("Welcome to Day 08 Lunch Session!\n");
+    printf(BOLD "Welcome to Day 08 Lunch Session!\n" RESET);
     printf("In this session, we'll dive deeper into Linux fundamentals, exploring file permissions, editing scripts, and user management.\n");
-    printf("Press Enter to start...\n");
+    printf(GREEN "Press Enter to start...\n" RESET);
     getchar(); // Wait for user to press Enter
 
     // Lessons
@@ -73,7 +81,7 @@ int main() {
             "Examples:\n"
             "  vi myscript.sh\n"
             "  nano myscript.sh\n"
-            "For a complete guide, you can refer to the `vi` editor tutorial at https://www.washington.edu/computing/unix/vi.html."
+            "For a complete guide, you can refer to the `vi` editor tutorial at https://courses.cs.washington.edu/courses/cse415/02sp/unix.html?_gl=1*1dae3b8*_ga*MTEyMjE0OTMxMS4xNzIzMzc3NDMw*_ga_JLHM9WH4JV*MTcyMzM3NzQ0My4xLjAuMTcyMzM3NzQ0NS4wLjAuMA..*_ga_3T65WK0BM8*MTcyMzM3NzQ0My4xLjAuMTcyMzM3NzQ0NS4wLjAuMA..."
         },
         {
             "User and Group Management",
@@ -105,13 +113,13 @@ int main() {
         {
             "3. How can you edit a script using the vi editor?\n"
             "Hint: Explain how to open a file in `vi` and the basic command to enter insert mode.\n"
-            "Format: You use the command `** [filename]`, then press `*` to enter insert mode.",
+            "Format: You use the command `** [filename], then press `*` to enter insert mode.",
             "vi [filename], then press 'i' to enter insert mode"
         },
         {
             "4. What command adds a new user to the system?\n"
             "Hint: Provide the command that is followed by the username.\n"
-            "Format: The command is `******** [username]`.",
+            "Format: The command is `******* [username]`.",
             "useradd [username]"
         },
         {

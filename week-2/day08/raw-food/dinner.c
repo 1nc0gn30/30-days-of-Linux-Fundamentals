@@ -4,6 +4,15 @@
 
 #define MAX_ANSWER_LENGTH 100
 
+// ANSI escape codes for text color
+#define RESET "\033[0m"
+#define RED "\033[31m"
+#define GREEN "\033[32m"
+#define YELLOW "\033[33m"
+#define BLUE "\033[34m"
+#define MAGENTA "\033[35m"
+#define CYAN "\033[36m"
+
 // Struct to represent a lesson
 typedef struct {
     const char *topic;
@@ -14,14 +23,15 @@ typedef struct {
 // Struct to represent a question
 typedef struct {
     const char *question;
+    const char *options[4];
     const char *correct_answer;
 } Question;
 
 // Function to display a lesson and prompt user
 void display_lesson(const Lesson *lesson) {
-    printf("Lesson on `%s`:\n", lesson->topic);
-    printf("%s\n", lesson->description);
-    printf("\n%s\n", lesson->examples);
+    printf("%sLesson on `%s`:%s\n", CYAN, lesson->topic, RESET);
+    printf("%s%s%s\n", YELLOW, lesson->description, RESET);
+    printf("\n%s%s%s\n", GREEN, lesson->examples, RESET);
     printf("Press Enter to continue...\n");
     getchar(); // Wait for user to press Enter
 }
@@ -29,19 +39,21 @@ void display_lesson(const Lesson *lesson) {
 // Function to ask a question and check the answer
 void ask_question(const Question *question) {
     char answer[MAX_ANSWER_LENGTH];
-    printf("%s\n", question->question);
-    printf("Instructions: Open a separate terminal and type the command described. Press Enter to continue after you’ve tried it.\n");
-    printf("When you are ready, press Enter to proceed...\n");
-    getchar(); // Wait for user to press Enter
+    printf("%s%s%s\n", BLUE, question->question, RESET);
 
-    printf("Your answer: ");
+    // Display multiple choice options
+    for (int i = 0; i < 4; i++) {
+        printf("%d. %s\n", i + 1, question->options[i]);
+    }
+
+    printf("Your answer (1-4): ");
     fgets(answer, sizeof(answer), stdin);
     answer[strcspn(answer, "\n")] = 0;
 
     if (strcmp(answer, question->correct_answer) == 0) {
-        printf("Correct!\n\n");
+        printf("%sCorrect!%s\n\n", GREEN, RESET);
     } else {
-        printf("Incorrect. The correct answer is: %s\n\n", question->correct_answer);
+        printf("%sIncorrect.%s The correct answer is: %s\n\n", RED, RESET, question->correct_answer);
     }
 }
 
@@ -49,7 +61,7 @@ int main() {
     // Clear screen (for Unix-based systems)
     printf("\033[H\033[J");
 
-    printf("Welcome to Day 08 Dinner!\n");
+    printf("%sWelcome to Day 08 Dinner!%s\n", MAGENTA, RESET);
     printf("In this session, we'll dive deeper into shell scripting, regular expressions, and text processing tools.\n");
     printf("Press Enter to start...\n");
     getchar(); // Wait for user to press Enter
@@ -119,34 +131,44 @@ int main() {
     // Questions
     Question questions[] = {
         {
-            "1. What is the purpose of the `$#` and `$@` variables in shell scripting?\n"
-            "Hint: Explain how these special variables are used when handling command-line arguments.\n"
-            "Format: `$#` gives the number of arguments, `$@` represents [what].",
-            "$@ represents all the arguments passed to the script"
+            "What is the purpose of the `$#` and `$@` variables in shell scripting?",
+            {"$# gives the number of arguments, $@ represents all arguments passed to the script",
+             "$# gives the first argument, $@ represents all arguments passed to the script",
+             "$# gives the number of arguments, $@ represents the last argument passed to the script",
+             "$# gives the number of arguments, $@ represents the script name"},
+            "1"
         },
         {
-            "2. How would you write a regex pattern to match lines that contain a word starting with 'test'?\n"
-            "Hint: Use a word boundary `\\b` to ensure it matches a whole word.\n"
-            "Format: The pattern is `\\b[what].*\\b`.",
-            "\\btest.*\\b"
+            "How would you write a regex pattern to match lines that contain a word starting with 'test'?",
+            {"\\btest.*",
+             "test.*\\b",
+             "\\btest.*\\b",
+             "\\b.*test\\b"},
+            "3"
         },
         {
-            "3. How do you perform a case-insensitive search using `grep`?\n"
-            "Hint: Mention the flag that makes the search case-insensitive.\n"
-            "Format: The flag is `-[flag]`.",
-            "-i"
+            "How do you perform a case-insensitive search using `grep`?",
+            {"-c",
+             "-i",
+             "-n",
+             "-v"},
+            "2"
         },
         {
-            "4. How do you delete all lines containing 'error' in a file using `sed`?\n"
-            "Hint: Describe the `sed` command that performs this action.\n"
-            "Format: The command is `sed ['pattern' delete command] file.txt`.",
-            "sed '/error/d' file.txt"
+            "How do you delete all lines containing 'error' in a file using `sed`?",
+            {"sed 's/error//g' file.txt",
+             "sed 'error' file.txt",
+             "sed 'd/error' file.txt",
+             "sed '/error/d' file.txt"},
+            "4"
         },
         {
-            "5. How would you extract the third field from a CSV file using `awk`?\n"
-            "Hint: Use the `-F` option to specify the field separator and print the third field.\n"
-            "Format: The command is `awk ['separator' 'print command'] file.csv`.",
-            "awk -F ',' '{print $3}' file.csv"
+            "How would you extract the third field from a CSV file using `awk`?",
+            {"awk -F ',' '{print $1}' file.csv",
+             "awk -F ',' '{print $2}' file.csv",
+             "awk -F ',' '{print $3}' file.csv",
+             "awk -F ',' '{print $4}' file.csv"},
+            "3"
         }
     };
 

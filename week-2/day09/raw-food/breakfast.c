@@ -11,9 +11,10 @@ typedef struct {
     const char *examples;
 } Lesson;
 
-// Struct to represent a question
+// Struct to represent a question with multiple choices
 typedef struct {
     const char *question;
+    const char *choices[4];
     const char *correct_answer;
 } Question;
 
@@ -26,19 +27,20 @@ void display_lesson(const Lesson *lesson) {
     getchar(); // Wait for user to press Enter
 }
 
-// Function to ask a question and check the answer
+// Function to ask a multiple-choice question and check the answer
 void ask_question(const Question *question) {
     char answer[MAX_ANSWER_LENGTH];
     printf("%s\n", question->question);
-    printf("Instructions: Open a separate terminal and type the command described. Press Enter to continue after you’ve tried it.\n");
-    printf("When you are ready, press Enter to proceed...\n");
-    getchar(); // Wait for user to press Enter
+    
+    for (int i = 0; i < 4; i++) {
+        printf("%c. %s\n", 'A' + i, question->choices[i]);
+    }
 
     printf("Your answer: ");
     fgets(answer, sizeof(answer), stdin);
     answer[strcspn(answer, "\n")] = 0;
 
-    if (strcmp(answer, question->correct_answer) == 0) {
+    if (strcasecmp(answer, question->correct_answer) == 0) {
         printf("Correct!\n\n");
     } else {
         printf("Incorrect. The correct answer is: %s\n\n", question->correct_answer);
@@ -53,7 +55,7 @@ int main() {
     printf("In this session, we'll explore system performance tuning techniques.\n");
     printf("We'll learn about optimizing system settings to improve performance, including CPU scheduling, memory management, and more.\n");
     printf("Press Enter to start...\n");
-    getchar(); // Wait for user to press Enter
+    getchar();
 
     // Lessons
     Lesson lessons[] = {
@@ -61,7 +63,8 @@ int main() {
             "System Performance Tuning",
             "System performance tuning involves optimizing the system settings to improve performance. "
             "Key areas to focus on include CPU scheduling, memory management, disk I/O optimization, and network performance.\n"
-            "Effective tuning can help in achieving better responsiveness, efficiency, and overall system stability.",
+            "Effective tuning can help in achieving better responsiveness, efficiency, and overall system stability. "
+            "Performance tuning is critical for environments where consistent performance is a priority, such as servers, databases, or high-performance computing clusters.",
             "Examples of tuning commands:\n"
             "  1. View CPU usage: top or htop\n"
             "  2. Adjust swappiness: sysctl vm.swappiness=10\n"
@@ -73,7 +76,8 @@ int main() {
             "CPU Scheduling",
             "CPU scheduling is the process by which the operating system determines which tasks (processes) should be executed by the CPU. "
             "It involves prioritizing tasks to ensure efficient CPU utilization and responsiveness.\n"
-            "Understanding different scheduling algorithms helps in optimizing system performance and balancing workload.",
+            "Different scheduling algorithms (such as FIFO, Round Robin, and Completely Fair Scheduler) are used to manage processes based on their priority and required resources. "
+            "Understanding these algorithms can help system administrators in selecting the right scheduling policy for specific workloads, leading to optimized system performance and balanced CPU load.",
             "Examples of tuning commands:\n"
             "  1. Check CPU scheduling policy: chrt -p [PID]\n"
             "  2. Change scheduling policy: chrt -f -p [PRI] [PID]\n"
@@ -83,7 +87,8 @@ int main() {
         {
             "Memory Management",
             "Memory management involves optimizing the use of system memory to improve performance and avoid issues like swapping and fragmentation.\n"
-            "Key techniques include adjusting the swappiness parameter, monitoring memory usage, and configuring swap space effectively.",
+            "Techniques include adjusting the swappiness parameter, monitoring memory usage, and configuring swap space effectively. "
+            "Proper memory management helps in preventing memory bottlenecks, reducing the likelihood of system slowdowns, and ensuring that critical applications have enough memory resources to function efficiently.",
             "Examples of tuning commands:\n"
             "  1. View memory usage: free -h\n"
             "  2. Adjust swappiness: sysctl vm.swappiness=10\n"
@@ -93,7 +98,8 @@ int main() {
         {
             "Disk I/O Optimization",
             "Disk I/O optimization focuses on improving the performance of disk operations, such as read and write speeds. "
-            "This involves monitoring disk performance, optimizing file systems, and adjusting parameters related to I/O operations.",
+            "This involves monitoring disk performance, optimizing file systems, and adjusting parameters related to I/O operations.\n"
+            "Effective disk I/O optimization ensures faster data access, reduced latency in read/write operations, and extended disk lifespan, especially in environments with heavy disk usage, such as database servers or data processing applications.",
             "Examples of tuning commands:\n"
             "  1. Monitor disk I/O: iostat -x\n"
             "  2. Check file system performance: tune2fs -l [device]\n"
@@ -103,7 +109,8 @@ int main() {
         {
             "Network Performance",
             "Network performance tuning aims to optimize network throughput and reduce latency. This includes configuring network interfaces, adjusting TCP settings, and monitoring network traffic.\n"
-            "Proper tuning can lead to improved network reliability and faster data transfer rates.",
+            "Network tuning is crucial in environments where data transfer speed and reliability are critical, such as web servers, cloud services, and distributed applications. "
+            "Proper tuning can lead to improved network reliability, faster data transfer rates, and reduced packet loss.",
             "Examples of tuning commands:\n"
             "  1. Check network interfaces: ifconfig or ip a\n"
             "  2. Adjust TCP congestion control: sysctl net.ipv4.tcp_congestion_control=reno\n"
@@ -112,37 +119,32 @@ int main() {
         }
     };
 
-    // Questions
+    // Questions with multiple-choice options
     Question questions[] = {
         {
-            "1. What is the purpose of adjusting the `vm.swappiness` parameter?\n"
-            "Hint: Explain how changing swappiness affects memory usage and swapping behavior.\n"
-            "Format: The `vm.swappiness` parameter controls the tendency of the kernel to move **** from RAM to swap space. A ***** value reduces swapping.",
-            "The `vm.swappiness` parameter controls the tendency of the kernel to move data from RAM to swap space. A lower value reduces swapping."
+            "1. What is the purpose of adjusting the `vm.swappiness` parameter?",
+            {"Increase CPU usage", "Reduce disk usage", "Control memory swapping", "Optimize network speed"},
+            "C"
         },
         {
-            "2. How can you view real-time CPU usage on a Unix-based system?\n"
-            "Hint: Mention commands that provide a dynamic view of CPU usage.\n"
-            "Format: You can use `***` or `****` to view real-time CPU usage.",
-            "You can use `top` or `htop` to view real-time CPU usage."
+            "2. How can you view real-time CPU usage on a Unix-based system?",
+            {"top", "free", "df", "iostat"},
+            "A"
         },
         {
-            "3. What command can be used to monitor disk I/O performance?\n"
-            "Hint: Name the command that provides detailed statistics on disk I/O.\n"
-            "Format: The command to monitor disk I/O is `******`.",
-            "The command to monitor disk I/O is `iostat`."
+            "3. What command can be used to monitor disk I/O performance?",
+            {"top", "iostat", "free", "vmstat"},
+            "B"
         },
         {
-            "4. What is the effect of changing the network congestion control algorithm?\n"
-            "Hint: Describe how different algorithms impact network performance.\n"
-            "Format: Changing the network congestion control algorithm affects the way *** adjusts its trans******* rate in response to network congestion.",
-            "Changing the network congestion control algorithm affects the way TCP adjusts its transmission rate in response to network congestion."
+            "4. What is the effect of changing the network congestion control algorithm?",
+            {"Adjusts CPU scheduling", "Modifies disk I/O priority", "Affects TCP transmission rate", "Controls memory allocation"},
+            "C"
         },
         {
-            "5. How do you check the current I/O scheduler for a disk device?\n"
-            "Hint: Mention the file where the I/O scheduler information is stored.\n"
-            "Format: The current I/O scheduler for a disk device can be checked using `*** /sys/block/[device]/queue/scheduler`.",
-            "The current I/O scheduler for a disk device can be checked using `cat /sys/block/[device]/queue/scheduler`."
+            "5. How do you check the current I/O scheduler for a disk device?",
+            {"sysctl", "iostat", "chrt", "cat /sys/block/[device]/queue/scheduler"},
+            "D"
         }
     };
 

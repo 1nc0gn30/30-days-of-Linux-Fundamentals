@@ -1,8 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <time.h>  // For randomizing question order
 
-#define MAX_ANSWER_LENGTH 100
+// ANSI color codes for better user experience
+#define COLOR_RESET "\033[0m"
+#define COLOR_RED "\033[31m"
+#define COLOR_GREEN "\033[32m"
+#define COLOR_YELLOW "\033[33m"
+#define COLOR_CYAN "\033[36m"
+#define COLOR_MAGENTA "\033[35m"
 
 // Struct to represent a lesson
 typedef struct {
@@ -15,171 +23,175 @@ typedef struct {
 typedef struct {
     const char *question;
     const char *correct_answer;
+    const char *hint;
 } Question;
+
+// Function to clear the screen
+void clear_screen() {
+    printf("\033[H\033[J");
+}
 
 // Function to display a lesson and prompt user
 void display_lesson(const Lesson *lesson) {
-    printf("Lesson on `%s`:\n", lesson->topic);
-    printf("%s\n", lesson->description);
-    printf("\n%s\n", lesson->examples);
-    printf("Press Enter to continue...\n");
+    clear_screen();
+    printf(COLOR_CYAN "Lesson on `%s`:\n" COLOR_RESET, lesson->topic);
+    printf(COLOR_MAGENTA "%s\n" COLOR_RESET, lesson->description);
+    printf(COLOR_YELLOW "\n%s\n" COLOR_RESET, lesson->examples);
+    printf(COLOR_GREEN "Press Enter to continue...\n" COLOR_RESET);
     getchar(); // Wait for user to press Enter
 }
 
 // Function to ask a question and check the answer
-void ask_question(const Question *question) {
-    char answer[MAX_ANSWER_LENGTH];
-    printf("%s\n", question->question);
-    printf("Instructions: Open a separate terminal and type the command described. Press Enter to continue after you’ve tried it.\n");
-    printf("When you are ready, press Enter to proceed...\n");
-    getchar(); // Wait for user to press Enter
+void ask_question(const Question *question, int question_number) {
+    char user_answer[100];
+    int attempts = 0;
 
-    printf("Your answer: ");
-    fgets(answer, sizeof(answer), stdin);
-    answer[strcspn(answer, "\n")] = 0;
+    while (attempts < 2) {
+        clear_screen();
+        printf(COLOR_CYAN "Question %d: %s\n" COLOR_RESET, question_number, question->question);
+        printf(COLOR_YELLOW "Hint: %s\n" COLOR_RESET, question->hint);
+        printf(COLOR_GREEN "Please type answer out in full and do not include the option letter.\nIf the answer is... A) Apple ...then you would type the answer as Apple. \nWhen you are ready, press Enter to proceed...\n" COLOR_RESET);
+        getchar(); // Wait for user to press Enter
 
-    if (strcmp(answer, question->correct_answer) == 0) {
-        printf("Correct!\n\n");
-    } else {
-        printf("Incorrect. The correct answer is: %s\n\n", question->correct_answer);
+        printf("Your answer: ");
+        fgets(user_answer, sizeof(user_answer), stdin);
+        user_answer[strcspn(user_answer, "\n")] = 0;  // Remove trailing newline
+
+        if (strcmp(user_answer, question->correct_answer) == 0) {
+            printf(COLOR_GREEN "Correct! Well done!\n\n" COLOR_RESET);
+            sleep(2);  // Pause before moving to the next question
+            break;
+        } else {
+            attempts++;
+            if (attempts < 2) {
+                printf(COLOR_RED "Incorrect. Try again...\n\n" COLOR_RESET);
+                sleep(2);  // Pause before retrying
+            } else {
+                printf(COLOR_RED "Incorrect again. The correct answer is: %s\n\n" COLOR_RESET, question->correct_answer);
+                sleep(2);  // Pause before moving to the next question
+            }
+        }
     }
 }
 
 int main() {
-    // Clear screen (for Unix-based systems)
-    printf("\033[H\033[J");
+    clear_screen();
 
-    printf("Welcome to Day 08 Breakfast!\n");
+    printf(COLOR_CYAN "Welcome to Day 08 Breakfast!\n" COLOR_RESET);
     printf("In this session, we'll explore shell scripting basics and package compilation.\n");
-    printf("We'll learn how to write shell scripts and compile packages from source code.\n");
-    printf("Press Enter to start...\n");
+    printf(COLOR_YELLOW "We'll learn how to write shell scripts and compile packages from source code.\n" COLOR_RESET);
+    printf(COLOR_GREEN "Press Enter to start...\n" COLOR_RESET);
     getchar(); // Wait for user to press Enter
 
-    // Lessons
-    Lesson lessons[] = {
-        {
-            "Shell Scripting Basics",
-            "Shell scripting is a powerful tool that allows you to automate tasks in Unix-based systems by writing a sequence of commands in a file. "
-            "This can be used to streamline workflows, manage system configurations, or perform repetitive tasks efficiently.\n"
-            "Shell scripts typically start with a 'shebang' (`#!/bin/bash`), which tells the system which interpreter to use for executing the script.\n"
-            "Common use cases include backup scripts, batch processing, and environment setup.",
-            "Examples:\n"
-            "  #!/bin/bash\n"
-            "  echo \"Hello, World!\"\n"
-            "  # Save this script as hello.sh, make it executable with chmod +x hello.sh, and run it with ./hello.sh\n"
-            "For more details, check out resources like 'The Linux Command Line' by William Shotts or the online Bash Guide at https://www.gnu.org/software/bash/manual/bash.html."
-        },
-        {
-            "Package Compilation",
-            "Compiling software from source code gives you the ability to customize software installations, optimize performance, and apply patches.\n"
-            "This is particularly useful when the desired package is not available in your distribution’s package manager or when you need a specific version.\n"
-            "The process usually involves downloading the source code, extracting it, configuring the build environment, compiling the source, and finally installing the binaries.",
-            "Examples:\n"
-            "  wget http://example.com/package.tar.gz\n"
-            "  tar -xvf package.tar.gz\n"
-            "  ./configure\n"
-            "  make\n"
-            "  sudo make install\n"
-            "A deeper dive into this topic can be found in resources like 'Linux From Scratch' or the 'GNU Autotools' documentation at https://www.gnu.org/software/autoconf/manual/autoconf.html."
-        },
-        {
-            "Variables in Shell Scripts",
-            "Variables are used to store data that can be used and manipulated throughout your script. They are essential for making scripts dynamic and adaptable.\n"
-            "In shell scripting, variables are created without a data type and can hold strings, numbers, or even the output of a command.\n"
-            "Understanding how to use variables effectively allows you to create more powerful and flexible scripts.",
-            "Examples:\n"
-            "  my_variable=\"Hello, World!\"\n"
-            "  echo $my_variable\n"
-            "  # Variables can also be assigned dynamically, for example: my_date=$(date)\n"
-            "For a comprehensive guide on shell variables, refer to the Bash Scripting Tutorial at https://linuxconfig.org/bash-scripting-tutorial."
-        },
-        {
-            "Control Structures in Shell Scripts",
-            "Control structures like `if-else` statements and loops (`for`, `while`) are fundamental to writing scripts that can make decisions and repeat tasks.\n"
-            "These structures enable conditional execution of commands and iterating over data sets, which is critical in automating complex workflows.\n"
-            "Mastering these control structures will allow you to write scripts that can handle a wide range of scenarios automatically.",
-            "Examples:\n"
-            "  if [ $my_variable = \"Hello, World!\" ]; then\n"
-            "    echo \"Match found!\"\n"
-            "  else\n"
-            "    echo \"No match.\"\n"
-            "  fi\n"
-            "  for i in 1 2 3; do echo $i; done\n"
-            "For more detailed information, you can consult the Advanced Bash-Scripting Guide at https://tldp.org/LDP/abs/html/."
-        },
-        {
-            "Functions in Shell Scripts",
-            "Functions in shell scripts are blocks of reusable code that can be invoked multiple times within the script. They help in organizing and structuring scripts, making them more readable and maintainable.\n"
-            "Functions are particularly useful when you have a set of commands that need to be executed multiple times with different parameters.",
-            "Examples:\n"
-            "  my_function() {\n"
-            "    echo \"Hello, World!\"\n"
-            "  }\n"
-            "  my_function\n"
-            "  # Functions can also accept parameters, e.g., my_function() { echo \"Hello, $1\"; }.\n"
-            "Learn more about functions in Bash by exploring the Bash Reference Manual at https://www.gnu.org/software/bash/manual/bash.html#Shell-Functions."
-        },
-        {
-            "Package Configuration Options",
-            "When compiling software from source, `./configure` scripts are used to tailor the build process to your specific environment. These scripts check for dependencies, set paths, and customize features.\n"
-            "Using configuration options, you can specify installation directories, enable or disable features, and apply patches. This level of control is invaluable when creating optimized or specialized builds.",
-            "Examples:\n"
-            "  ./configure --prefix=/usr/local\n"
-            "  ./configure --enable-debug\n"
-            "  # You can also use options like --disable-feature or --with-custom-option to further customize your build.\n"
-            "The GNU Autoconf documentation (https://www.gnu.org/software/autoconf/manual/autoconf.html) is an excellent resource for understanding these options in detail."
-        }
-    };
-
-    // Questions
-Question questions[] = {
+   // Lessons
+Lesson lessons[] = {
     {
-        "1. What is the purpose of the `#!/bin/bash` line in a shell script?\n"
-        "Hint: Explain the role of the `shebang` line in specifying the shell interpreter.\n"
-        "Format: The shebang line specifies the shell interpreter as [interpreter].",
-        "#!/bin/bash specifies the shell interpreter as /bin/bash"
+        "Shell Scripting Basics",
+        "Shell scripting allows you to automate repetitive tasks in your Linux environment. By writing scripts, you can perform a series of commands without manually typing them one by one. Scripts can include commands, loops, conditional statements, and functions to handle complex operations.",
+        "Example: \n"
+        "#!/bin/bash\n"
+        "echo 'Hello, World!'\n"
+        "This script prints 'Hello, World!' to the terminal."
     },
     {
-        "2. What command is used to extract a tarball?\n"
-        "Hint: Mention the specific flags used to extract files from a `.tar.gz` archive.\n"
-        "Format: The command to extract a tarball is `tar` with the flags [flags].",
-        "tar -xvf"
+        "Package Compilation",
+        "Compiling a package from source code involves converting the human-readable code into machine code that your computer can execute. This is useful when you need the latest version of software or when it's not available in your package manager.",
+        "Example: \n"
+        "1. Download the source code (e.g., via `wget` or `git clone`).\n"
+        "2. Extract the archive: `tar -xvf source-code.tar.gz`\n"
+        "3. Navigate to the directory: `cd source-code`\n"
+        "4. Configure the package: `./configure`\n"
+        "5. Compile the code: `make`\n"
+        "6. Install the package: `sudo make install`"
     },
     {
-        "3. What is the purpose of the `export` command in shell scripting?\n"
-        "Hint: Describe how `export` affects environment variables.\n"
-        "Format: The `export` command is used to variable av******* to sub*********.",
-        "The `export` command is used to make a variable available to subprocesses"
+        "Variables in Shell Scripts",
+        "Variables in shell scripts are used to store data that your script can use later. Variables can hold numbers, strings, or the output of commands. You can assign values to variables and then reference them using the `$` symbol.",
+        "Example: \n"
+        "name='Neal'\n"
+        "echo \"Hello, $name\"\n"
+        "This script prints 'Hello, Neal' using the variable `name`."
     },
     {
-        "4. How do you write an if-else statement in a shell script?\n"
-        "Hint: Outline the basic syntax for an `if-else` statement in bash.\n"
-        "Format: The syntax is `** condition; **** action; **** alternative; fi`.",
-        "if condition; then action; else alternative; fi"
+        "Control Structures",
+        "Control structures like `if-else` statements and loops (`for`, `while`) allow your scripts to make decisions and repeat tasks. This makes your scripts more powerful by enabling conditional execution and iteration.",
+        "Example: \n"
+        "if [ \"$name\" = \"Neal\" ]; then\n"
+        "  echo \"Hello, Neal\"\n"
+        "else\n"
+        "  echo \"Hello, Stranger\"\n"
+        "fi\n"
+        "This script greets Neal if the `name` variable is set to 'Neal'; otherwise, it greets a stranger."
     },
     {
-        "5. What is the difference between `./configure` and `./configure --prefix=/usr/local`?\n"
-        "Hint: Explain how the `--prefix` option affects the installation path.\n"
-        "Format: The `The latter sets the installation p****x to /usr/local",
-        "The latter sets the installation prefix to /usr/local"
+        "Functions",
+        "Functions in shell scripts are blocks of code that you can define once and reuse multiple times throughout your script. Functions help to organize code and avoid repetition, making scripts easier to read and maintain.",
+        "Example: \n"
+        "greet() {\n"
+        "  echo \"Hello, $1\"\n"
+        "}\n"
+        "greet 'Neal'\n"
+        "This script defines a function `greet` and then calls it with the argument 'Neal'."
     },
     {
-        "6. How do you define a function in a shell script? Use my_function as function name and commands as name for commands.\n"
-        "Hint: Describe the syntax for defining a function in bash.\n"
-        "Format: A function is defined using the syntax `[function_name]() { [commands]; }`.",
-        "my_function() { commands; }"
+        "Package Configuration",
+        "The configuration step in package compilation is where you customize how the package will be built. The `./configure` script checks for dependencies and allows you to set various options, such as installation directories or enabling/disabling features.",
+        "Example: \n"
+        "./configure --prefix=/usr/local --enable-feature\n"
+        "This configures the package to install in `/usr/local` and enables a specific feature during the build."
     }
 };
 
-    // Display lessons
+   // Questions
+Question questions[] = {
+    {"What is the purpose of the shebang (`#!`) in the first line of a shell script?\nA) Specifies the file type\nB) Specifies the interpreter\nC) Starts a comment\nD) Defines a function", 
+    "Specifies the interpreter", 
+    "It tells the system which interpreter to use for executing the script."},
+
+    {"List the sequence of commands to compile a package from source code after downloading the archive.\nA) tar -xvf, cd, ./configure, make, sudo make install\nB) make, cd, tar -xvf, sudo make install, ./configure\nC) ./configure, tar -xvf, make, sudo make install, cd\nD) sudo make install, make, cd, tar -xvf, ./configure", 
+    "tar -xvf, cd, ./configure, make, sudo make install", 
+    "Think of the steps from extraction to installation."},
+
+    {"How do you store and access data, such as a user's name, within a shell script?\nA) Function\nB) Variable\nC) Loop\nD) Alias", 
+    "Variable", 
+    "It's a placeholder for dynamic values in the script."},
+
+    {"What control structure would you use to execute different commands based on conditions?\nA) for loop\nB) while loop\nC) if-else\nD) case", 
+    "if-else", 
+    "It allows your script to make decisions."},
+
+    {"What feature in a shell script lets you organize code into reusable blocks?\nA) Function\nB) Variable\nC) Loop\nD) Alias", 
+    "Function", 
+    "It allows you to define and call blocks of code."},
+
+    {"Which command customizes the build process of a package, allowing you to set options before compiling?\nA) make\nB) configure\nC) sudo make install\nD) tar -xvf", 
+    "configure", 
+    "This command is run before `make` and checks for dependencies."}
+};
+
+
+    // Randomize question order
+    srand(time(NULL));
+    for (int i = sizeof(questions) / sizeof(questions[0]) - 1; i > 0; i--) {
+        int j = rand() % (i + 1);
+        Question temp = questions[i];
+        questions[i] = questions[j];
+        questions[j] = temp;
+    }
+
+    // Run through lessons and questions
     for (int i = 0; i < sizeof(lessons) / sizeof(lessons[0]); i++) {
         display_lesson(&lessons[i]);
     }
 
-    // Ask questions
     for (int i = 0; i < sizeof(questions) / sizeof(questions[0]); i++) {
-        ask_question(&questions[i]);
+        ask_question(&questions[i], i + 1); // Pass question number
     }
+
+    printf(COLOR_CYAN "Congratulations! You've completed Day 08 Breakfast.\n" COLOR_RESET);
+    printf("Remember to keep practicing and exploring the topics we covered today.\n");
+    printf(COLOR_GREEN "Press Enter to exit." COLOR_RESET);
+    getchar(); // Wait for user to press Enter before exiting
 
     return 0;
 }

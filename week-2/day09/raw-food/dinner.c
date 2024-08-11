@@ -1,8 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>  
 
 #define MAX_ANSWER_LENGTH 200
+
+// ANSI color codes
+#define RESET       "\x1B[0m"
+#define GREEN       "\x1B[32m"
+#define YELLOW      "\x1B[33m"
+#define BLUE        "\x1B[34m"
+#define MAGENTA     "\x1B[35m"
 
 // Struct to represent a lesson
 typedef struct {
@@ -11,37 +19,37 @@ typedef struct {
     const char *examples;
 } Lesson;
 
-// Struct to represent a question
+// Struct to represent a multiple-choice question
 typedef struct {
     const char *question;
-    const char *correct_answer;
-} Question;
+    const char *options[4];
+    char correct_answer;
+} MCQuestion;
 
 // Function to display a lesson and prompt user
 void display_lesson(const Lesson *lesson) {
-    printf("Lesson on `%s`:\n", lesson->topic);
+    printf(GREEN "Lesson on `%s`:\n" RESET, lesson->topic);
     printf("%s\n", lesson->description);
     printf("\n%s\n", lesson->examples);
     printf("Press Enter to continue...\n");
     getchar(); // Wait for user to press Enter
 }
 
-// Function to ask a question and check the answer
-void ask_question(const Question *question) {
-    char answer[MAX_ANSWER_LENGTH];
-    printf("%s\n", question->question);
-    printf("Instructions: Provide a detailed response based on your understanding. Press Enter to continue after you’ve tried it.\n");
-    printf("When you are ready, press Enter to proceed...\n");
-    getchar(); // Wait for user to press Enter
+// Function to ask a multiple-choice question and check the answer
+void ask_question(const MCQuestion *question) {
+    char answer;
+    printf(YELLOW "%s\n" RESET, question->question);
+    for (int i = 0; i < 4; i++) {
+        printf("  %c. %s\n", 'A' + i, question->options[i]);
+    }
+    printf("\nEnter your choice (A, B, C, or D): ");
+    scanf(" %c", &answer);
+    answer = toupper(answer); // Convert to uppercase for comparison
 
-    printf("Your answer: ");
-    fgets(answer, sizeof(answer), stdin);
-    answer[strcspn(answer, "\n")] = 0;
-
-    if (strcmp(answer, question->correct_answer) == 0) {
-        printf("Correct!\n\n");
+    if (answer == question->correct_answer) {
+        printf(BLUE "Correct!\n\n" RESET);
     } else {
-        printf("Incorrect. The correct answer is: %s\n\n", question->correct_answer);
+        printf(MAGENTA "Incorrect. The correct answer is: %c\n\n" RESET, question->correct_answer);
     }
 }
 
@@ -49,7 +57,7 @@ int main() {
     // Clear screen (for Unix-based systems)
     printf("\033[H\033[J");
 
-    printf("Welcome to the Containers Lesson!\n");
+    printf(GREEN "Welcome to Day 09 Dinner!! Containers Lesson!\n" RESET);
     printf("In this session, we'll explore container technology, focusing on Docker, container orchestration, and related concepts.\n");
     printf("We'll also cover practical commands and answer some questions to solidify your understanding.\n");
     printf("Press Enter to start...\n");
@@ -165,66 +173,73 @@ int main() {
     };
 
     // Questions
-Question questions[] = {
-    {
-        "1. What is containerization and how does it differ from traditional virtualization?\n"
-        "Hint: Containerization involves packaging software and its dependencies into a single unit called a *********, which can run on any system with the appropriate *******. Unlike traditional virtualization, containers share the host OS ****** and are more *********** with faster startup times and lower overhead compared to virtual machines.",
-        "Containerization involves packaging software and its dependencies into a single unit called a container, which can run on any system with the appropriate runtime. Unlike traditional virtualization, containers share the host OS kernel and are more lightweight, with faster startup times and lower overhead compared to virtual machines."
-    },
-    {
-        "2. What is Docker and what role does it play in containerization?\n"
-        "Hint: Docker is a **************** platform that automates the deployment of applications within **********. It provides tools for building, running, and managing containers, making it easier to develop, ship, and deploy applications consistently across different ************.",
-        "Docker is a containerization platform that automates the deployment of applications within containers. It provides tools for building, running, and managing containers, making it easier to develop, ship, and deploy applications consistently across different environments."
-    },
-    {
-        "3. What is the difference between Docker Swarm and Kubernetes?\n"
-        "Hint: Docker Swarm is Docker's native ********** and ************* tool, known for its ********** and ease of use. Kubernetes, on the other hand, is a more complex and *******-**** orchestration system that provides advanced capabilities for managing containerized applications at *****, including automated deployments, scaling, and management.",
-        "Docker Swarm is Docker's native clustering and orchestration tool, known for its simplicity and ease of use. Kubernetes, on the other hand, is a more complex and feature-rich orchestration system that provides advanced capabilities for managing containerized applications at scale, including automated deployments, scaling, and management."
-    },
-    {
-        "4. What are container images and how are they used?\n"
-        "Hint: Container ****** are the blueprint for creating **********, containing the application code, *********, and dependencies needed to run an application. Images are used to instantiate containers and can be stored in ********* registries for distribution and sharing.",
-        "Container images are the blueprint for creating containers. They contain the application code, libraries, and dependencies needed to run an application. Images are used to instantiate containers and can be stored in container registries for distribution and sharing."
-    },
-    {
-        "5. How do you build a Docker image using a Dockerfile?\n"
-        "Hint: A Dockerfile is a ****** containing instructions for building a Docker *****. It specifies the **** image, copies files, and defines commands to execute. The `docker *****` command is used to create an image from a Dockerfile, resulting in a portable and reproducible container image.",
-        "A Dockerfile is a script containing instructions for building a Docker image. It specifies the base image, copies files, and defines commands to execute. The `docker build` command is used to create an image from a Dockerfile, resulting in a portable and reproducible container image."
-    },
-    {
-        "6. What are Docker volumes and how do they differ from container storage?\n"
-        "Hint: Docker ******* are used to persist and manage **** created by containers. They allow data to be shared between containers and to persist beyond the lifecycle of a container. Unlike container storage, which is *********, volumes are managed independently and can be reused across different containers.",
-        "Docker volumes are used to persist and manage data created by containers. They allow data to be shared between containers and to persist beyond the lifecycle of a container. Unlike container storage, which is ephemeral and tied to the container's lifecycle, volumes are managed independently and can be reused across different containers."
-    },
-    {
-        "7. What is container orchestration and why is it important?\n"
-        "Hint: Container ************* involves automating the deployment, scaling, and management of containerized applications. It is important because it simplifies the management of complex applications running across multiple containers and ***** ensuring reliable and efficient operation at *****.",
-        "Container orchestration involves automating the deployment, scaling, and management of containerized applications. It is important because it simplifies the management of complex applications running across multiple containers and hosts, ensuring reliable and efficient operation at scale."
-    },
-    {
-        "8. How do you use Docker Compose to manage multi-container applications?\n"
-        "Hint: Docker Compose uses a **** file to define and configure multi-container applications. By specifying services, networks, and volumes in the file, Compose allows for easy management and orchestration of complex applications with multiple interconnected containers. The `docker-compose **` command starts all services defined in the configuration file.",
-        "Docker Compose uses a YAML file to define and configure multi-container applications. By specifying services, networks, and volumes in the file, Compose allows for easy management and orchestration of complex applications with multiple interconnected containers. The `docker-compose up` command starts all services defined in the configuration file."
-    },
-    {
-        "9. What are some common security practices for containerized environments?\n"
-        "Hint: Common security practices include using minimal base *****, regularly scanning for ***************, implementing proper access ********, and isolating containers to prevent unauthorized access. It's also important to secure the Docker ****** and manage secrets carefully.",
-        "Common security practices include using minimal base images, regularly scanning for vulnerabilities, implementing proper access controls, and isolating containers to prevent unauthorized access. It's also important to secure the Docker daemon and manage secrets carefully."
-    },
-    {
-        "10. How does Docker integrate with cloud platforms?\n"
-        "Hint: Docker integrates with cloud platforms to enhance deployment flexibility and scalability. Cloud providers often offer managed container services that support Docker, allowing for seamless ***, automated ***, and improved resource management in cloud environments. This integration helps optimize the performance and availability of containerized applications.",
-        "Docker integrates with cloud platforms to enhance deployment flexibility and scalability. Cloud providers often offer managed container services that support Docker, allowing for seamless scaling, automated updates, and improved resource management in cloud environments. This integration helps optimize the performance and availability of containerized applications."
-    }
-};
+    MCQuestion questions[] = {
+        {
+            "1. What is containerization and how does it differ from traditional virtualization?",
+            {"Containerization", "Virtualization", "Hypervisor", "Machine Learning"},
+            'B'
+        },
+        {
+            "2. What is Docker and what role does it play in containerization?",
+            {"Platform", "Service", "Network", "Library"},
+            'A'
+        },
+        {
+            "3. What is the difference between Docker Swarm and Kubernetes?",
+            {"Clustering and Orchestration", "Networking", "Storage", "Security"},
+            'A'
+        },
+        {
+                        "4. What are container images and how are they used?",
+            {"Blueprint for containers", "Executable files", "Operating systems", "Library dependencies"},
+            'A'
+        },
+        {
+            "5. What command is used to pull an image from a Docker registry?",
+            {"docker pulls", "docker run", "docker pull", "docker push"},
+            'C'
+        },
+        {
+            "6. What is the purpose of a Dockerfile?",
+            {"To edit Docker videos", "To configure network settings", "To build Docker images", "To monitor container performance"},
+            'C'
+        },
+        {
+            "7. Which Docker network type provides isolation between containers?",
+            {"Bridge", "Host", "Overlay", "None"},
+            'A'
+        },
+        {
+            "8. How can you persist data in Docker containers?",
+            {"Using images", "Using environment variables", "Using Docker commands", "Using volumes"},
+            'D'
+        },
+        {
+            "9. What is Docker Compose used for?",
+            {"Managing multi-container applications", "Creating Docker images", "Building Docker networks", "Storing container data"},
+            'A'
+        },
+        {
+            "10. Which command can be used to check the status of a running container?",
+            {"docker psx", "docker ps", "docker info", "docker inspect"},
+            'B'
+        }
+    };
 
-    // Display each lesson and ask related question
-    for (int i = 0; i < 10; i++) {
+    // Display lessons
+    for (int i = 0; i < sizeof(lessons) / sizeof(lessons[0]); i++) {
         display_lesson(&lessons[i]);
+    }
+
+    // Ask questions
+    for (int i = 0; i < sizeof(questions) / sizeof(questions[0]); i++) {
         ask_question(&questions[i]);
     }
 
-    printf("Thank you for participating in the Containers lesson!\n");
+    printf(GREEN "Thank you for participating in the Containers Lesson!\n" RESET);
+    printf("Press Enter to exit...\n");
+    getchar(); // Wait for user to press Enter before exiting
 
     return 0;
 }
+
