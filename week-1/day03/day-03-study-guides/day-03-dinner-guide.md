@@ -12,11 +12,13 @@ Commands:
 
 Examples:
 
-bash
+```bash
 
 touch newfile.txt                          # Create an empty file named 'newfile.txt'
 cat file1.txt file2.txt > combined.txt    # Combine the content of 'file1.txt' and 'file2.txt' into 'combined.txt'
 echo "Hello, World!" > hello.txt          # Create a file named 'hello.txt' with the content "Hello, World!"
+
+```
 
 Description:
 
@@ -33,12 +35,14 @@ Commands:
 
 Examples:
 
-bash
+```bash
 
 cp file.txt backup/                       # Copy 'file.txt' to the 'backup' directory
 cp -r dir1/ dir2/                        # Recursively copy 'dir1' and its contents to 'dir2'
 rsync -avz source/ destination/          # Synchronize files from 'source' to 'destination' with verbose output
 rsync --delete source/ destination/     # Synchronize files and delete those no longer in 'source'
+
+```
 
 Description:
 
@@ -54,11 +58,13 @@ Commands:
 
 Examples:
 
-bash
+```bash
 
 mv oldfile.txt newfile.txt               # Rename 'oldfile.txt' to 'newfile.txt'
 mv file.txt /path/to/destination/        # Move 'file.txt' to the specified directory
 rename 's/.txt/.bak/' *.txt              # Rename all '.txt' files to '.bak'
+
+```
 
 Description:
 
@@ -75,12 +81,14 @@ Commands:
 
 Examples:
 
-bash
+```bash
 
 cd /home/user                          # Change to the '/home/user' directory
 pwd                                    # Print the current directory path
 find /path/to/search -name "*.txt"     # Find all '.txt' files under the specified path
 find . -type f -exec ls -lh {} \;     # List details of all files found in the current directory
+
+```
 
 Description:
 
@@ -98,11 +106,13 @@ Commands:
 
 Examples:
 
-bash
+```bash
 
 ln -s /path/to/original /path/to/link   # Create a symbolic link to the original file
 stat file.txt                           # Display detailed status information about 'file.txt'
 file file.txt                           # Determine and display the type of 'file.txt'
+
+```
 
 Description:
 
@@ -120,11 +130,13 @@ Commands:
 
 Examples:
 
-bash
+```bash
 
 find . -name "*.log" | xargs rm       # Find and delete all '.log' files
 echo "Hello, World!" | tee hello.txt  # Write "Hello, World!" to 'hello.txt' and also output to the terminal
 awk '{print $1}' file.txt             # Print the first field of each line in 'file.txt'
+
+```
 
 Description:
 
