@@ -45,6 +45,11 @@ void display_question(const Question *question) {
     fgets(user_answer, sizeof(user_answer), stdin);
     user_answer[strcspn(user_answer, "\n")] = 0;
 
+    // Convert the answer to uppercase for comparison
+    if (user_answer[0] >= 'a' && user_answer[0] <= 'd') {
+        user_answer[0] -= 32; // Convert to uppercase
+    }
+
     // Convert answer to index
     int answer_index = -1;
     if (user_answer[0] >= 'A' && user_answer[0] <= 'D') {
@@ -139,12 +144,12 @@ int main() {
 
     // Questions
     Question questions[] = {
-        {"Which command displays real-time system information and resource usage?", {"A. top", "B. htop", "C. vmstat", "D. iostat"}, "top"},
-        {"Which tool creates disk images?", {"A. rsync", "B. tar", "C. dd", "D. cp"}, "dd"},
-        {"How do you enable a firewall using ufw?", {"A. sudo ufw enable", "B. sudo firewall start", "C. sudo iptables -A", "D. sudo firewall-cmd --add-port"}, "sudo ufw enable"},
-        {"What does the `chmod 700` command do?", {"A. Changes file permissions", "B. Changes file ownership", "C. Creates a backup", "D. Archives files"}, "Changes file permissions"},
-        {"Which command is used to sync files and directories?", {"A. rsync", "B. tar", "C. dd", "D. cp"}, "rsync"},
-        {"How do you schedule automated backups with cron?", {"A. Edit /etc/crontab", "B. Use the cron command", "C. Run crontab -e", "D. Edit /etc/cron.daily"}, "Edit /etc/crontab"}
+        {"Which command displays real-time system information and resource usage?", {"top", "htop", "vmstat", "iostat"}, "top"},
+        {"Which tool creates disk images?", {"rsync", "tar", "dd", "cp"}, "dd"},
+        {"How do you enable a firewall using ufw?", {"sudo ufw enable", "sudo firewall start", "sudo iptables -A", "sudo firewall-cmd --add-port"}, "sudo ufw enable"},
+        {"What does the `chmod 700` command do?", {"Changes file permissions", "Changes file ownership", "Creates a backup", "Archives files"}, "Changes file permissions"},
+        {"Which command is used to sync files and directories?", {"rsync", "tar", "dd", "cp"}, "rsync"},
+        {"How do you schedule automated backups with cron?", {"Edit /etc/crontab", "Use the cron command", "Run crontab -e", "Edit /etc/cron.daily"}, "Edit /etc/crontab"}
     };
 
     // Display lessons

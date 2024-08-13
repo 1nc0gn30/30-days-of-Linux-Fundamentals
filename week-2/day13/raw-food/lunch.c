@@ -45,6 +45,11 @@ void display_question(const Question *question) {
     fgets(user_answer, sizeof(user_answer), stdin);
     user_answer[strcspn(user_answer, "\n")] = 0;
 
+    // Convert the answer to uppercase for comparison
+    if (user_answer[0] >= 'a' && user_answer[0] <= 'd') {
+        user_answer[0] -= 32; // Convert to uppercase
+    }
+
     // Convert answer to index
     int answer_index = -1;
     if (user_answer[0] >= 'A' && user_answer[0] <= 'D') {
@@ -190,12 +195,12 @@ Lesson lessons[] = {
 
 // Questions
 Question questions[] = {
-    {"Which tool provides a real-time view of CPU and memory usage?", {"A. top", "B. vmstat", "C. iostat", "D. sar"}, "top"},
-    {"What command can be used to monitor disk I/O statistics?", {"A. netstat", "B. sar", "C. iostat", "D. vmstat"}, "iostat"},
-    {"How do you monitor network interface statistics?", {"A. netstat -s", "B. sar -n DEV", "C. iostat -x", "D. vmstat"}, "sar -n DEV"},
-    {"Which command is used to report CPU usage in historical data?", {"A. top", "B. sar -u", "C. vmstat", "D. iostat"}, "sar -u"},
-    {"What is the purpose of the `iostat` command?", {"A. Network statistics", "B. CPU and I/O statistics", "C. Disk usage", "D. Memory usage"}, "CPU and I/O statistics"},
-    {"How can you collect system activity data for analysis?", {"A. top", "B. vmstat", "C. sar", "D. netstat"}, "sar"}
+    {"Which tool provides a real-time view of CPU and memory usage?", {"top", "vmstat", "iostat", "sar"}, "top"},
+    {"What command can be used to monitor disk I/O statistics?", {"netstat", "sar", "iostat", "vmstat"}, "iostat"},
+    {"How do you monitor network interface statistics?", {"netstat -s", "sar -n DEV", "iostat -x", "vmstat"}, "sar -n DEV"},
+    {"Which command is used to report CPU usage in historical data?", {"top", "sar -u", "vmstat", "iostat"}, "sar -u"},
+    {"What is the purpose of the `iostat` command?", {"Network statistics", "CPU and I/O statistics", "Disk usage", "Memory usage"}, "CPU and I/O statistics"},
+    {"How can you collect system activity data for analysis?", {"top", "vmstat", "sar", "netstat"}, "sar"}
 };
 
 

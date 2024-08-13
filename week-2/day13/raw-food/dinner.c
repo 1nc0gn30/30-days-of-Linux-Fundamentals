@@ -45,6 +45,11 @@ void display_question(const Question *question) {
     fgets(user_answer, sizeof(user_answer), stdin);
     user_answer[strcspn(user_answer, "\n")] = 0;
 
+    // Convert the answer to uppercase for comparison
+    if (user_answer[0] >= 'a' && user_answer[0] <= 'd') {
+        user_answer[0] -= 32; // Convert to uppercase
+    }
+
     // Convert answer to index
     int answer_index = -1;
     if (user_answer[0] >= 'A' && user_answer[0] <= 'D') {
@@ -209,12 +214,12 @@ int main() {
 
     // Questions
     Question questions[] = {
-        {"Which command is used to monitor real-time CPU and memory usage?", {"A. top", "B. vmstat", "C. iostat", "D. sar"}, "top"},
-        {"What does `vmstat` provide information on?", {"A. Disk I/O", "B. Network Traffic", "C. Memory Usage", "D. Process Information"}, "Memory Usage"},
-        {"What command is used to analyze disk I/O?", {"A. netstat", "B. sar", "C. iostat", "D. top"}, "iostat"},
-        {"Which tool provides historical performance data?", {"A. top", "B. vmstat", "C. netstat", "D. sar"}, "sar"},
-        {"How can you check the amount of data received over the network?", {"A. netstat -i", "B. sar -n DEV", "C. iostat", "D. vmstat"}, "sar -n DEV"},
-        {"What is a key metric reported by `iostat`?", {"A. %usr", "B. %idle", "C. kB_read/s", "D. %sys"}, "kB_read/s"}
+        {"Which command is used to monitor real-time CPU and memory usage?", {"top", "vmstat", "iostat", "sar"}, "top"},
+        {"What does `vmstat` provide information on?", {"Disk I/O", "Network Traffic", "Memory Usage", "Process Information"}, "Memory Usage"},
+        {"What command is used to analyze disk I/O?", {"netstat", "sar", "iostat", "top"}, "iostat"},
+        {"Which tool provides historical performance data?", {"top", "vmstat", "netstat", "sar"}, "sar"},
+        {"How can you check the amount of data received over the network?", {"netstat -i", "sar -n DEV", "iostat", "vmstat"}, "sar -n DEV"},
+        {"What is a key metric reported by `iostat`?", {"%usr", "%idle", "kB_read/s", "%sys"}, "kB_read/s"}
     };
 
     // Display lessons

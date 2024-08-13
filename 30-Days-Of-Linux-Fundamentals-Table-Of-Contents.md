@@ -1,8 +1,8 @@
-# **30-Days-Of-Linux-Fundamentals**
+### **30-Days-Of-Linux-Fundamentals**
 
 ## Table Of Contents
 
-### Week 1
+# Week 1
 
 #### Day 1 Study Guide
 
@@ -286,24 +286,135 @@
    - [Using rsync for Efficient File Transfer](#using-rsync-for-efficient-file-transfer)
    - [Quiz Questions](#quiz-questions-2)
 
-#	[WEEK 2 !!! Feel Free to Research online!!]
+# Week 2
 
- *   Shell Scripting Basics
+#### Day 08 Study Guide: Advanced Shell Scripting and Text Processing
 
- *   Package Compilation and Building
+## Breakfast
+- [Introduction to Shell Scripting](#introduction-to-shell-scripting)
+- [Variables and Control Structures](#variables-and-control-structures)
+- [Loops in Shell Scripts](#loops-in-shell-scripts)
+- [Quiz](#quiz)
 
- *   System Performance Tuning
+## Lunch
+- [Working with Files and Directories](#working-with-files-and-directories)
+- [Text Processing with sed and awk](#text-processing-with-sed-and-awk)
+- [Regular Expressions](#regular-expressions)
+- [Quiz](#quiz-1)
 
- *   Virtualization and Containers
+## Dinner
+- [Advanced File Handling](#advanced-file-handling)
+- [Handling Command Line Arguments](#handling-command-line-arguments)
+- [Advanced Shell Scripting Techniques](#advanced-shell-scripting-techniques)
+- [Quiz](#quiz-2)
 
- *   Remote Access and Management
+---
 
- *   System Recovery and Rescue
+#### Day 09 Study Guide: Advanced Text Processing and Automation
 
- *   Advanced Network Configuration
+## Breakfast
+- [Advanced sed Usage](#advanced-sed-usage)
+- [Advanced awk Programming](#advanced-awk-programming)
+- [Introduction to Automation](#introduction-to-automation)
+- [Quiz](#quiz)
 
- *   Linux Kernel Basics
+## Lunch
+- [Automating with Cron Jobs](#automating-with-cron-jobs)
+- [Text Processing with grep](#text-processing-with-grep)
+- [Using xargs for Automation](#using-xargs-for-automation)
+- [Quiz](#quiz-1)
 
- *   System Administration Best Practices
+## Dinner
+- [Combining sed, awk, and grep](#combining-sed-awk-and-grep)
+- [Building Complex Pipelines](#building-complex-pipelines)
+- [Advanced Automation Techniques](#advanced-automation-techniques)
+- [Quiz](#quiz-2)
 
- *   Final Review and Challenge
+---
+
+#### Day 10 Study Guide: Introduction to System Administration
+
+## Breakfast
+- [System Administration Basics](#system-administration-basics)
+- [User and Group Management](#user-and-group-management)
+- [File Permissions](#file-permissions)
+- [Quiz](#quiz)
+
+## Lunch
+- [Managing Services and Daemons](#managing-services-and-daemons)
+- [Understanding System Logs](#understanding-system-logs)
+- [System Security Basics](#system-security-basics)
+- [Quiz](#quiz-1)
+
+## Dinner
+- [Introduction to System Monitoring](#introduction-to-system-monitoring)
+- [Advanced File Permissions](#advanced-file-permissions)
+- [Automation in System Administration](#automation-in-system-administration)
+- [Quiz](#quiz-2)
+
+---
+
+#### Day 11 Study Guide: Advanced Network Configuration
+
+## Breakfast
+- [Introduction to Network Configuration](#introduction-to-network-configuration)
+- [Static vs. Dynamic IPs](#static-vs-dynamic-ips)
+- [Basic DHCP Configuration](#basic-dhcp-configuration)
+- [Quiz](#quiz)
+
+## Lunch
+- [Bonding Interfaces](#bonding-interfaces)
+- [Configuring VLANs](#configuring-vlans)
+- [Advanced IP Configuration](#advanced-ip-configuration)
+- [Quiz](#quiz-1)
+
+## Dinner
+- [Optimizing Network Performance](#optimizing-network-performance)
+- [Network Troubleshooting Tools](#network-troubleshooting-tools)
+- [Advanced Network Services Management](#advanced-network-services-management)
+- [Quiz](#quiz-2)
+
+---
+
+#### Day 12 Study Guide: Linux Kernel Basics
+
+## Breakfast
+- [Introduction to Linux Kernel](#introduction-to-linux-kernel)
+- [Understanding Kernel Versions](#understanding-kernel-versions)
+- [Basic Kernel Configuration](#basic-kernel-configuration)
+- [Quiz](#quiz)
+
+## Lunch
+- [Kernel Modules](#kernel-modules)
+- [Managing Kernel Parameters](#managing-kernel-parameters)
+- [Compiling a Kernel](#compiling-a-kernel)
+- [Quiz](#quiz-1)
+
+## Dinner
+- [Advanced Kernel Customization](#advanced-kernel-customization)
+- [Monitoring Kernel Performance](#monitoring-kernel-performance)
+- [Kernel Security Best Practices](#kernel-security-best-practices)
+- [Quiz](#quiz-2)
+
+---
+
+#### Day 13 Study Guide: System Administration Best Practices
+
+## Breakfast
+- [System Monitoring and Performance Tuning](#system-monitoring-and-performance-tuning)
+- [Backup and Recovery Strategies](#backup-and-recovery-strategies)
+- [Security Best Practices](#security-best-practices)
+- [Quiz](#quiz)
+
+## Lunch
+- [Patch Management](#patch-management)
+- [Configuration Management](#configuration-management)
+- [Compliance and Auditing](#compliance-and-auditing)
+- [Quiz](#quiz-1)
+
+## Dinner
+- [Advanced Security Configurations](#advanced-security-configurations)
+- [Automating System Administration Tasks](#automating-system-administration-tasks)
+- [Disaster Recovery Planning](#disaster-recovery-planning)
+- [Quiz](#quiz-2)
+
