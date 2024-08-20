@@ -288,7 +288,7 @@
 
 # Week 2
 
-#### Day 08 Study Guide: Advanced Shell Scripting and Text Processing
+# Day 08 Study Guide: Advanced Shell Scripting and Text Processing
 
 ## Breakfast
 - [Introduction to Shell Scripting](#introduction-to-shell-scripting)
@@ -310,7 +310,7 @@
 
 ---
 
-#### Day 09 Study Guide: Advanced Text Processing and Automation
+# Day 09 Study Guide: Advanced Text Processing and Automation
 
 ## Breakfast
 - [Advanced sed Usage](#advanced-sed-usage)
@@ -332,7 +332,7 @@
 
 ---
 
-#### Day 10 Study Guide: Introduction to System Administration
+# Day 10 Study Guide: Introduction to System Administration
 
 ## Breakfast
 - [System Administration Basics](#system-administration-basics)
@@ -354,7 +354,7 @@
 
 ---
 
-#### Day 11 Study Guide: Advanced Network Configuration
+# Day 11 Study Guide: Advanced Network Configuration
 
 ## Breakfast
 - [Introduction to Network Configuration](#introduction-to-network-configuration)
@@ -376,7 +376,7 @@
 
 ---
 
-#### Day 12 Study Guide: Linux Kernel Basics
+# Day 12 Study Guide: Linux Kernel Basics
 
 ## Breakfast
 - [Introduction to Linux Kernel](#introduction-to-linux-kernel)
@@ -398,7 +398,7 @@
 
 ---
 
-#### Day 13 Study Guide: System Administration Best Practices
+# Day 13 Study Guide: System Administration Best Practices
 
 ## Breakfast
 - [System Monitoring and Performance Tuning](#system-monitoring-and-performance-tuning)
