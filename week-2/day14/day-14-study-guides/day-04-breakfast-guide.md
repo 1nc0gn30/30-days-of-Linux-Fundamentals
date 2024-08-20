@@ -6,22 +6,19 @@
 
 ## Practical Commands
 - **Load a module:** 
-  ```bash
+```bash
   modprobe <module_name>
 ```
 Unload a module:
 ``` bash
-Copy code
 rmmod <module_name>
 ```
 View loaded modules:
 ``` bash
-Copy code
 lsmod
 ```
 Modify kernel parameters:
 ``` bash
-Copy code
 sysctl -w <parameter>=<value>
 ```
 ### Practice Question
