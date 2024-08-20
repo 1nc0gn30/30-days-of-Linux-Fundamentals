@@ -215,7 +215,7 @@
 
 ## Table of Contents
 
-1. [Breakfast: Networking Basics]
+# Breakfast: Networking Basics
    - [Viewing Network Configuration (`ifconfig`)]
    - [Pinging a Host (`ping`)]
    - [Traceroute to a Host (`traceroute`)]
@@ -223,7 +223,7 @@
    - [Testing Port Connectivity (`nc` or `netcat`)]
    - [Quiz Questions]
 
-2. [Lunch: Advanced Networking Basics]
+# Lunch: Advanced Networking Basics
    - [Inspecting Network Interfaces (`ip`)]
    - [Diagnosing Network Issues (`mtr`)]
    - [Monitoring Network Traffic (`tcpdump`)]
@@ -231,7 +231,7 @@
    - [Testing Network Connectivity (`curl`)]
    - [Quiz Questions]
 
-3. [Dinner: Advanced Networking Review and Further Exploration]
+# Dinner: Advanced Networking Review and Further Exploration
    - [Inspecting Network Interfaces (`ip`)]
    - [Diagnosing Network Issues (`mtr`)]
    - [Monitoring Network Traffic (`tcpdump`)]
@@ -249,7 +249,7 @@
 
 ## Table of Contents
 
-1. [Breakfast: Package Management Basics]
+## Breakfast: Package Management Basics
    - [Installing Packages]
      - Debian-based Systems
      - RHEL-based Systems
@@ -271,14 +271,14 @@
      - Compressing Files
    - [Quiz Questions]
 
-2. [Lunch: Advanced Package Management]
+## Lunch: Advanced Package Management
    - [Upgrading Packages]
    - [Managing PPAs]
    - [Using dpkg for Package Management]
    - [Archiving and Compression with zip and gzip]
    - [Quiz Questions]
 
-3. [Dinner: Advanced Package Management and Archiving]
+## Dinner: Advanced Package Management and Archiving
    - [Advanced Package Management with `apt-get`]
    - [Using apt-cache for Package Information]
    - [Advanced dpkg Commands]
