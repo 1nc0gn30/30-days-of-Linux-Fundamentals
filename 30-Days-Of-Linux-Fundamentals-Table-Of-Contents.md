@@ -7,81 +7,81 @@
 #### Day 1 Study Guide
 
 ## Breakfast
-- [Lesson on ls](#lesson-on-ls)
-- [Lesson on cd](#lesson-on-cd)
-- [Lesson on touch](#lesson-on-touch)
-- [Lesson on rm](#lesson-on-rm)
-- [Lesson on pwd](#lesson-on-pwd)
-- [Lesson on mkdir](#lesson-on-mkdir)
-- [Lesson on cp](#lesson-on-cp)
-- [Lesson on mv](#lesson-on-mv)
+- [Lesson on ls]
+- [Lesson on cd]
+- [Lesson on touch]
+- [Lesson on rm]
+- [Lesson on pwd]
+- [Lesson on mkdir]
+- [Lesson on cp]
+- [Lesson on mv]
 
 ## Lunch
-- [Lesson on cat](#lesson-on-cat)
-- [Lesson on cp](#lesson-on-cp)
-- [Lesson on chmod](#lesson-on-chmod)
-- [Lesson on du](#lesson-on-du)
-- [Lesson on diff](#lesson-on-diff)
-- [Lesson on locate](#lesson-on-locate)
-- [Lesson on grep](#lesson-on-grep)
+- [Lesson on cat]
+- [Lesson on cp]
+- [Lesson on chmod]
+- [Lesson on du]
+- [Lesson on diff]
+- [Lesson on locate]
+- [Lesson on grep]
 
 ## Dinner
-- [Creating Symbolic Links](#creating-symbolic-links)
-- [Finding Files by Type](#finding-files-by-type)
-- [Archiving Files](#archiving-files)
-- [Searching for Files](#searching-for-files)
-- [Checking File Integrity](#checking-file-integrity)
-- [Scheduling Tasks](#scheduling-tasks)
+- [Creating Symbolic Links]
+- [Finding Files by Type]
+- [Archiving Files]
+- [Searching for Files]
+- [Checking File Integrity]
+- [Scheduling Tasks]
 
 # Day 02 Study Guide
 
 ## Breakfast
-- [Changing File Ownership](#changing-file-ownership)
-  - [chown](#chown)
-- [Changing File Attributes](#changing-file-attributes)
-  - [chattr](#chattr)
-- [Displaying Running Processes](#displaying-running-processes)
-  - [ps](#ps)
-- [Monitoring System Activity](#monitoring-system-activity)
-  - [top](#top)
-- [Viewing and Controlling Processes](#viewing-and-controlling-processes)
-  - [kill](#kill)
+- [Changing File Ownership]
+  - [chown]
+- [Changing File Attributes]
+  - [chattr]
+- [Displaying Running Processes]
+  - [ps]
+- [Monitoring System Activity]
+  - [top]
+- [Viewing and Controlling Processes]
+  - [kill]
 
 ## Lunch
-- [File Compression and Archiving](#file-compression-and-archiving)
-  - [tar](#tar)
-- [Disk Usage and Management](#disk-usage-and-management)
-  - [df](#df)
-  - [fdisk](#fdisk)
-  - [du](#du)
-- [Network Utilities](#network-utilities)
-  - [netstat](#netstat)
-  - [ping](#ping)
-  - [traceroute](#traceroute)
+- [File Compression and Archiving]
+  - [tar]
+- [Disk Usage and Management]
+  - [df]
+  - [fdisk]
+  - [du]
+- [Network Utilities]
+  - [netstat]
+  - [ping]
+  - [traceroute]
 
 ## Dinner: Comprehensive Review and Advanced Concepts
-- [Basic File and Directory Commands](#basic-file-and-directory-commands)
-  - [ls](#ls)
-  - [cd](#cd)
-  - [touch](#touch)
-  - [rm](#rm)
-  - [pwd](#pwd)
-  - [mkdir](#mkdir)
-  - [cp](#cp)
-  - [mv](#mv)
-  - [cat](#cat)
-  - [chmod](#chmod)
-- [Disk Usage and Management](#disk-usage-and-management-1)
-  - [du](#du-1)
-- [Network Utilities](#network-utilities-1)
-  - [netstat](#netstat-1)
-  - [ping](#ping-1)
-  - [traceroute](#traceroute-1)
-- [Advanced File Operations](#advanced-file-operations)
-  - [find](#find)
-  - [grep](#grep)
-  - [sed](#sed)
-  - [awk](#awk)
+- [Basic File and Directory Commands]
+  - [ls]
+  - [cd]
+  - [touch]
+  - [rm]
+  - [pwd]
+  - [mkdir]
+  - [cp]
+  - [mv]
+  - [cat]
+  - [chmod]
+- [Disk Usage and Management]
+  - [du]
+- [Network Utilities]
+  - [netstat]
+  - [ping]
+  - [traceroute]
+- [Advanced File Operations]
+  - [find]
+  - [grep]
+  - [sed]
+  - [awk]
 
 ## [Day 3] 
 
@@ -89,51 +89,51 @@
 
 ## Table of Contents
 
-- [Creating Files](#creating-files)
+- [Creating Files]
   - `touch`
   - `echo`
   - `cat`
-- [Copying Files and Directories](#copying-files-and-directories)
+- [Copying Files and Directories]
   - `cp`
-- [Moving and Renaming Files](#moving-and-renaming-files)
+- [Moving and Renaming Files]
   - `mv`
-- [Advanced Directory Navigation](#advanced-directory-navigation)
+- [Advanced Directory Navigation]
   - `cd`
-- [Quiz Questions](#quiz-questions)
-- [Summary](#summary)
+- [Quiz Questions]
+- [Summary]
 
 # Day 3 Lunch Study Guide: Advanced File and Directory Management
 
 ## Table of Contents
 
-1. [Create, Copy, Move, and Rename Files](#create-copy-move-and-rename-files)
-   - [Creating Files](#creating-files)
-   - [Copying Files](#copying-files)
-   - [Moving and Renaming Files](#moving-and-renaming-files)
-   - [Additional Commands](#additional-commands)
+1. [Create, Copy, Move, and Rename Files]
+   - [Creating Files]
+   - [Copying Files]
+   - [Moving and Renaming Files]
+   - [Additional Commands]
 
-2. [Directory Navigation and Manipulation](#directory-navigation-and-manipulation)
-   - [Navigating Directories](#navigating-directories)
-   - [Creating and Removing Directories](#creating-and-removing-directories)
-   - [Additional Commands](#additional-commands-1)
+2. [Directory Navigation and Manipulation]
+   - [Navigating Directories]
+   - [Creating and Removing Directories]
+   - [Additional Commands]
 
-3. [File Management Scavenger Hunt](#file-management-scavenger-hunt)
-   - [Finding Files](#finding-files)
-   - [Searching File Content](#searching-file-content)
-   - [Managing Files](#managing-files)
+3. [File Management Scavenger Hunt]
+   - [Finding Files]
+   - [Searching File Content]
+   - [Managing Files]
 
 
 # Day 3 Dinner Study Guide: Comprehensive Review and Advanced Concepts
 
 ## Table of Contents
 
-1. [Creating Files](#creating-files)
-2. [Copying Files](#copying-files)
-3. [Moving and Renaming Files](#moving-and-renaming-files)
-4. [Navigating Directories](#navigating-directories)
-5. [Advanced File Operations](#advanced-file-operations)
-6. [Combining Commands](#combining-commands)
-7. [Summary](#summary)
+1. [Creating Files]
+2. [Copying Files]
+3. [Moving and Renaming Files]
+4. [Navigating Directories]
+5. [Advanced File Operations]
+6. [Combining Commands]
+7. [Summary]
 
 # Day 4 Table of Contents
 
@@ -215,206 +215,233 @@
 
 ## Table of Contents
 
-1. [Breakfast: Networking Basics](#breakfast-networking-basics)
-   - [Viewing Network Configuration (`ifconfig`)](#viewing-network-configuration-ifconfig)
-   - [Pinging a Host (`ping`)](#pinging-a-host-ping)
-   - [Traceroute to a Host (`traceroute`)](#traceroute-to-a-host-traceroute)
-   - [Displaying Network Statistics (`netstat`)](#displaying-network-statistics-netstat)
-   - [Testing Port Connectivity (`nc` or `netcat`)](#testing-port-connectivity-nc-or-netcat)
-   - [Quiz Questions](#quiz-questions)
+1. [Breakfast: Networking Basics]
+   - [Viewing Network Configuration (`ifconfig`)]
+   - [Pinging a Host (`ping`)]
+   - [Traceroute to a Host (`traceroute`)]
+   - [Displaying Network Statistics (`netstat`)]
+   - [Testing Port Connectivity (`nc` or `netcat`)]
+   - [Quiz Questions]
 
-2. [Lunch: Advanced Networking Basics](#lunch-advanced-networking-basics)
-   - [Inspecting Network Interfaces (`ip`)](#inspecting-network-interfaces-ip)
-   - [Diagnosing Network Issues (`mtr`)](#diagnosing-network-issues-mtr)
-   - [Monitoring Network Traffic (`tcpdump`)](#monitoring-network-traffic-tcpdump)
-   - [Checking Port Status (`nmap`)](#checking-port-status-nmap)
-   - [Testing Network Connectivity (`curl`)](#testing-network-connectivity-curl)
-   - [Quiz Questions](#quiz-questions-1)
+2. [Lunch: Advanced Networking Basics]
+   - [Inspecting Network Interfaces (`ip`)]
+   - [Diagnosing Network Issues (`mtr`)]
+   - [Monitoring Network Traffic (`tcpdump`)]
+   - [Checking Port Status (`nmap`)]
+   - [Testing Network Connectivity (`curl`)]
+   - [Quiz Questions]
 
-3. [Dinner: Advanced Networking Review and Further Exploration](#dinner-advanced-networking-review-and-further-exploration)
-   - [Inspecting Network Interfaces (`ip`)](#inspecting-network-interfaces-ip-1)
-   - [Diagnosing Network Issues (`mtr`)](#diagnosing-network-issues-mtr-1)
-   - [Monitoring Network Traffic (`tcpdump`)](#monitoring-network-traffic-tcpdump-1)
-   - [Checking Port Status (`nmap`)](#checking-port-status-nmap-1)
-   - [Testing Network Connectivity (`curl`)](#testing-network-connectivity-curl-1)
-   - [Additional Advanced Commands](#additional-advanced-commands)
-     - [Analyzing Network Performance (`iperf`)](#analyzing-network-performance-iperf)
-     - [Network Interface Configuration (`ifconfig`)](#network-interface-configuration-ifconfig)
-     - [Advanced Network Diagnostics (`netstat`)](#advanced-network-diagnostics-netstat)
-     - [Managing Firewall Rules (`iptables`)](#managing-firewall-rules-iptables)
-   - [Review Questions](#review-questions)
-   - [Conclusion](#conclusion)
+3. [Dinner: Advanced Networking Review and Further Exploration]
+   - [Inspecting Network Interfaces (`ip`)]
+   - [Diagnosing Network Issues (`mtr`)]
+   - [Monitoring Network Traffic (`tcpdump`)]
+   - [Checking Port Status (`nmap`)]
+   - [Testing Network Connectivity (`curl`)]
+   - [Additional Advanced Commands]
+     - [Analyzing Network Performance (`iperf`)]
+     - [Network Interface Configuration (`ifconfig`)]
+     - [Advanced Network Diagnostics (`netstat`)]
+     - [Managing Firewall Rules (`iptables`)]
+   - [Review Questions]
+   - [Conclusion]
 
 # Day 7: Package Management and Archiving
 
 ## Table of Contents
 
-1. [Breakfast: Package Management Basics](#breakfast-package-management-basics)
-   - [Installing Packages](#installing-packages)
+1. [Breakfast: Package Management Basics]
+   - [Installing Packages]
      - Debian-based Systems
      - RHEL-based Systems
      - Using DNF
      - Arch-based Systems
-   - [Removing Packages](#removing-packages)
+   - [Removing Packages]
      - Debian-based Systems
      - RHEL-based Systems
      - Using DNF
      - Arch-based Systems
-   - [Updating Packages](#updating-packages)
+   - [Updating Packages]
      - Debian-based Systems
      - RHEL-based Systems
      - Using DNF
      - Arch-based Systems
-   - [Archiving and Compression](#archiving-and-compression)
+   - [Archiving and Compression]
      - Creating Archives
      - Extracting Archives
      - Compressing Files
-   - [Quiz Questions](#quiz-questions)
+   - [Quiz Questions]
 
-2. [Lunch: Advanced Package Management](#lunch-advanced-package-management)
-   - [Upgrading Packages](#upgrading-packages)
-   - [Managing PPAs](#managing-ppas)
-   - [Using dpkg for Package Management](#using-dpkg-for-package-management)
-   - [Archiving and Compression with zip and gzip](#archiving-and-compression-with-zip-and-gzip)
-   - [Quiz Questions](#quiz-questions-1)
+2. [Lunch: Advanced Package Management]
+   - [Upgrading Packages]
+   - [Managing PPAs]
+   - [Using dpkg for Package Management]
+   - [Archiving and Compression with zip and gzip]
+   - [Quiz Questions]
 
-3. [Dinner: Advanced Package Management and Archiving](#dinner-advanced-package-management-and-archiving)
-   - [Advanced Package Management with `apt-get`](#advanced-package-management-with-apt-get)
-   - [Using apt-cache for Package Information](#using-apt-cache-for-package-information)
-   - [Advanced dpkg Commands](#advanced-dpkg-commands)
-   - [Creating and Managing Archives with tar](#creating-and-managing-archives-with-tar)
-   - [Using rsync for Efficient File Transfer](#using-rsync-for-efficient-file-transfer)
-   - [Quiz Questions](#quiz-questions-2)
+3. [Dinner: Advanced Package Management and Archiving]
+   - [Advanced Package Management with `apt-get`]
+   - [Using apt-cache for Package Information]
+   - [Advanced dpkg Commands]
+   - [Creating and Managing Archives with tar]
+   - [Using rsync for Efficient File Transfer]
+   - [Quiz Questions]
 
 # Week 2
 
-# Day 08 Study Guide: Advanced Shell Scripting and Text Processing
+# Day 08: Advanced Shell Scripting and Text Processing
+
+## Table of Contents
 
 ## Breakfast
-- [Introduction to Shell Scripting](#introduction-to-shell-scripting)
-- [Variables and Control Structures](#variables-and-control-structures)
-- [Loops in Shell Scripts](#loops-in-shell-scripts)
-- [Quiz](#quiz)
+- [Introduction to Shell Scripting]
+- [Variables and Control Structures]
+- [Loops in Shell Scripts]
+- [Quiz]
 
 ## Lunch
-- [Working with Files and Directories](#working-with-files-and-directories)
-- [Text Processing with sed and awk](#text-processing-with-sed-and-awk)
-- [Regular Expressions](#regular-expressions)
-- [Quiz](#quiz-1)
+- [Working with Files and Directories]
+- [Text Processing with sed and awk]
+- [Regular Expressions]
+- [Quiz]
 
 ## Dinner
-- [Advanced File Handling](#advanced-file-handling)
-- [Handling Command Line Arguments](#handling-command-line-arguments)
-- [Advanced Shell Scripting Techniques](#advanced-shell-scripting-techniques)
-- [Quiz](#quiz-2)
+- [Advanced File Handling]
+- [Handling Command Line Arguments]
+- [Advanced Shell Scripting Techniques]
+- [Quiz]
 
 ---
 
-# Day 09 Study Guide: Advanced Text Processing and Automation
+# Day 09: Advanced Text Processing and Automation
+
+## Table of Contents
 
 ## Breakfast
-- [Advanced sed Usage](#advanced-sed-usage)
-- [Advanced awk Programming](#advanced-awk-programming)
-- [Introduction to Automation](#introduction-to-automation)
-- [Quiz](#quiz)
+- [Advanced sed Usage]
+- [Advanced awk Programming]
+- [Introduction to Automation]
+- [Quiz]
 
 ## Lunch
-- [Automating with Cron Jobs](#automating-with-cron-jobs)
-- [Text Processing with grep](#text-processing-with-grep)
-- [Using xargs for Automation](#using-xargs-for-automation)
-- [Quiz](#quiz-1)
+- [Automating with Cron Jobs]
+- [Text Processing with grep]
+- [Using xargs for Automation]
+- [Quiz]
 
 ## Dinner
-- [Combining sed, awk, and grep](#combining-sed-awk-and-grep)
-- [Building Complex Pipelines](#building-complex-pipelines)
-- [Advanced Automation Techniques](#advanced-automation-techniques)
-- [Quiz](#quiz-2)
+- [Combining sed, awk, and grep]
+- [Building Complex Pipelines]
+- [Advanced Automation Techniques]
+- [Quiz]
 
 ---
 
-# Day 10 Study Guide: Introduction to System Administration
+# Day 10: Introduction to System Administration
 
 ## Breakfast
-- [System Administration Basics](#system-administration-basics)
-- [User and Group Management](#user-and-group-management)
-- [File Permissions](#file-permissions)
-- [Quiz](#quiz)
+- [System Administration Basics]
+- [User and Group Management]
+- [File Permissions]
+- [Quiz]
 
 ## Lunch
-- [Managing Services and Daemons](#managing-services-and-daemons)
-- [Understanding System Logs](#understanding-system-logs)
-- [System Security Basics](#system-security-basics)
-- [Quiz](#quiz-1)
+- [Managing Services and Daemons]
+- [Understanding System Logs]
+- [System Security Basics]
+- [Quiz]
 
 ## Dinner
-- [Introduction to System Monitoring](#introduction-to-system-monitoring)
-- [Advanced File Permissions](#advanced-file-permissions)
-- [Automation in System Administration](#automation-in-system-administration)
-- [Quiz](#quiz-2)
+- [Introduction to System Monitoring]
+- [Advanced File Permissions]
+- [Automation in System Administration]
+- [Quiz]
 
 ---
 
-# Day 11 Study Guide: Advanced Network Configuration
+# Day 11: Advanced Network Configuration
 
 ## Breakfast
-- [Introduction to Network Configuration](#introduction-to-network-configuration)
-- [Static vs. Dynamic IPs](#static-vs-dynamic-ips)
-- [Basic DHCP Configuration](#basic-dhcp-configuration)
-- [Quiz](#quiz)
-
+- [Introduction to Network Configuration]
+- [Static vs. Dynamic IPs]
+- [Basic DHCP Configuration]
+- [Quiz]
 ## Lunch
-- [Bonding Interfaces](#bonding-interfaces)
-- [Configuring VLANs](#configuring-vlans)
-- [Advanced IP Configuration](#advanced-ip-configuration)
-- [Quiz](#quiz-1)
+- [Bonding Interfaces]
+- [Configuring VLANs]
+- [Advanced IP Configuration]
+- [Quiz]
 
 ## Dinner
-- [Optimizing Network Performance](#optimizing-network-performance)
-- [Network Troubleshooting Tools](#network-troubleshooting-tools)
-- [Advanced Network Services Management](#advanced-network-services-management)
-- [Quiz](#quiz-2)
+- [Optimizing Network Performance]
+- [Network Troubleshooting Tools]
+- [Advanced Network Services Management]
+- [Quiz]
 
 ---
 
-# Day 12 Study Guide: Linux Kernel Basics
+# Day 12: Linux Kernel Basics
 
 ## Breakfast
-- [Introduction to Linux Kernel](#introduction-to-linux-kernel)
-- [Understanding Kernel Versions](#understanding-kernel-versions)
-- [Basic Kernel Configuration](#basic-kernel-configuration)
-- [Quiz](#quiz)
+- [Introduction to Linux Kernel]
+- [Understanding Kernel Versions]
+- [Basic Kernel Configuration]
+- [Quiz]
 
 ## Lunch
-- [Kernel Modules](#kernel-modules)
-- [Managing Kernel Parameters](#managing-kernel-parameters)
-- [Compiling a Kernel](#compiling-a-kernel)
-- [Quiz](#quiz-1)
+- [Kernel Modules]
+- [Managing Kernel Parameters]
+- [Compiling a Kernel]
+- [Quiz]
 
 ## Dinner
-- [Advanced Kernel Customization](#advanced-kernel-customization)
-- [Monitoring Kernel Performance](#monitoring-kernel-performance)
-- [Kernel Security Best Practices](#kernel-security-best-practices)
-- [Quiz](#quiz-2)
+- [Advanced Kernel Customization]
+- [Monitoring Kernel Performance]
+- [Kernel Security Best Practices]
+- [Quiz]
 
 ---
 
-# Day 13 Study Guide: System Administration Best Practices
+# Day 13: System Administration Best Practices
+
+## Table of Contents
 
 ## Breakfast
-- [System Monitoring and Performance Tuning](#system-monitoring-and-performance-tuning)
-- [Backup and Recovery Strategies](#backup-and-recovery-strategies)
-- [Security Best Practices](#security-best-practices)
+- [System Monitoring and Performance Tuning]
+- [Backup and Recovery Strategies]
+- [Security Best Practices]
 - [Quiz](#quiz)
 
 ## Lunch
-- [Patch Management](#patch-management)
-- [Configuration Management](#configuration-management)
-- [Compliance and Auditing](#compliance-and-auditing)
-- [Quiz](#quiz-1)
+- [Patch Management]
+- [Configuration Management]
+- [Compliance and Auditing]
+- [Quiz]
 
 ## Dinner
-- [Advanced Security Configurations](#advanced-security-configurations)
-- [Automating System Administration Tasks](#automating-system-administration-tasks)
-- [Disaster Recovery Planning](#disaster-recovery-planning)
-- [Quiz](#quiz-2)
+- [Advanced Security Configurations]
+- [Automating System Administration Tasks]
+- [Disaster Recovery Planning]
+- [Quiz]
 
+# Day 14: Week 2 Overview
+
+## Table of Contents
+
+## Breakfast: Week 2 Review
+- Lesson 1: Key concepts of Week 2
+- Lesson 2: Recap of Linux System Administration
+- Lesson 3: Kernel Parameters Overview
+- Lesson 4: Advanced Network Configuration Recap
+- Multiple Choice Questions:
+- (Include questions based on the lessons)
+## Lunch: System Recap
+- Lesson 1: System Monitoring Tools Revisited
+- Lesson 2: Optimizing Network Performance
+- Lesson 3: Best Practices in System Administration
+- Multiple Choice Questions:
+- (Include questions related to optimization and best practices)
+## Dinner: Practical Lab Session
+- Lab Task 1: Configure network services and test performance
+- Lab Task 2: Practice with kernel modules and parameters
+- Multiple Choice Questions:
+- (Based on lab exercises and practical scenarios)
