@@ -1,6 +1,6 @@
 ### **30-Days-Of-Linux-Fundamentals-Table-Of-Contents**
 
-# Week 1
+**# Week 1**
 
 ## Day 1 Study Guide
 
@@ -286,7 +286,7 @@
    - [Using rsync for Efficient File Transfer]
    - [Quiz Questions]
 
-# Week 2
+**# Week 2**
 
 # Day 08: Advanced Shell Scripting and Text Processing
 
@@ -445,3 +445,27 @@
 - Lab Task 2: Practice with kernel modules and parameters
 - Multiple Choice Questions:
 - (Based on lab exercises and practical scenarios)
+
+**# Week 3**
+
+# Day 15: Security Essentials
+
+## Table of Contents:
+
+## Breakfast: Introduction to Linux Security
+
+Lesson 1: Importance of Security in Linux
+Lesson 2: User and Group Management for Security
+Lesson 3: File Permissions and Ownership
+
+## Lunch: Securing Network Configurations
+
+Lesson 1: Firewall Basics (iptables/nftables)
+Lesson 2: SSH Hardening
+Lesson 3: Introduction to SELinux/AppArmor
+
+## Dinner: Practical Security Tools
+
+Lab Task 1: Configuring a Basic Firewall
+Lab Task 2: Implementing User Permissions
+Lab Task 3: Using SELinux/AppArmor for Application Security
