@@ -1,10 +1,10 @@
-### **30-Days-Of-Linux-Fundamentals**
-
-## Table Of Contents
+### **30-Days-Of-Linux-Fundamentals-Table-Of-Contents**
 
 # Week 1
 
-#### Day 1 Study Guide
+## Day 1 Study Guide
+
+## Table Of Contents
 
 ## Breakfast
 - [Lesson on ls]
