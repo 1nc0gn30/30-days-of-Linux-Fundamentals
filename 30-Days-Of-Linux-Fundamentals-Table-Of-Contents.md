@@ -73,8 +73,6 @@
 - Quiz Questions
 - Summary
 
----
-
 ### Lunch Study Guide
 
 #### Table of Contents
@@ -93,8 +91,6 @@
    - Finding Files
    - Searching File Content
    - Managing Files
-
----
 
 ### Dinner Study Guide: Comprehensive Review and Advanced Concepts
 
@@ -124,8 +120,6 @@
 4. **Editing Files with sed**
    - `sed`
 
----
-
 ### Lunch
 1. **Advanced Editing with vim**
    - Insert Mode
@@ -145,8 +139,6 @@
    - `chmod`
    - `ls -l`
 
----
-
 ### Dinner
 1. **File Compression and Archiving**
    - `tar`, `gzip`, `bzip2`
@@ -165,8 +157,6 @@
 4. **System Resource Monitoring** (`vmstat`, `iostat`, `free`)
 5. **Viewing System Logs** (`dmesg`, `journalctl`)
 
----
-
 ### Lunch
 1. **Advanced Process Management** (`htop`, `pstree`)
 2. **Detailed Resource Monitoring** (`sar`, `atop`)
@@ -174,15 +164,11 @@
 4. **Analyzing Logs** (`logwatch`, `syslog`)
 5. **System Performance** (`perf`, `dstat`)
 
----
-
 ### Dinner: Advanced Topics and Challenges
 1. Review of Breakfast and Lunch Topics
 2. Advanced Process Control
 3. In-Depth System Monitoring Techniques
 4. Hands-On Advanced Challenges
-
----
 
 ## Day 6: Networking Basics
 
@@ -194,8 +180,6 @@
 - Testing Port Connectivity (`nc` or `netcat`)
 - Quiz Questions
 
----
-
 ### Lunch
 - Inspecting Network Interfaces (`ip`)
 - Diagnosing Network Issues (`mtr`)
@@ -203,8 +187,6 @@
 - Checking Port Status (`nmap`)
 - Testing Network Connectivity (`curl`)
 - Quiz Questions
-
----
 
 ### Dinner: Advanced Networking Review and Further Exploration
 - Inspecting Network Interfaces (`ip`)
@@ -246,16 +228,12 @@
   - Compressing Files
 - Quiz Questions
 
----
-
 ### Lunch: Advanced Package Management
 - Upgrading Packages
 - Managing PPAs
 - Using `dpkg` for Package Management
 - Archiving and Compression with `zip` and `gzip`
 - Quiz Questions
-
----
 
 ### Dinner: Advanced Package Management and Archiving
 - Advanced Package Management with `apt-get`
