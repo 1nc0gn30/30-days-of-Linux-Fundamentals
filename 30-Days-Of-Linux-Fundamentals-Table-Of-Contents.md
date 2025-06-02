@@ -1,6 +1,6 @@
 # 30 Days of Linux Fundamentals Table of Contents
 
-## Week 1
+**Week 1**
 
 ### Day 1 Study Guide
 
@@ -245,7 +245,7 @@
 
 ---
 
-**# Week 2**
+**Week 2**
 
 # Day 08: Advanced Shell Scripting and Text Processing
 
@@ -494,8 +494,6 @@
 3. **Lab Task 3: Testing Restoration**: Practice restoring backups from both `tar` and snapshot methods to verify disaster readiness.
 
 ---
-
-**Week 4: System Optimization and Automation**
 
 # Day 19: Performance Monitoring and Tuning
 
