@@ -1,0 +1,142 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <ctype.h>
+
+#define RESET_COLOR "\033[0m"
+#define RED_COLOR "\033[31m"
+#define GREEN_COLOR "\033[32m"
+#define BLUE_COLOR "\033[34m"
+#define YELLOW_COLOR "\033[33m"
+#define CYAN_COLOR "\033[36m"
+#define BOLD_COLOR "\033[1m"
+
+#define MAX_ANSWER_LENGTH 100
+#define MAX_RESOURCES 5
+
+typedef struct {
+    const char *topic;
+    const char *description;
+    const char *command_example;
+    const char *detailed_explanation;
+    const char *resources[MAX_RESOURCES];
+} Lesson;
+
+typedef struct {
+    const char *question;
+    const char *choices[4];
+    const char *correct_answer;
+} Question;
+
+void display_lesson(const Lesson *lesson) {
+    printf(BOLD_COLOR BLUE_COLOR "Lesson: %s\n" RESET_COLOR, lesson->topic);
+    printf(CYAN_COLOR "%s\n" RESET_COLOR, lesson->description);
+    printf(YELLOW_COLOR "Example:\n" RESET_COLOR GREEN_COLOR " %s\n" RESET_COLOR, lesson->command_example);
+    printf(YELLOW_COLOR "Explanation:\n" RESET_COLOR "%s\n", lesson->detailed_explanation);
+    printf(YELLOW_COLOR "Resources:\n" RESET_COLOR);
+    for (int i = 0; i < MAX_RESOURCES && lesson->resources[i] != NULL; i++) {
+        printf("- %s\n", lesson->resources[i]);
+    }
+    printf(YELLOW_COLOR "\nPress Enter to continue...\n" RESET_COLOR);
+    getchar();
+    printf("\n");
+}
+
+void display_question(const Question *question) {
+    char user_answer[MAX_ANSWER_LENGTH];
+
+    printf(BOLD_COLOR GREEN_COLOR "Quiz: %s\n" RESET_COLOR, question->question);
+    for (int i = 0; i < 4; i++) {
+        printf("%c. %s\n", 'A' + i, question->choices[i]);
+    }
+
+    printf("Your answer (A, a, A., a., etc): ");
+    fgets(user_answer, sizeof(user_answer), stdin);
+    user_answer[strcspn(user_answer, "\n")] = '\0';
+
+    if (strlen(user_answer) >= 1) {
+        char c = toupper(user_answer[0]);
+        if (c >= 'A' && c <= 'D') {
+            int idx = c - 'A';
+            if (strcmp(question->choices[idx], question->correct_answer) == 0) {
+                printf(GREEN_COLOR "✅ Correct! \"%s\" is the right answer.\n" RESET_COLOR, question->correct_answer);
+            } else {
+                printf(RED_COLOR "❌ Incorrect.\n" RESET_COLOR);
+                printf(YELLOW_COLOR "Explanation:\n" RESET_COLOR);
+                printf("- Correct Answer: %s\n", question->correct_answer);
+            }
+        } else {
+            printf(RED_COLOR "Invalid choice. Please enter A, B, C, or D.\n" RESET_COLOR);
+        }
+    } else {
+        printf(RED_COLOR "No input received.\n" RESET_COLOR);
+    }
+
+    printf("\n");
+}
+
+int main() {
+    printf("\033[H\033[J");
+    printf(BOLD_COLOR CYAN_COLOR "Day 21 - Lunch: Performance Optimization\n" RESET_COLOR);
+    getchar();
+
+    Lesson lessons[] = {
+        {
+            "Optimizing System Resources",
+            "Strategies for reducing resource consumption (CPU, memory, disk).",
+            "nice -n 10 ./heavy_script.sh",
+            "Tools like 'nice' and 'ionice' let you assign process priority. Reducing unneeded tasks and optimizing configurations reduces load.",
+            {"https://www.redhat.com/sysadmin/optimize-linux-performance", NULL, NULL, NULL, NULL}
+        },
+        {
+            "Managing Services with systemd",
+            "Disabling or limiting unnecessary services for better performance.",
+            "sudo systemctl disable bluetooth",
+            "Using 'systemctl' you can stop and disable services that aren’t critical. This frees up memory and CPU cycles.",
+            {"https://wiki.archlinux.org/title/Systemd", NULL, NULL, NULL, NULL}
+        },
+        {
+            "Swapping and Cache Management",
+            "Understanding and tuning swap usage and cache behavior.",
+            "sudo swapon --show && free -h",
+            "Linux uses swap when RAM is full. Too much swap slows performance. Tune swappiness with sysctl and monitor via /proc/meminfo.",
+            {"https://linuxhint.com/linux_swap_memory_management/", NULL, NULL, NULL, NULL}
+        }
+    };
+
+    for (int i = 0; i < sizeof(lessons)/sizeof(Lesson); i++) {
+        display_lesson(&lessons[i]);
+    }
+
+    Question questions[] = {
+        {
+            "What tool adjusts the CPU priority of a process?",
+            {"cron", "top", "nice", "kill"},
+            "nice"
+        },
+        {
+            "Which command disables a service in systemd?",
+            {"service stop", "systemctl disable", "killall", "sysctl off"},
+            "systemctl disable"
+        },
+        {
+            "What does swappiness control?",
+            {"File system cache size", "Disk I/O priority", "RAM to swap ratio", "User process scheduling"},
+            "RAM to swap ratio"
+        },
+        {
+            "Where can you monitor real-time memory and swap info?",
+            {"/etc/fstab", "/proc/meminfo", "/sys/devices", "/var/log/syslog"},
+            "/proc/meminfo"
+        }
+    };
+
+    printf(BOLD_COLOR GREEN_COLOR "Time to reinforce performance optimization concepts:\n" RESET_COLOR);
+    for (int i = 0; i < sizeof(questions)/sizeof(Question); i++) {
+        display_question(&questions[i]);
+    }
+
+    printf(BOLD_COLOR CYAN_COLOR "\nLunch complete. Your system should be smoother already.\n" RESET_COLOR);
+    return 0;
+}
