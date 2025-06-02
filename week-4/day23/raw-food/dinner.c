@@ -1,62 +1,71 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <ctype.h>
 
-void monitor_disk_space() {
-    printf("\n🧠 Task 1: Disk Usage Alert Simulation\n");
-    printf("-------------------------------------\n");
-    printf("THRESHOLD=85\n");
-    printf("USAGE=$(df / | awk 'NR==2 {print $5}' | sed 's/%%//')\n");
-    printf("if [ $USAGE -gt $THRESHOLD ]; then\n  echo \"Disk space at $USAGE%%!\" | mail -s \"Disk Alert\" admin@localhost\nfi\n");
-}
+#define RESET_COLOR "\033[0m"
+#define RED_COLOR "\033[31m"
+#define GREEN_COLOR "\033[32m"
+#define BLUE_COLOR "\033[34m"
+#define YELLOW_COLOR "\033[33m"
+#define CYAN_COLOR "\033[36m"
+#define BOLD_COLOR "\033[1m"
 
-void automate_backup() {
-    printf("\n🧠 Task 2: Backup Automation Example\n");
-    printf("-------------------------------------\n");
-    printf("DATE=$(date +%%F)\nBACKUP_FILE=\"/backups/etc-$DATE.tar.gz\"\ntar -czf \"$BACKUP_FILE\" /etc\nfind /backups -name \"etc-*.tar.gz\" -mtime +7 -delete\n");
-    printf("Creates a backup and deletes old backups.\n");
-}
+#define MAX_RESOURCES 5
 
-void debug_script_example() {
-    printf("\n🧠 Task 3: Debugging a Script\n");
-    printf("-------------------------------------\n");
-    printf("Use these debugging techniques:\n");
-    printf("- bash -x script.sh\n- set -e to exit on error\n- set -u to error on unset vars\n- Check for quotes, if conditions, unexpected behavior\n");
-}
+typedef struct {
+    const char *title;
+    const char *description;
+    const char *command;
+    const char *explanation;
+    const char *resources[MAX_RESOURCES];
+} Challenge;
 
-void show_dinner_menu() {
-    printf("\n==========================================\n");
-    printf(" Day 23: Dinner - Script Lab Challenges\n");
-    printf("==========================================\n");
-    printf("1. Disk Monitor + Email Alert\n");
-    printf("2. Automated Backup Script\n");
-    printf("3. Script Debugging Practice\n");
-    printf("4. Exit\n");
-    printf("Choose an option: ");
+void display_challenge(const Challenge *c) {
+    printf(BOLD_COLOR CYAN_COLOR "\nChallenge: %s\n" RESET_COLOR, c->title);
+    printf(YELLOW_COLOR "%s\n" RESET_COLOR, c->description);
+    printf(GREEN_COLOR "\nCommand Example:\n%s\n" RESET_COLOR, c->command);
+    printf(BLUE_COLOR "\nExplanation:\n%s\n" RESET_COLOR, c->explanation);
+    printf(YELLOW_COLOR "\nHelpful Resources:\n" RESET_COLOR);
+    for (int i = 0; i < MAX_RESOURCES && c->resources[i] != NULL; i++) {
+        printf("- %s\n", c->resources[i]);
+    }
+    printf("\nPress Enter to continue...\n");
+    getchar(); getchar();
 }
 
 int main() {
-    int choice;
-    while (1) {
-        show_dinner_menu();
-        scanf("%d", &choice);
-
-        switch (choice) {
-            case 1:
-                monitor_disk_space();
-                break;
-            case 2:
-                automate_backup();
-                break;
-            case 3:
-                debug_script_example();
-                break;
-            case 4:
-                printf("Good work! You're mastering Linux scripting.\n");
-                return 0;
-            default:
-                printf("Invalid option. Try again.\n");
+    Challenge challenges[] = {
+        {
+            "Disk Monitor + Email Alert",
+            "Simulate a disk usage check and send an alert if usage exceeds threshold.",
+            "THRESHOLD=85\nUSAGE=$(df / | awk 'NR==2 {print $5}' | sed 's/%//')\nif [ $USAGE -gt $THRESHOLD ]; then\n  echo \"Disk space at $USAGE%!\" | mail -s \"Disk Alert\" admin@localhost\nfi",
+            "This script helps you automate monitoring of disk space and alerts the system administrator if a critical threshold is exceeded.",
+            {"https://linuxize.com/post/how-to-check-disk-usage-in-linux/", NULL}
+        },
+        {
+            "Automated Backup Script",
+            "Create scheduled backups and remove backups older than 7 days.",
+            "DATE=$(date +%F)\nBACKUP_FILE=\"/backups/etc-$DATE.tar.gz\"\ntar -czf \"$BACKUP_FILE\" /etc\nfind /backups -name \"etc-*.tar.gz\" -mtime +7 -delete",
+            "The script backs up /etc into a timestamped tarball and cleans up backups older than 7 days.",
+            {"https://www.tecmint.com/backup-linux-files-using-tar/", NULL}
+        },
+        {
+            "Script Debugging Techniques",
+            "Learn how to identify and fix common Bash script issues.",
+            "bash -x script.sh\nset -e\nset -u",
+            "Use 'bash -x' to trace command execution, 'set -e' to stop on errors, and 'set -u' to catch unset variables.",
+            {"https://linuxize.com/post/how-to-debug-bash-scripts/", NULL}
         }
+    };
+
+    printf(BOLD_COLOR GREEN_COLOR "Day 23 - Dinner: Script Lab Challenges\n" RESET_COLOR);
+
+    for (int i = 0; i < sizeof(challenges)/sizeof(Challenge); i++) {
+        display_challenge(&challenges[i]);
     }
+
+    printf(BOLD_COLOR CYAN_COLOR "All challenges complete. Take a break or script more magic!\n" RESET_COLOR);
     return 0;
 }
