@@ -2,7 +2,7 @@
 
 **Week 1**
 
-### Day 1 Study Guide
+# Day 1 Study Guide
 
 #### Table of Contents
 
@@ -35,7 +35,7 @@
 
 ---
 
-### Day 2 Study Guide
+# Day 2 Study Guide
 
 #### Breakfast
 - Changing File Ownership (`chown`)
@@ -61,7 +61,7 @@
 
 ---
 
-## Day 3: Advanced File and Directory Management
+# Day 3: Advanced File and Directory Management
 
 ### Breakfast Study Guide
 
@@ -105,7 +105,7 @@
 
 ---
 
-## Day 4: File Viewing and Editing
+# Day 4: File Viewing and Editing
 
 ### Breakfast
 1. **Viewing File Contents**
@@ -148,7 +148,7 @@
 
 ---
 
-## Day 5: Processes and System Monitoring
+# Day 5: Processes and System Monitoring
 
 ### Breakfast
 1. **Viewing Processes** (`ps`)
@@ -170,7 +170,7 @@
 3. In-Depth System Monitoring Techniques
 4. Hands-On Advanced Challenges
 
-## Day 6: Networking Basics
+# Day 6: Networking Basics
 
 ### Breakfast
 - Viewing Network Configuration (`ifconfig`)
@@ -204,7 +204,7 @@
 
 ---
 
-## Day 7: Package Management and Archiving
+# Day 7: Package Management and Archiving
 
 ### Breakfast: Package Management Basics
 - Installing Packages
