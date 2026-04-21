@@ -1,0 +1,275 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { COURSE_WEEKS, TOTAL_DAYS } from '../lib/course';
+
+const totalWeeks = COURSE_WEEKS.length;
+const totalStudyBlocks = TOTAL_DAYS * 3;
+---
+
+<MainLayout
+  title="30 Days of Linux Fundamentals | Hands-On Linux Roadmap"
+  description="Train Linux with a complete 30-day roadmap, daily command practice, progress tracking, and guided study sessions."
+  activeNav="home"
+>
+  <section class="section surface hero">
+    <div>
+      <p class="eyebrow">Linux Training Program</p>
+      <h1>Master Linux in 30 focused days.</h1>
+      <p class="muted lead">
+        A full beginner-to-advanced path with daily command drills, practical missions, and guided study blocks designed to build confidence fast.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="/day/1">Start Day 1</a>
+        <a class="btn" href="/curriculum">Explore Curriculum</a>
+        <a class="btn btn-resume" href="/curriculum" data-resume-link>Resume Progress</a>
+      </div>
+      <p class="resume-note muted" data-resume-note>Progress-aware resume is ready after your first day session.</p>
+    </div>
+    <aside class="hero-stats" aria-label="Program overview">
+      <div class="stat-box">
+        <span>Duration</span>
+        <strong>{TOTAL_DAYS} Days</strong>
+      </div>
+      <div class="stat-box">
+        <span>Structure</span>
+        <strong>{totalWeeks} Weeks</strong>
+      </div>
+      <div class="stat-box">
+        <span>Daily Sessions</span>
+        <strong>3 Meals</strong>
+      </div>
+      <div class="stat-box">
+        <span>Total Study Blocks</span>
+        <strong>{totalStudyBlocks}</strong>
+      </div>
+    </aside>
+  </section>
+
+  <section class="section flow">
+    <h2>How each day works</h2>
+    <div class="flow-grid">
+      <article class="surface flow-card">
+        <h3>1. Warm-up Session</h3>
+        <p class="muted">Open your day terminal, select a meal tab, and start command drills with hints and XP scoring.</p>
+      </article>
+      <article class="surface flow-card">
+        <h3>2. Command Repetition</h3>
+        <p class="muted">Repeat commands until mastery climbs, then use command intel to understand output and use-cases.</p>
+      </article>
+      <article class="surface flow-card">
+        <h3>3. Knowledge Lock-In</h3>
+        <p class="muted">Read the source guide, complete mini missions, and capture applied takeaways in your own terminal.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section week-breakdown">
+    <h2>Week-by-week roadmap</h2>
+    <div class="week-grid">
+      {COURSE_WEEKS.map((week) => (
+        <article class="surface week-card">
+          <p class="eyebrow">Week {week.id}</p>
+          <h3>{week.title}</h3>
+          <p class="muted">{week.summary}</p>
+          <p class="range">Days {week.startDay}-{week.endDay}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section surface cta-panel">
+    <h2>Ready to operate Linux daily?</h2>
+    <p class="muted">The curriculum view gives you day-by-day access, progress visibility, and fast jump links.</p>
+    <a class="btn btn-primary" href="/curriculum">Open Curriculum Control Center</a>
+  </section>
+</MainLayout>
+
+<script>
+  const PROGRESS_KEY = 'linux30-course-progress-v1';
+
+  function initHomeResume() {
+    const resumeLink = document.querySelector('[data-resume-link]');
+    const resumeNote = document.querySelector('[data-resume-note]');
+    if (!(resumeLink instanceof HTMLAnchorElement)) return;
+
+    let progress = null;
+    try {
+      progress = JSON.parse(localStorage.getItem(PROGRESS_KEY) || 'null');
+    } catch (_error) {
+      progress = null;
+    }
+
+    const completed = Array.isArray(progress?.completedDays) ? progress.completedDays : [];
+    const lastVisitedDay = Number(progress?.lastVisitedDay || 0);
+    const nextTarget = Math.max(1, Math.min(30, completed.length > 0 ? Math.max(...completed) + 1 : lastVisitedDay || 1));
+
+    resumeLink.href = `/day/${nextTarget}`;
+
+    if (resumeNote instanceof HTMLElement) {
+      if (completed.length === 0 && lastVisitedDay <= 1) {
+        resumeNote.textContent = 'No saved progress detected yet. Start with Day 1.';
+      } else {
+        resumeNote.textContent = `Resume target: Day ${nextTarget}. Completed days tracked: ${completed.length}.`;
+      }
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', initHomeResume);
+  document.addEventListener('astro:page-load', initHomeResume);
+</script>
+
+<style>
+  .hero {
+    padding: clamp(1rem, 3vw, 1.7rem);
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 0.95rem;
+  }
+
+  h1 {
+    margin: 0.35rem 0 0.6rem;
+    font-size: clamp(1.8rem, 5.3vw, 3rem);
+    line-height: 1.15;
+  }
+
+  h2 {
+    margin: 0 0 0.8rem;
+    font-size: clamp(1.3rem, 3.8vw, 1.85rem);
+  }
+
+  .lead {
+    max-width: 64ch;
+    margin-top: 0;
+  }
+
+  .hero-actions {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.55rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 0.7rem;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.84rem;
+    background: rgba(9, 15, 28, 0.7);
+    transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .btn:hover,
+  .btn:focus-visible {
+    transform: translateY(-1px);
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .btn-primary {
+    border-color: transparent;
+    color: #03131a;
+    background: linear-gradient(120deg, var(--accent), var(--accent-strong));
+    font-weight: 700;
+  }
+
+  .btn-primary:hover,
+  .btn-primary:focus-visible {
+    color: #03131a;
+    border-color: transparent;
+    filter: brightness(1.06);
+  }
+
+  .resume-note {
+    margin: 0.65rem 0 0;
+    font-size: 0.78rem;
+  }
+
+  .hero-stats {
+    border: 1px solid var(--border);
+    border-radius: 0.9rem;
+    background: rgba(8, 14, 25, 0.78);
+    padding: 0.8rem;
+    display: grid;
+    gap: 0.55rem;
+    align-content: start;
+  }
+
+  .stat-box {
+    border: 1px solid var(--border);
+    border-radius: 0.6rem;
+    background: rgba(5, 11, 21, 0.8);
+    padding: 0.52rem 0.6rem;
+  }
+
+  .stat-box span {
+    color: var(--text-muted);
+    font-size: 0.74rem;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .stat-box strong {
+    font-size: 1rem;
+  }
+
+  .flow-grid,
+  .week-grid {
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .flow-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .week-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .flow-card,
+  .week-card,
+  .cta-panel {
+    padding: 0.9rem;
+  }
+
+  .flow-card h3,
+  .week-card h3 {
+    margin: 0.2rem 0 0.35rem;
+    font-size: 1rem;
+  }
+
+  .range {
+    color: var(--accent);
+    margin: 0.7rem 0 0;
+    font-size: 0.82rem;
+  }
+
+  .cta-panel {
+    text-align: center;
+    display: grid;
+    gap: 0.65rem;
+    place-items: center;
+  }
+
+  .cta-panel h2,
+  .cta-panel p {
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      grid-template-columns: 1fr;
+    }
+
+    .flow-grid,
+    .week-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

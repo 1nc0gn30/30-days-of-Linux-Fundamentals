@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="30 Days of Linux Fundamentals open graph image">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1d4ed8"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.2" cy="0.2" r="0.9">
+      <stop offset="0%" stop-color="#93c5fd" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#93c5fd" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#050913"/>
+  <rect width="1200" height="630" fill="url(#bg)" opacity="0.26"/>
+  <circle cx="260" cy="180" r="260" fill="url(#glow)"/>
+  <rect x="58" y="58" width="1084" height="514" rx="34" fill="#070d1b" opacity="0.68" stroke="#9cb4e4" stroke-opacity="0.22"/>
+  <text x="120" y="255" fill="#e9f0ff" font-size="74" font-family="Inter, Segoe UI, Arial, sans-serif" font-weight="800">30 Days of Linux Fundamentals</text>
+  <text x="120" y="328" fill="#b9c9e8" font-size="34" font-family="Inter, Segoe UI, Arial, sans-serif">Structured CLI skill-building curriculum</text>
+  <text x="120" y="520" fill="#8ca0c8" font-size="24" font-family="Inter, Segoe UI, Arial, sans-serif">by Neal Frazier</text>
+  <rect x="730" y="120" width="360" height="390" rx="22" fill="#0a0f1e" opacity="0.86"/><text x="760" y="190" fill="#9ee8ff" font-size="26" font-family="JetBrains Mono, monospace">$ sudo learn --daily</text><text x="760" y="238" fill="#8fd19e" font-size="22" font-family="JetBrains Mono, monospace">[#####.....] day 12/30</text><text x="760" y="286" fill="#d4def6" font-size="22" font-family="JetBrains Mono, monospace">skills: shell, perms, grep</text>
+</svg>

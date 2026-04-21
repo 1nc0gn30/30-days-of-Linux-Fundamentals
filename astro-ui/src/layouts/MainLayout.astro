@@ -1,0 +1,431 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  activeNav?: 'home' | 'curriculum' | null;
+}
+
+const {
+  title,
+  description = 'A practical 30-day Linux learning track with daily lessons and hands-on challenges.',
+  activeNav = null,
+} = Astro.props;
+
+import { ClientRouter } from 'astro:transitions';
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
+const navItems = [
+  { href: '/', label: 'Home', id: 'home' },
+  { href: '/curriculum', label: 'Curriculum', id: 'curriculum' },
+] as const;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Neal Frazier" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="30 Days of Linux Fundamentals" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={`${Astro.site}og-image.png?v=20260421`} />
+    <meta property="og:image:alt" content="30 Days of Linux Fundamentals preview image" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${Astro.site}og-image.png?v=20260421`} />
+    <style>
+      :root {
+        --bg: #070b14;
+        --bg-soft: #10192b;
+        --card-bg: #131f34;
+        --card-glass: rgba(16, 25, 43, 0.74);
+        --accent: #57d5ff;
+        --accent-strong: #22c0ff;
+        --accent-warm: #f4c768;
+        --text: #e9f2ff;
+        --text-muted: #9aaec9;
+        --border: #2b3b58;
+        --shadow: 0 20px 55px rgb(0 0 0 / 0.3);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background:
+          radial-gradient(circle at 8% 0%, #1b375f 0%, transparent 30%),
+          radial-gradient(circle at 94% 18%, #12334b 0%, transparent 36%),
+          linear-gradient(160deg, #070b14 0%, #0c1425 65%, #0f1a30 100%);
+        color: var(--text);
+        font-family: 'JetBrains Mono', 'Fira Code', 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      .skip-link {
+        position: absolute;
+        left: -9999px;
+        top: 0;
+        background: #040915;
+        color: var(--text);
+        border: 1px solid var(--accent);
+        border-radius: 0.5rem;
+        padding: 0.4rem 0.65rem;
+        z-index: 200;
+      }
+
+      .skip-link:focus {
+        left: 0.5rem;
+        top: 0.5rem;
+      }
+
+      .app-shell {
+        max-width: 1080px;
+        margin: 0 auto;
+        min-height: 100vh;
+        border-inline: 1px solid rgba(255, 255, 255, 0.04);
+        background: linear-gradient(180deg, rgba(7, 11, 20, 0.82), rgba(7, 11, 20, 0.62));
+      }
+
+      .site-nav {
+        background: linear-gradient(180deg, rgba(12, 20, 37, 0.95) 0%, rgba(12, 20, 37, 0.85) 100%);
+        padding: 0.95rem clamp(0.9rem, 3vw, 2.2rem);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(10px);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 0.45rem;
+        align-items: center;
+      }
+
+      .nav-logo {
+        font-weight: 700;
+        font-size: clamp(1rem, 2vw, 1.15rem);
+        color: var(--accent);
+        text-decoration: none;
+        letter-spacing: 0.01em;
+      }
+
+      .nav-menu-btn {
+        display: none;
+        appearance: none;
+        background: rgba(11, 17, 30, 0.85);
+        color: var(--text);
+        border: 1px solid var(--border);
+        padding: 0.4rem 0.55rem;
+        border-radius: 0.55rem;
+        font: inherit;
+        cursor: pointer;
+      }
+
+      .nav-link {
+        color: var(--text);
+        text-decoration: none;
+        font-size: 0.87rem;
+        opacity: 0.9;
+        padding: 0.4rem 0.7rem;
+        border-radius: 0.5rem;
+        border: 1px solid transparent;
+        transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+      }
+
+      .nav-link:hover,
+      .nav-link:focus-visible,
+      .nav-link.active {
+        color: var(--accent);
+        background: rgba(87, 213, 255, 0.08);
+        border-color: rgba(87, 213, 255, 0.35);
+        opacity: 1;
+      }
+
+      main {
+        max-width: 980px;
+        margin: 1.2rem auto;
+        padding: 0 1rem 2.5rem;
+        animation: page-in 280ms ease-out;
+      }
+
+      .section {
+        margin-bottom: 1rem;
+      }
+
+      .footer {
+        border-top: 1px solid var(--border);
+        text-align: center;
+        padding: 1.4rem 1rem 2rem;
+        color: var(--text-muted);
+        font-size: 0.82rem;
+      }
+
+      .footer a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      .footer a:hover,
+      .footer a:focus-visible {
+        text-decoration: underline;
+      }
+
+      .surface {
+        background: linear-gradient(180deg, var(--card-glass) 0%, rgba(15, 24, 40, 0.75) 100%);
+        border: 1px solid var(--border);
+        border-radius: 1rem;
+        box-shadow: var(--shadow);
+      }
+
+      .mobile-drawer-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(3, 6, 12, 0.68);
+        backdrop-filter: blur(4px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+        z-index: 120;
+      }
+
+      .mobile-drawer {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100dvh;
+        width: min(82vw, 320px);
+        background: linear-gradient(180deg, rgba(9, 16, 31, 0.98), rgba(7, 13, 25, 0.98));
+        border-left: 1px solid var(--border);
+        padding: 1rem;
+        transform: translateX(104%);
+        transition: transform 0.24s ease;
+        z-index: 130;
+        display: grid;
+        grid-template-rows: auto 1fr;
+        gap: 1rem;
+      }
+
+      .mobile-drawer.open {
+        transform: translateX(0);
+      }
+
+      .mobile-drawer-backdrop.open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .mobile-drawer-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .mobile-drawer-title {
+        margin: 0;
+        font-size: 1rem;
+      }
+
+      .mobile-drawer-links {
+        display: grid;
+        gap: 0.55rem;
+        align-content: start;
+      }
+
+      .mobile-link {
+        text-decoration: none;
+        color: var(--text);
+        border: 1px solid var(--border);
+        border-radius: 0.7rem;
+        padding: 0.62rem 0.7rem;
+        background: rgba(6, 11, 21, 0.75);
+      }
+
+      .mobile-link:hover,
+      .mobile-link:focus-visible,
+      .mobile-link.active {
+        color: var(--accent);
+        border-color: var(--accent);
+      }
+
+      .eyebrow {
+        margin: 0;
+        color: var(--accent);
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .muted {
+        color: var(--text-muted);
+      }
+
+      @keyframes page-in {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 700px) {
+        .app-shell {
+          border-inline: none;
+        }
+
+        main {
+          margin: 0.9rem auto;
+          padding: 0 0.75rem 4.1rem;
+        }
+
+        .site-nav {
+          padding: 0.85rem 0.8rem;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .nav-menu-btn {
+          display: inline-flex;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <ClientRouter />
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <div class="app-shell">
+      <header>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="/" class="nav-logo">30 Days of Linux</a>
+          <div class="nav-links">
+            {navItems.map((item) => (
+              <a href={item.href} class:list={["nav-link", activeNav === item.id && "active"]}>{item.label}</a>
+            ))}
+          </div>
+          <button class="nav-menu-btn" type="button" data-open-menu aria-label="Open menu">Menu</button>
+        </nav>
+      </header>
+      <main id="main-content">
+        <slot />
+      </main>
+      <footer class="footer">
+        <p>
+          Built for hands-on Linux practice. Continue with the <a href="/curriculum">full curriculum</a>.
+        </p>
+        <p>&copy; 2026 30 Days of Linux Fundamentals</p>
+      </footer>
+    </div>
+    <div class="mobile-drawer-backdrop" data-menu-backdrop></div>
+    <aside class="mobile-drawer" data-mobile-drawer aria-hidden="true" aria-label="Mobile navigation menu">
+      <div class="mobile-drawer-head">
+        <h2 class="mobile-drawer-title">Menu</h2>
+        <button class="nav-menu-btn" type="button" data-close-menu aria-label="Close menu">Close</button>
+      </div>
+      <div class="mobile-drawer-links">
+        {navItems.map((item) => (
+          <a href={item.href} class:list={["mobile-link", activeNav === item.id && "active"]}>{item.label}</a>
+        ))}
+      </div>
+    </aside>
+
+    <script>
+      function initializeNavDrawer() {
+        const openBtn = document.querySelector('[data-open-menu]');
+        const closeBtn = document.querySelector('[data-close-menu]');
+        const drawer = document.querySelector('[data-mobile-drawer]');
+        const backdrop = document.querySelector('[data-menu-backdrop]');
+        if (!openBtn || !closeBtn || !drawer || !backdrop) return;
+        if (openBtn.dataset.bound === 'true') return;
+        openBtn.dataset.bound = 'true';
+
+        const close = () => {
+          drawer.classList.remove('open');
+          backdrop.classList.remove('open');
+          drawer.setAttribute('aria-hidden', 'true');
+        };
+        const open = () => {
+          drawer.classList.add('open');
+          backdrop.classList.add('open');
+          drawer.setAttribute('aria-hidden', 'false');
+        };
+
+        openBtn.addEventListener('click', open);
+        closeBtn.addEventListener('click', close);
+        backdrop.addEventListener('click', close);
+        drawer.querySelectorAll('a').forEach((a) => a.addEventListener('click', close));
+      }
+
+      function initializeCopyButtons() {
+        document.querySelectorAll('pre').forEach((block) => {
+          if (block.querySelector('.copy-btn')) return;
+          const button = document.createElement('button');
+          button.innerText = 'Copy';
+          button.className = 'copy-btn';
+
+          block.style.position = 'relative';
+          block.appendChild(button);
+
+          button.onclick = async () => {
+            const text = block.querySelector('code')?.innerText || block.innerText;
+            await navigator.clipboard.writeText(text);
+            button.innerText = 'Copied';
+            setTimeout(() => {
+              button.innerText = 'Copy';
+            }, 1200);
+          };
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', initializeNavDrawer);
+      document.addEventListener('astro:page-load', initializeNavDrawer);
+      document.addEventListener('DOMContentLoaded', initializeCopyButtons);
+      document.addEventListener('astro:page-load', initializeCopyButtons);
+    </script>
+    <style is:global>
+      .copy-btn {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        background: rgba(15, 23, 42, 0.95);
+        color: var(--text);
+        border: 1px solid var(--border);
+        padding: 0.22rem 0.62rem;
+        font-size: 0.7rem;
+        border-radius: 999px;
+        cursor: pointer;
+        transition: transform 0.18s ease, border-color 0.2s ease, color 0.2s ease;
+      }
+
+      .copy-btn:hover {
+        color: var(--accent);
+        border-color: var(--accent);
+        transform: translateY(-1px);
+      }
+    </style>
+  </body>
+</html>

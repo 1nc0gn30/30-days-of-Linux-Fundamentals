@@ -1,0 +1,1849 @@
+---
+export const prerender = false;
+
+import MainLayout from '../../layouts/MainLayout.astro';
+import fs from 'node:fs';
+import path from 'node:path';
+import { getNextDay, getPreviousDay, TOTAL_DAYS } from '../../lib/course';
+
+const { id } = Astro.params;
+const dayNum = Number.parseInt(id ?? '', 10);
+
+if (!Number.isInteger(dayNum) || dayNum < 1 || dayNum > TOTAL_DAYS) {
+	return Astro.redirect('/curriculum');
+}
+
+const previousDay = getPreviousDay(dayNum);
+const nextDay = getNextDay(dayNum);
+const dayDescription = `Day ${dayNum} Linux mission with command drills, guided study sessions, and progress tracking.`;
+
+const mealMeta = [
+	{ id: 'breakfast', label: 'Breakfast', icon: '🍳', accent: '#f4c768' },
+	{ id: 'lunch', label: 'Lunch', icon: '🥪', accent: '#49d7a8' },
+	{ id: 'dinner', label: 'Dinner', icon: '🍽️', accent: '#ff8b7a' },
+];
+
+const commandHeads = new Set([
+	'adduser', 'alias', 'apt', 'apt-get', 'awk', 'basename', 'bash', 'bzip2', 'cat', 'cd', 'chmod', 'chown',
+	'cp', 'crontab', 'curl', 'cut', 'date', 'df', 'diff', 'dig', 'dnf', 'du', 'echo', 'env', 'export', 'find',
+	'free', 'fsck', 'getent', 'grep', 'groupadd', 'groupdel', 'groupmod', 'groups', 'gunzip', 'gzip', 'head',
+	'hostnamectl', 'htop', 'id', 'ifconfig', 'iostat', 'iptables', 'journalctl', 'kill', 'killall', 'less', 'ln',
+	'ls', 'lsof', 'mkdir', 'mount', 'mv', 'nano', 'nc', 'netstat', 'nice', 'nohup', 'nslookup', 'passwd', 'ping',
+	'pkill', 'ps', 'pwd', 'renice', 'rm', 'rmdir', 'sar', 'scp', 'sed', 'sha256sum', 'shutdown', 'snort', 'sort',
+	'ssh', 'ss', 'stat', 'sudo', 'su', 'swapon', 'systemctl', 'tail', 'tar', 'tee', 'top', 'touch', 'tr', 'tree',
+	'umount', 'uname', 'uniq', 'unzip', 'useradd', 'userdel', 'usermod', 'vmstat', 'watch', 'wc', 'wget',
+	'whereis', 'which', 'who', 'whoami', 'wireshark', 'xargs', 'xz', 'zip',
+]);
+
+const mealFallbackPools = {
+	breakfast: [
+		'pwd', 'ls -la', 'cd /var/log', 'mkdir -p ~/linux-lab/day-${day}', 'touch notes.txt',
+		'cp notes.txt notes.bak', 'mv notes.bak archive-notes.txt', 'cat /etc/os-release',
+		'grep -R "error" /var/log', 'find . -type f -name "*.log"', 'chmod 640 notes.txt',
+		'chown "$USER":"$USER" notes.txt', 'head -n 20 /var/log/syslog', 'tail -n 50 /var/log/syslog',
+		'wc -l /etc/passwd', 'cut -d: -f1 /etc/passwd', 'sort /etc/passwd | uniq', 'echo "study mode on" > status.txt',
+	],
+	lunch: [
+		'ps aux', 'top', 'htop', 'kill -9 PID', 'pkill -f process_name', 'df -h', 'du -sh *',
+		'free -h', 'vmstat 1 5', 'iostat -x', 'sar -u 1 3', 'tar -czvf backup.tar.gz ~/linux-lab',
+		'tar -xzvf backup.tar.gz', 'gzip logfile.log', 'gunzip logfile.log.gz', 'zip -r project.zip project',
+		'unzip project.zip', 'scp file.txt user@host:/tmp',
+	],
+	dinner: [
+		'sudo useradd -m secure_user', 'sudo passwd secure_user', 'sudo usermod -aG sudo secure_user',
+		'sudo groupadd ops_team', 'sudo chown -R secure_user:ops_team /srv/app', 'sudo chmod -R 750 /srv/app',
+		'sudo systemctl status ssh', 'sudo systemctl restart ssh', 'sudo journalctl -u ssh --since today',
+		'sudo iptables -F', 'sudo iptables -P INPUT DROP', 'sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT',
+		'sudo ss -tulpen', 'sudo netstat -plant', 'sudo sha256sum -c checksums.txt', 'sudo tar -xzvf /backups/home_backup.tar.gz -C /',
+		'sudo crontab -e', 'sudo hostnamectl set-hostname linux-lab-node',
+	],
+};
+
+function simpleMarkdown(text) {
+	if (!text) return '';
+
+	return text
+		.replace(/`\$([\s\S]*?)`/g, '<pre><code>$1</code></pre>')
+		.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
+		.replace(/^### (.*$)/gm, '<h3>$1</h3>')
+		.replace(/^## (.*$)/gm, '<h3>$1</h3>')
+		.replace(/^# (.*$)/gm, '<h3>$1</h3>')
+		.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+		.replace(/\*(.*?)\*/g, '<em>$1</em>')
+		.replace(/^- (.*$)/gm, '<li>$1</li>')
+		.replace(/\n/g, '<br>');
+}
+
+function normalizeCandidate(line) {
+	let command = line.trim();
+	if (!command) return '';
+
+	command = command
+		.replace(/^[-*+>]\s*/, '')
+		.replace(/^Commands?:\s*/i, '')
+		.replace(/^Simulated Commands?:\s*/i, '')
+		.replace(/^Answer:\s*/i, '')
+		.replace(/^Correct Answer:\s*[A-Z]\.\s*/i, '');
+	command = command.replace(/^[$#]\s*/, '');
+	command = command.replace(/^\d+\.\s+/, '');
+	command = command.replace(/\s+#.*$/, '').trim();
+	command = command.replace(/\$\{day\}/g, String(dayNum));
+
+	if (command.length < 2 || command.length > 110) return '';
+	if (/^https?:\/\//i.test(command)) return '';
+	if (!/[a-z]/i.test(command)) return '';
+	if (/^\[.*\]\(.*\)$/.test(command)) return '';
+	if (!/[\s/_\-|><=]/.test(command) && command.length < 3) return '';
+
+	const tokens = command.split(/\s+/).filter(Boolean);
+	let head = tokens[0] || '';
+	if (head === 'sudo' && tokens[1]) head = tokens[1];
+	if (head === 'env' && tokens[1]) head = tokens[1];
+	if (head.includes('/')) {
+		head = head.split('/').filter(Boolean).at(-1) || head;
+	}
+	head = head.replace(/[;:,]+$/, '');
+
+	if (!commandHeads.has(head)) return '';
+	if (/[.!?]$/.test(command) && !/[|><]/.test(command)) return '';
+
+	return command;
+}
+
+function extractCommands(markdown) {
+	const found = [];
+	const seen = new Set();
+
+	const add = (candidate) => {
+		const normalized = normalizeCandidate(candidate);
+		if (!normalized) return;
+		if (seen.has(normalized)) return;
+		seen.add(normalized);
+		found.push(normalized);
+	};
+
+	for (const match of markdown.matchAll(/`([^`\n]+)`/g)) {
+		add(match[1]);
+	}
+
+	for (const block of markdown.matchAll(/```([\s\S]*?)```/g)) {
+		const lines = block[1].split('\n');
+		for (const line of lines) {
+			add(line);
+		}
+	}
+
+	for (const line of markdown.split('\n')) {
+		add(line);
+	}
+
+	return found.slice(0, 18);
+}
+
+function getFallbackCommands(mealId) {
+	const pool = mealFallbackPools[mealId] ?? [];
+	if (pool.length === 0) return [];
+
+	const start = (dayNum * 3) % pool.length;
+	const picks = [];
+	const seen = new Set();
+
+	for (let offset = 0; offset < pool.length && picks.length < 12; offset += 1) {
+		const candidate = pool[(start + offset) % pool.length].replace(/\$\{day\}/g, String(dayNum));
+		const normalized = normalizeCandidate(candidate);
+		if (!normalized || seen.has(normalized)) continue;
+		seen.add(normalized);
+		picks.push(normalized);
+	}
+
+	return picks;
+}
+
+function extractResources(markdown) {
+	const resources = [];
+	const seen = new Set();
+	for (const match of markdown.matchAll(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g)) {
+		const label = match[1].trim();
+		const url = match[2].trim();
+		if (!label || !url || seen.has(url)) continue;
+		seen.add(url);
+		resources.push({ label, url });
+		if (resources.length >= 8) break;
+	}
+	return resources;
+}
+
+function extractTopics(markdown) {
+	const topics = [];
+	for (const match of markdown.matchAll(/^#{2,3}\s+(.+)$/gm)) {
+		const topic = match[1].trim();
+		if (!topic) continue;
+		topics.push(topic);
+		if (topics.length >= 8) break;
+	}
+	return topics;
+}
+
+function getGuideContent(meal) {
+	try {
+		const lessonsDir = path.join(process.cwd(), 'src/content/lessons');
+		if (!fs.existsSync(lessonsDir)) {
+			return {
+				html: '<p>Content directory not found.</p>',
+				raw: '',
+				commands: [],
+				file: null,
+			};
+		}
+
+		const files = fs.readdirSync(lessonsDir);
+		const dayPattern = new RegExp(`day-0*${dayNum}-`);
+		const mealPattern = new RegExp(`${meal}`);
+
+		const targetFile = files.find((f) => dayPattern.test(f) && mealPattern.test(f) && f.endsWith('.md'));
+
+		if (targetFile) {
+			const raw = fs.readFileSync(path.join(lessonsDir, targetFile), 'utf-8');
+			const extracted = extractCommands(raw);
+			const fallback = getFallbackCommands(meal);
+			const mergedCommands = [...extracted];
+			for (const command of fallback) {
+				if (mergedCommands.includes(command)) continue;
+				mergedCommands.push(command);
+				if (mergedCommands.length >= 12) break;
+			}
+			return {
+				html: simpleMarkdown(raw),
+				raw,
+				commands: mergedCommands.slice(0, 12),
+				resources: extractResources(raw),
+				topics: extractTopics(raw),
+				file: targetFile,
+			};
+		}
+	} catch (error) {
+		console.error(`Error loading ${meal} for day ${dayNum}:`, error);
+	}
+
+	return {
+		html: `<p>No guide found for ${meal} on Day ${dayNum}.</p>`,
+		raw: '',
+		commands: getFallbackCommands(meal),
+		resources: [],
+		topics: [],
+		file: null,
+	};
+}
+
+const mealData = mealMeta.map((meal) => ({
+	...meal,
+	...getGuideContent(meal.id),
+}));
+
+const dayPayload = {
+	dayNum,
+	meals: mealData.map((meal) => ({
+		id: meal.id,
+		label: meal.label,
+		icon: meal.icon,
+		commands: meal.commands,
+	})),
+};
+---
+
+<MainLayout
+	title={`Day ${dayNum} Mission Terminal - 30 Days of Linux`}
+	description={dayDescription}
+	activeNav="curriculum"
+>
+	<div class="day-shell" data-day-terminal data-day={dayNum}>
+		<header class="surface hero-panel">
+			<div>
+				<a href="/curriculum" class="back-link">← Back to Curriculum</a>
+				<h1>Day {dayNum} Mission Terminal</h1>
+				<p>Train commands in a live simulation, track XP, and unlock each guide when you're ready.</p>
+			</div>
+			<div class="mission-stats" aria-label="Mission stats">
+				<div class="stat-card">
+					<span class="stat-label">XP</span>
+					<strong id="xp-value">0</strong>
+				</div>
+				<div class="stat-card">
+					<span class="stat-label">Streak</span>
+					<strong id="streak-value">0</strong>
+				</div>
+				<div class="stat-card">
+					<span class="stat-label">Command Mastery</span>
+					<strong id="mastery-value">0%</strong>
+				</div>
+			</div>
+		</header>
+
+		<nav class="surface day-nav" aria-label="Day navigation">
+			{previousDay ? <a class="day-nav-link" href={`/day/${previousDay}`}>Previous Day ({previousDay})</a> : <span class="day-nav-link disabled">Beginning of Course</span>}
+			<a class="day-nav-link" href="/curriculum">Curriculum</a>
+			{nextDay ? <a class="day-nav-link" href={`/day/${nextDay}`}>Next Day ({nextDay})</a> : <span class="day-nav-link disabled">Final Day Reached</span>}
+		</nav>
+
+		<section class="surface control-rack" aria-label="Mission controls">
+			<div class="meal-tabs" role="tablist" aria-label="Meal sessions">
+				{mealData.map((meal, index) => (
+					<button
+						class={`meal-tab ${index === 0 ? 'active' : ''}`}
+						type="button"
+						data-tab={meal.id}
+						role="tab"
+						aria-selected={index === 0 ? 'true' : 'false'}
+					>
+						<span aria-hidden="true">{meal.icon}</span>
+						<span>{meal.label}</span>
+					</button>
+				))}
+			</div>
+			<div class="music-controls" role="group" aria-label="Music controls">
+				<span class="music-label">Study Music</span>
+				<button type="button" class="music-btn active" data-music-mode="off">Off</button>
+				<button type="button" class="music-btn" data-music-id="jfKfPfyJRdk">Lofi Girl</button>
+				<button type="button" class="music-btn" data-music-id="DWcJFNfaw9c">Synthwave</button>
+				<button type="button" class="music-btn" data-music-id="4xDzrJKXOOY">Coding Mix</button>
+			</div>
+		</section>
+
+		<section class="surface music-dock mobile-drawer-panel" data-drawer-panel="global:music" aria-label="YouTube player">
+			<div class="music-dock-head drawer-head">
+				<h2>YouTube Study Radio</h2>
+				<button type="button" class="drawer-close-btn" data-close-drawer aria-label="Close panel">✕</button>
+			</div>
+			<div class="music-dock-head">
+				<p>Pick a track or paste any YouTube URL.</p>
+			</div>
+			<div class="music-dock-controls">
+				<input type="url" data-custom-youtube placeholder="Paste YouTube link (video or playlist)" />
+				<button type="button" data-custom-youtube-load>Load Video</button>
+			</div>
+			<div class="youtube-wrap" data-youtube-wrap hidden>
+				<iframe
+					data-youtube-frame
+					title="Study music player"
+					src=""
+					allow="autoplay; encrypted-media; picture-in-picture"
+					referrerpolicy="strict-origin-when-cross-origin"
+					allowfullscreen
+				></iframe>
+			</div>
+		</section>
+
+		<div class="meal-panels">
+			{mealData.map((meal, index) => (
+				<section
+					class={`surface meal-panel ${index === 0 ? 'active' : ''}`}
+					data-meal-panel={meal.id}
+					style={`--meal-accent:${meal.accent}`}
+					hidden={index !== 0}
+				>
+					<div class="panel-head">
+						<h2>{meal.icon} {meal.label} Session</h2>
+						<p>Type commands, build streaks, and then review the source guide.</p>
+					</div>
+					<div class="mission-action-dock">
+						<button type="button" class="action-pill" data-open-drawer={`${meal.id}:board`}>Board</button>
+						<button type="button" class="action-pill" data-open-drawer={`${meal.id}:intel`}>Intel</button>
+						<button type="button" class="action-pill" data-open-drawer={`${meal.id}:boost`}>Boost</button>
+						<button type="button" class="action-pill" data-open-drawer={`${meal.id}:guide`}>Guide</button>
+						<button type="button" class="action-pill" data-open-drawer="global:music">Music</button>
+					</div>
+
+					<div class="mission-grid">
+						<article class="terminal-card" aria-live="polite">
+							<h3>Live Terminal Drill</h3>
+							<p class="muted">Re-type the command exactly to clear each challenge.</p>
+							<div class="prompt-line">
+								<span class="prompt-prefix">target$</span>
+								<code data-target-command={meal.id}>loading...</code>
+							</div>
+							<div class="input-row">
+								<label class="sr-only" for={`cmd-input-${meal.id}`}>Command input</label>
+								<input id={`cmd-input-${meal.id}`} data-command-input={meal.id} type="text" placeholder="Type command here" autocomplete="off" />
+								<button type="button" data-action="check" data-meal={meal.id}>Run</button>
+								<button type="button" data-action="hint" data-meal={meal.id}>Hint</button>
+								<button type="button" data-action="skip" data-meal={meal.id}>Skip</button>
+							</div>
+							<div class="progress-wrap" role="progressbar" aria-label={`${meal.label} mastery`}>
+								<div class="progress-bar" data-progress-bar={meal.id}></div>
+							</div>
+							<p class="progress-text" data-progress-text={meal.id}>0 / {meal.commands.length} mastered</p>
+							<ul class="terminal-log" data-log={meal.id}></ul>
+						</article>
+
+						<article class="commands-card mobile-drawer-panel" data-drawer-panel={`${meal.id}:board`}>
+							<div class="drawer-head">
+								<h3>Command Board</h3>
+								<button type="button" class="drawer-close-btn" data-close-drawer aria-label="Close panel">✕</button>
+							</div>
+							<p class="muted">Tap a command when you practiced it in your own terminal.</p>
+							<div class="command-chip-grid" data-command-grid={meal.id}>
+								{meal.commands.length > 0 ? (
+									meal.commands.map((command) => (
+										<button type="button" class="command-chip" data-command={command} data-meal={meal.id} title={command}>
+											{command}
+										</button>
+									))
+								) : (
+									<p class="muted">No commands parsed for this session yet.</p>
+								)}
+							</div>
+						</article>
+					</div>
+
+					<article class="command-intel-card mobile-drawer-panel" data-drawer-panel={`${meal.id}:intel`}>
+						<div class="drawer-head">
+							<h3>Command Intel</h3>
+							<button type="button" class="drawer-close-btn" data-close-drawer aria-label="Close panel">✕</button>
+						</div>
+						<div class="intel-grid">
+							<div class="intel-box">
+								<h4>Meaning</h4>
+								<p data-intel-meaning={meal.id}>Command explanation will appear here.</p>
+							</div>
+							<div class="intel-box">
+								<h4>Sample Output</h4>
+								<pre data-intel-output={meal.id}>Output preview will appear here.</pre>
+							</div>
+							<div class="intel-box">
+								<h4>Useful Fun Fact</h4>
+								<p data-intel-fact={meal.id}>Fun facts about the active command will appear here.</p>
+							</div>
+							<div class="intel-box">
+								<h4>Last Run Output</h4>
+								<pre data-intel-last-run={meal.id}>Run a command to see result feedback.</pre>
+							</div>
+						</div>
+					</article>
+
+					<article class="study-upgrade-card mobile-drawer-panel" data-drawer-panel={`${meal.id}:boost`}>
+						<div class="study-upgrade-head">
+							<div class="drawer-head">
+								<h3>Knowledge Boost</h3>
+								<button type="button" class="drawer-close-btn" data-close-drawer aria-label="Close panel">✕</button>
+							</div>
+							<p>Faster learning with topic cues, mini-missions, and external docs.</p>
+						</div>
+						<div class="study-upgrade-grid">
+							<div class="study-box">
+								<h4>Key Topics</h4>
+								<div class="topic-chip-grid">
+									{meal.topics.length > 0 ? meal.topics.slice(0, 6).map((topic) => <span class="topic-chip">{topic}</span>) : (
+										<span class="topic-chip">Linux fundamentals</span>
+									)}
+								</div>
+							</div>
+							<div class="study-box">
+								<h4>Mini Missions</h4>
+								<ul>
+									{meal.commands.slice(0, 4).map((command, idx) => (
+										<li>Mission {idx + 1}: Run <code>{command}</code> and explain the output in one sentence.</li>
+									))}
+									{meal.commands.length === 0 && <li>Read the guide once, then summarize three commands you can apply today.</li>}
+								</ul>
+							</div>
+							<div class="study-box">
+								<h4>Useful Resources</h4>
+								<ul class="resource-list">
+									{meal.resources.length > 0 ? meal.resources.slice(0, 6).map((resource) => (
+										<li>
+											<a href={resource.url} target="_blank" rel="noopener noreferrer">{resource.label}</a>
+										</li>
+									)) : (
+										<>
+											<li><a href="https://man7.org/linux/man-pages/" target="_blank" rel="noopener noreferrer">Linux man-pages project</a></li>
+											<li><a href="https://www.gnu.org/software/coreutils/manual/coreutils.html" target="_blank" rel="noopener noreferrer">GNU Coreutils manual</a></li>
+											<li><a href="https://explainshell.com/" target="_blank" rel="noopener noreferrer">ExplainShell command breakdowns</a></li>
+										</>
+									)}
+								</ul>
+							</div>
+						</div>
+					</article>
+
+					<article class="guide-card mobile-drawer-panel" data-drawer-panel={`${meal.id}:guide`}>
+						<div class="guide-head">
+							<div class="drawer-head">
+								<h3>Study Guide Source</h3>
+								<button type="button" class="drawer-close-btn" data-close-drawer aria-label="Close panel">✕</button>
+							</div>
+							<button type="button" class="guide-toggle" data-toggle-guide={meal.id}>Show Guide</button>
+						</div>
+						<div class="guide-body" data-guide-body={meal.id} hidden>
+							<div class="guide-meta">Source: {meal.file ?? 'No file found'}</div>
+							<div class="markdown-content" set:html={meal.html} />
+						</div>
+					</article>
+				</section>
+			))}
+		</div>
+		<button class="drawer-backdrop" type="button" data-drawer-backdrop hidden aria-label="Close panel"></button>
+
+		<script type="application/json" id="day-terminal-data" set:html={JSON.stringify(dayPayload)} />
+	</div>
+</MainLayout>
+
+<script>
+	const statusLines = {
+		success: [
+			'Command accepted. Nice execution.',
+			'Clean run. System confidence increased.',
+			'Mission step complete. Keep pushing.',
+		],
+		failure: [
+			'Not quite. Re-check the flags and spacing.',
+			'Command mismatch. Try again carefully.',
+			'Close, but syntax is off. Use a hint if needed.',
+		],
+	};
+
+	const normalize = (value) => value.trim().replace(/^[$#]\s*/, '').replace(/\s+/g, ' ');
+	const pick = (items) => items[Math.floor(Math.random() * items.length)];
+	const getBaseCommand = (command) => normalize(command).split(' ')[0] || '';
+	const cleanArg = (command, index = 1) => {
+		const parts = normalize(command).split(' ');
+		return parts[index] || '';
+	};
+
+	const commandIntelMap = {
+		ls: {
+			meaning: 'Lists files and directories so you can inspect what is in the current location.',
+			output: 'Documents\nscripts\nnotes.txt\n',
+			fact: 'Combine `ls -lah` to reveal hidden files and human-readable file sizes in one pass.',
+		},
+		cd: {
+			meaning: 'Changes your working directory so later commands run in a different location.',
+			output: '(directory changed)\n',
+			fact: 'Use `cd -` to jump back to your previous directory instantly.',
+		},
+		pwd: {
+			meaning: 'Prints the absolute path of your current directory.',
+			output: '/home/neo/30days/30-days-of-Linux-Fundamentals\n',
+			fact: 'When a script behaves unexpectedly, `pwd` is the fastest sanity check.',
+		},
+		cat: {
+			meaning: 'Reads and prints file contents directly to the terminal.',
+			output: 'server_mode=true\nlog_level=info\n',
+			fact: '`cat` is great for quick reads; use `less` for large files you need to scroll.',
+		},
+		grep: {
+			meaning: 'Searches text for lines matching a pattern.',
+			output: '42:ERROR failed to bind socket\n',
+			fact: '`grep -RIn` is a powerful codebase search combo for recursive, line-numbered matches.',
+		},
+		find: {
+			meaning: 'Recursively locates files/directories by name, type, time, size, and more.',
+			output: './logs/app.log\n./logs/archive/app-2026-04.log\n',
+			fact: 'Pair `find` with `-exec` for one-command bulk operations.',
+		},
+		mkdir: {
+			meaning: 'Creates new directories.',
+			output: '(directory created)\n',
+			fact: '`mkdir -p a/b/c` creates nested paths without errors for existing parents.',
+		},
+		rm: {
+			meaning: 'Removes files or directories.',
+			output: '(file removed)\n',
+			fact: 'Use `rm -i` while learning to force confirmation before each delete.',
+		},
+		cp: {
+			meaning: 'Copies files or directories to a new destination.',
+			output: '(copied successfully)\n',
+			fact: '`cp -a` preserves permissions and timestamps for more faithful backups.',
+		},
+		mv: {
+			meaning: 'Moves or renames files and directories.',
+			output: '(moved successfully)\n',
+			fact: 'A rename is just a move within the same directory.',
+		},
+		chmod: {
+			meaning: 'Changes file permissions (read/write/execute) for owner, group, or others.',
+			output: '(mode updated)\n',
+			fact: '`chmod u+x script.sh` is safer than broad numeric permission changes while learning.',
+		},
+		chown: {
+			meaning: 'Changes file ownership to a different user and/or group.',
+			output: '(owner changed)\n',
+			fact: 'Ownership controls who can later change permissions on a file.',
+		},
+		ps: {
+			meaning: 'Displays currently running processes.',
+			output: 'PID TTY          TIME CMD\n1452 pts/0    00:00:00 bash\n',
+			fact: '`ps aux | grep <name>` is a classic quick process lookup.',
+		},
+		kill: {
+			meaning: 'Sends a signal to a process, usually to stop or terminate it.',
+			output: '(signal sent)\n',
+			fact: '`kill -15` asks gracefully; `kill -9` force-stops and should be a last resort.',
+		},
+		tar: {
+			meaning: 'Creates or extracts archive files.',
+			output: 'project/\nproject/README.md\nproject/src/main.sh\n',
+			fact: 'Remember mnemonic: `x` extract, `c` create, `v` verbose, `f` filename.',
+		},
+		curl: {
+			meaning: 'Transfers data to or from URLs, commonly for API calls and downloads.',
+			output: '{\"status\":\"ok\",\"version\":\"1.0\"}\n',
+			fact: '`curl -I` fetches headers only, useful for checking redirects and status quickly.',
+		},
+		wget: {
+			meaning: 'Downloads files from the web, including recursive fetches.',
+			output: 'Saving to: `backup.tar.gz`\n100%[===================>] 2.1M\n',
+			fact: '`wget -c` can resume partial downloads.',
+		},
+		awk: {
+			meaning: 'Pattern-scans text and processes columns/fields programmatically.',
+			output: 'user1 84\nuser2 91\n',
+			fact: 'For quick one-liners, `awk` often replaces writing a temporary script.',
+		},
+		sed: {
+			meaning: 'Edits and transforms text streams using scripted expressions.',
+			output: 'server_port=8081\n',
+			fact: 'Use `sed -n` with `p` to print only matched lines and avoid noisy output.',
+		},
+		sort: {
+			meaning: 'Sorts lines alphabetically, numerically, or by custom keys.',
+			output: 'alpha\nbravo\ndelta\n',
+			fact: '`sort -u` sorts and de-duplicates in one command.',
+		},
+		uniq: {
+			meaning: 'Filters adjacent duplicate lines in sorted input.',
+			output: 'warning\nerror\n',
+			fact: 'Use `sort file | uniq -c` to count repeated entries.',
+		},
+		head: {
+			meaning: 'Shows the first lines of a file or stream.',
+			output: 'line 1\nline 2\nline 3\n',
+			fact: '`head -n 20` is ideal for quick file structure checks.',
+		},
+		tail: {
+			meaning: 'Shows the last lines of a file or stream.',
+			output: 'line 198\nline 199\nline 200\n',
+			fact: '`tail -f` is a core log-monitoring workflow during debugging.',
+		},
+		df: {
+			meaning: 'Reports disk space usage by filesystem.',
+			output: 'Filesystem      Size  Used Avail Use% Mounted on\n/dev/sda1       100G   62G   33G  66% /\n',
+			fact: '`df -h` makes sizes human-readable so it is easier to spot storage pressure.',
+		},
+		du: {
+			meaning: 'Estimates disk usage for files and directories.',
+			output: '4.0K\t./notes\n120M\t./project\n',
+			fact: '`du -sh * | sort -h` quickly reveals the biggest folders.',
+		},
+		ssh: {
+			meaning: 'Securely connects to a remote machine over encrypted channels.',
+			output: 'Welcome to ubuntu 24.04 LTS\nneo@remote:~$ \n',
+			fact: 'SSH keys are safer and faster than password-only access.',
+		},
+		scp: {
+			meaning: 'Securely copies files between local and remote systems over SSH.',
+			output: 'report.log                              100%   14KB  48.1KB/s   00:00\n',
+			fact: '`scp -r` copies full directories recursively.',
+		},
+		crontab: {
+			meaning: 'Manages scheduled cron jobs for timed automation.',
+			output: 'no crontab for neo\n',
+			fact: 'Always comment cron entries with intent so future you knows why a job exists.',
+		},
+	};
+
+	function buildCommandIntel(command) {
+		const normalized = normalize(command);
+		if (!normalized) {
+			return {
+				meaning: 'No command selected yet.',
+				output: 'Output preview unavailable.',
+				fact: 'Pick a command challenge to begin.',
+			};
+		}
+
+		const base = getBaseCommand(normalized);
+		const template = commandIntelMap[base];
+		if (template) return template;
+
+		const arg = cleanArg(normalized) || '<target>';
+		return {
+			meaning: `Runs \`${base}\` on ${arg} to perform a Linux task in this training mission.`,
+			output: `$ ${normalized}\n(command executed in training simulation)\n`,
+			fact: `Check \`man ${base}\` for complete flags and real-world usage patterns.`,
+		};
+	}
+
+	function parseYouTubeInput(input) {
+		const raw = String(input || '').trim();
+		if (!raw) return null;
+		if (/^[a-zA-Z0-9_-]{11}$/.test(raw)) {
+			return `https://www.youtube.com/embed/${raw}?autoplay=1&rel=0&modestbranding=1`;
+		}
+
+		try {
+			const url = new URL(raw);
+			if (url.hostname.includes('youtu.be')) {
+				const id = url.pathname.replace('/', '').trim();
+				if (id) {
+					return `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
+				}
+			}
+
+			const videoId = url.searchParams.get('v');
+			const listId = url.searchParams.get('list');
+			if (videoId) {
+				return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+			}
+			if (listId) {
+				return `https://www.youtube.com/embed/videoseries?autoplay=1&list=${encodeURIComponent(listId)}`;
+			}
+		} catch (_error) {
+			return null;
+		}
+
+		return null;
+	}
+
+	function initDayTerminal() {
+		const root = document.querySelector('[data-day-terminal]');
+		if (!root || root.dataset.bound === 'true') return;
+		root.dataset.bound = 'true';
+
+		const payloadNode = root.querySelector('#day-terminal-data');
+		if (!payloadNode) return;
+		const payload = JSON.parse(payloadNode.textContent || '{}');
+		const meals = payload.meals || [];
+		const dayNum = payload.dayNum;
+
+		if (!Array.isArray(meals) || meals.length === 0) return;
+
+		const storageKey = `linux30-day-${dayNum}-terminal-state`;
+		const courseProgressKey = 'linux30-course-progress-v1';
+		const totalCommands = meals.reduce((count, meal) => count + (meal.commands?.length || 0), 0);
+		const commandMap = Object.fromEntries(meals.map((meal) => [meal.id, meal.commands || []]));
+		const targets = {};
+		const youtubeWrap = root.querySelector('[data-youtube-wrap]');
+		const youtubeFrame = root.querySelector('[data-youtube-frame]');
+		const customYoutubeInput = root.querySelector('[data-custom-youtube]');
+		const customYoutubeLoad = root.querySelector('[data-custom-youtube-load]');
+		const drawerBackdrop = root.querySelector('[data-drawer-backdrop]');
+		let activeDrawer = '';
+
+		const defaultState = {
+			activeMeal: meals[0].id,
+			xp: 0,
+			streak: 0,
+			musicEmbed: '',
+			solved: Object.fromEntries(meals.map((meal) => [meal.id, []])),
+			guideOpen: Object.fromEntries(meals.map((meal) => [meal.id, false])),
+			lastRun: Object.fromEntries(meals.map((meal) => [meal.id, 'Run a command to see result feedback.'])),
+		};
+
+		let state = structuredClone(defaultState);
+		try {
+			const saved = localStorage.getItem(storageKey);
+			if (saved) {
+				const parsed = JSON.parse(saved);
+				state = {
+					...state,
+					...parsed,
+					solved: { ...defaultState.solved, ...(parsed.solved || {}) },
+					guideOpen: { ...defaultState.guideOpen, ...(parsed.guideOpen || {}) },
+					lastRun: { ...defaultState.lastRun, ...(parsed.lastRun || {}) },
+				};
+			}
+		} catch (_error) {
+			state = structuredClone(defaultState);
+		}
+
+		if (!commandMap[state.activeMeal]) {
+			state.activeMeal = meals[0].id;
+		}
+
+		function syncCourseProgress() {
+			let existing = { completedDays: [], lastVisitedDay: dayNum };
+			try {
+				existing = JSON.parse(localStorage.getItem(courseProgressKey) || 'null') || existing;
+			} catch (_error) {
+				existing = { completedDays: [], lastVisitedDay: dayNum };
+			}
+
+			const completedDays = new Set(
+				Array.isArray(existing.completedDays)
+					? existing.completedDays
+						.map((value) => Number(value))
+						.filter((value) => Number.isInteger(value) && value >= 1 && value <= 30)
+					: [],
+			);
+			const solvedCount = meals.reduce((count, meal) => count + (state.solved[meal.id]?.length || 0), 0);
+			const dayIsComplete = totalCommands > 0 && solvedCount >= totalCommands;
+
+			if (dayIsComplete) {
+				completedDays.add(dayNum);
+			}
+
+			localStorage.setItem(
+				courseProgressKey,
+				JSON.stringify({
+					completedDays: Array.from(completedDays).sort((a, b) => a - b),
+					lastVisitedDay: dayNum,
+					updatedAt: new Date().toISOString(),
+				}),
+			);
+		}
+
+		const save = () => {
+			localStorage.setItem(storageKey, JSON.stringify(state));
+			syncCourseProgress();
+		};
+
+		const getSolvedSet = (mealId) => new Set(state.solved[mealId] || []);
+		const setSolved = (mealId, valueSet) => {
+			state.solved[mealId] = Array.from(valueSet);
+		};
+
+		const setTarget = (mealId, preferred) => {
+			const commands = commandMap[mealId] || [];
+			if (commands.length === 0) {
+				targets[mealId] = null;
+				return;
+			}
+			if (preferred) {
+				targets[mealId] = preferred;
+				return;
+			}
+			const solved = getSolvedSet(mealId);
+			const unresolved = commands.filter((cmd) => !solved.has(cmd));
+			const pool = unresolved.length > 0 ? unresolved : commands;
+			targets[mealId] = pick(pool);
+		};
+
+		const log = (mealId, text, tone = 'neutral') => {
+			const list = root.querySelector(`[data-log="${mealId}"]`);
+			if (!list) return;
+			const item = document.createElement('li');
+			item.textContent = text;
+			item.className = `log-${tone}`;
+			list.prepend(item);
+			while (list.children.length > 6) {
+				list.removeChild(list.lastElementChild);
+			}
+		};
+
+		const renderStats = () => {
+			const solvedCount = meals.reduce((count, meal) => count + (state.solved[meal.id]?.length || 0), 0);
+			const mastery = totalCommands === 0 ? 0 : Math.round((solvedCount / totalCommands) * 100);
+
+			const xpEl = root.querySelector('#xp-value');
+			const streakEl = root.querySelector('#streak-value');
+			const masteryEl = root.querySelector('#mastery-value');
+			if (xpEl) xpEl.textContent = String(state.xp);
+			if (streakEl) streakEl.textContent = String(state.streak);
+			if (masteryEl) masteryEl.textContent = `${mastery}%`;
+			return mastery;
+		};
+
+		const renderPerMeal = (mealId) => {
+			const commands = commandMap[mealId] || [];
+			const solved = getSolvedSet(mealId);
+			const target = targets[mealId];
+			const targetEl = root.querySelector(`[data-target-command="${mealId}"]`);
+			if (targetEl) targetEl.textContent = target || 'No commands available for this meal.';
+			const intel = buildCommandIntel(target || '');
+			const meaningEl = root.querySelector(`[data-intel-meaning="${mealId}"]`);
+			const outputEl = root.querySelector(`[data-intel-output="${mealId}"]`);
+			const factEl = root.querySelector(`[data-intel-fact="${mealId}"]`);
+			const lastRunEl = root.querySelector(`[data-intel-last-run="${mealId}"]`);
+			if (meaningEl) meaningEl.textContent = intel.meaning;
+			if (outputEl) outputEl.textContent = intel.output;
+			if (factEl) factEl.textContent = intel.fact;
+			if (lastRunEl) lastRunEl.textContent = state.lastRun[mealId] || 'Run a command to see result feedback.';
+
+			const progressEl = root.querySelector(`[data-progress-text="${mealId}"]`);
+			const progressBar = root.querySelector(`[data-progress-bar="${mealId}"]`);
+			if (progressEl) progressEl.textContent = `${solved.size} / ${commands.length} mastered`;
+			if (progressBar) {
+				const percent = commands.length ? Math.round((solved.size / commands.length) * 100) : 0;
+				progressBar.style.width = `${percent}%`;
+			}
+
+			root.querySelectorAll(`[data-meal="${mealId}"][data-command]`).forEach((button) => {
+				const command = button.dataset.command;
+				if (!command) return;
+				button.classList.toggle('done', solved.has(command));
+			});
+
+			const guideBody = root.querySelector(`[data-guide-body="${mealId}"]`);
+			const guideToggle = root.querySelector(`[data-toggle-guide="${mealId}"]`);
+			const open = Boolean(state.guideOpen[mealId]);
+			if (guideBody) guideBody.hidden = !open;
+			if (guideToggle) guideToggle.textContent = open ? 'Hide Guide' : 'Show Guide';
+		};
+
+		const renderTabs = () => {
+			root.querySelectorAll('[data-tab]').forEach((tab) => {
+				const isActive = tab.dataset.tab === state.activeMeal;
+				tab.classList.toggle('active', isActive);
+				tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+			});
+
+			root.querySelectorAll('[data-meal-panel]').forEach((panel) => {
+				const isActive = panel.dataset.mealPanel === state.activeMeal;
+				panel.classList.toggle('active', isActive);
+				panel.hidden = !isActive;
+			});
+		};
+
+		const renderDrawers = () => {
+			root.querySelectorAll('[data-drawer-panel]').forEach((panel) => {
+				const panelId = panel.dataset.drawerPanel;
+				panel.classList.toggle('open', panelId === activeDrawer);
+			});
+			if (drawerBackdrop instanceof HTMLButtonElement) {
+				const open = Boolean(activeDrawer);
+				drawerBackdrop.hidden = !open;
+				drawerBackdrop.classList.toggle('open', open);
+			}
+		};
+
+		const closeDrawer = () => {
+			activeDrawer = '';
+			renderDrawers();
+		};
+
+		const openDrawer = (panelId) => {
+			if (!panelId) return;
+			activeDrawer = panelId;
+			renderDrawers();
+		};
+
+		const setYoutubeEmbed = (embedUrl) => {
+			if (!(youtubeWrap instanceof HTMLElement) || !(youtubeFrame instanceof HTMLIFrameElement)) return;
+			const normalized = String(embedUrl || '').trim();
+			if (!normalized) {
+				youtubeWrap.hidden = true;
+				youtubeFrame.src = '';
+				return;
+			}
+			youtubeWrap.hidden = false;
+			youtubeFrame.src = normalized;
+		};
+
+		const setMusic = (embedUrl) => {
+			state.musicEmbed = embedUrl || '';
+			save();
+			setYoutubeEmbed(state.musicEmbed);
+
+			root.querySelectorAll('[data-music-mode], [data-music-id]').forEach((button) => {
+				const mode = button.dataset.musicMode;
+				const id = button.dataset.musicId;
+				const active = (mode === 'off' && !state.musicEmbed) || (id && state.musicEmbed.includes(`/embed/${id}`));
+				button.classList.toggle('active', Boolean(active));
+			});
+		};
+
+		const award = (mealId, amount, message, tone) => {
+			state.xp = Math.max(0, state.xp + amount);
+			log(mealId, message, tone);
+		};
+
+		meals.forEach((meal) => setTarget(meal.id));
+
+		root.querySelectorAll('[data-tab]').forEach((tab) => {
+			tab.addEventListener('click', () => {
+				const mealId = tab.dataset.tab;
+				if (!mealId) return;
+				state.activeMeal = mealId;
+				renderTabs();
+				closeDrawer();
+				save();
+			});
+		});
+
+		root.querySelectorAll('[data-open-drawer]').forEach((button) => {
+			button.addEventListener('click', () => openDrawer(button.dataset.openDrawer));
+		});
+
+		root.querySelectorAll('[data-close-drawer]').forEach((button) => {
+			button.addEventListener('click', closeDrawer);
+		});
+
+		if (drawerBackdrop instanceof HTMLButtonElement) {
+			drawerBackdrop.addEventListener('click', closeDrawer);
+		}
+
+		document.addEventListener('keydown', (event) => {
+			if (event.key === 'Escape' && activeDrawer) {
+				closeDrawer();
+			}
+		});
+
+		root.querySelectorAll('[data-action]').forEach((button) => {
+			button.addEventListener('click', () => {
+				const mealId = button.dataset.meal;
+				const action = button.dataset.action;
+				if (!mealId || !action) return;
+				const input = root.querySelector(`[data-command-input="${mealId}"]`);
+				const target = targets[mealId];
+
+				if (action === 'skip') {
+					state.streak = 0;
+					setTarget(mealId);
+					renderPerMeal(mealId);
+					save();
+					award(mealId, -1, 'Skipped challenge. New target loaded.', 'neutral');
+					renderStats();
+					return;
+				}
+
+				if (!target || !(input instanceof HTMLInputElement)) return;
+
+				if (action === 'hint') {
+					const firstSegment = target.split(' ')[0];
+					award(mealId, 0, `Hint: starts with \"${firstSegment}\".`, 'neutral');
+					return;
+				}
+
+				if (action === 'check') {
+					const entered = normalize(input.value);
+					const expected = normalize(target);
+					const enteredIntel = buildCommandIntel(entered);
+					if (entered === expected) {
+						const solved = getSolvedSet(mealId);
+						const firstSolve = !solved.has(target);
+						solved.add(target);
+						setSolved(mealId, solved);
+						state.streak += 1;
+						state.lastRun[mealId] = `$ ${entered}\n${enteredIntel.output}`;
+						award(mealId, firstSolve ? 15 : 4, pick(statusLines.success), 'success');
+						setTarget(mealId);
+						input.value = '';
+						renderPerMeal(mealId);
+					} else {
+						state.streak = 0;
+						state.lastRun[mealId] = `$ ${entered || '(empty command)'}\ncommand not accepted in mission mode\nhint: ${expected}`;
+						award(mealId, -2, pick(statusLines.failure), 'failure');
+						renderPerMeal(mealId);
+					}
+
+					renderStats();
+					save();
+				}
+			});
+		});
+
+		root.querySelectorAll('[data-command-input]').forEach((field) => {
+			field.addEventListener('keydown', (event) => {
+				if (event.key !== 'Enter') return;
+				event.preventDefault();
+				const mealId = field.dataset.commandInput;
+				const runBtn = root.querySelector(`[data-action="check"][data-meal="${mealId}"]`);
+				if (runBtn instanceof HTMLButtonElement) {
+					runBtn.click();
+				}
+			});
+		});
+
+		root.querySelectorAll('[data-command]').forEach((button) => {
+			button.addEventListener('click', () => {
+				const command = button.dataset.command;
+				const mealId = button.dataset.meal;
+				if (!command || !mealId) return;
+				const solved = getSolvedSet(mealId);
+				if (solved.has(command)) {
+					solved.delete(command);
+					setSolved(mealId, solved);
+					award(mealId, -3, `Practice unchecked: ${command}`, 'neutral');
+				} else {
+					solved.add(command);
+					setSolved(mealId, solved);
+					award(mealId, 6, `Practice logged: ${command}`, 'success');
+				}
+
+				renderPerMeal(mealId);
+				renderStats();
+				save();
+			});
+		});
+
+		root.querySelectorAll('[data-toggle-guide]').forEach((button) => {
+			button.addEventListener('click', () => {
+				const mealId = button.dataset.toggleGuide;
+				if (!mealId) return;
+				state.guideOpen[mealId] = !state.guideOpen[mealId];
+				renderPerMeal(mealId);
+				save();
+			});
+		});
+
+		root.querySelectorAll('[data-music-mode], [data-music-id]').forEach((button) => {
+			button.addEventListener('click', () => {
+				const mode = button.dataset.musicMode;
+				const videoId = button.dataset.musicId;
+				if (mode === 'off') {
+					setMusic('');
+					return;
+				}
+				if (videoId) {
+					setMusic(parseYouTubeInput(videoId) || '');
+				}
+			});
+		});
+
+		if (customYoutubeLoad instanceof HTMLButtonElement && customYoutubeInput instanceof HTMLInputElement) {
+			customYoutubeLoad.addEventListener('click', () => {
+				const embed = parseYouTubeInput(customYoutubeInput.value);
+				if (!embed) {
+					log(state.activeMeal, 'Could not parse that YouTube URL. Try a valid video or playlist link.', 'failure');
+					return;
+				}
+				setMusic(embed);
+				log(state.activeMeal, 'YouTube track loaded.', 'success');
+				customYoutubeInput.value = '';
+			});
+		}
+
+		renderTabs();
+		meals.forEach((meal) => renderPerMeal(meal.id));
+		renderStats();
+		renderDrawers();
+		setYoutubeEmbed(state.musicEmbed);
+		syncCourseProgress();
+		root.querySelectorAll('[data-music-mode], [data-music-id]').forEach((button) => {
+			const mode = button.dataset.musicMode;
+			const id = button.dataset.musicId;
+			const active = (mode === 'off' && !state.musicEmbed) || (id && state.musicEmbed.includes(`/embed/${id}`));
+			button.classList.toggle('active', Boolean(active));
+		});
+	}
+
+	document.addEventListener('DOMContentLoaded', initDayTerminal);
+	document.addEventListener('astro:page-load', initDayTerminal);
+</script>
+
+<style>
+	.day-shell {
+		display: grid;
+		gap: 1rem;
+	}
+
+	.day-nav {
+		padding: 0.6rem 0.8rem;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.45rem;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.day-nav-link {
+		text-decoration: none;
+		color: var(--text);
+		font-size: 0.8rem;
+		border: 1px solid var(--border);
+		border-radius: 999px;
+		padding: 0.24rem 0.55rem;
+		background: rgba(5, 11, 21, 0.74);
+	}
+
+	.day-nav-link:hover,
+	.day-nav-link:focus-visible {
+		color: var(--accent);
+		border-color: var(--accent);
+	}
+
+	.day-nav-link.disabled {
+		color: var(--text-muted);
+		pointer-events: none;
+	}
+
+	.hero-panel {
+		padding: clamp(1rem, 2.6vw, 1.75rem);
+		display: grid;
+		gap: 1.2rem;
+	}
+
+	.hero-panel h1 {
+		margin: 0.5rem 0;
+		font-size: clamp(1.5rem, 4vw, 2.4rem);
+		color: var(--accent);
+	}
+
+	.hero-panel p {
+		margin: 0;
+		max-width: 70ch;
+		color: var(--text-muted);
+	}
+
+	.back-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.3rem;
+		color: var(--accent);
+		font-size: 0.86rem;
+		text-decoration: none;
+	}
+
+	.mission-stats {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+		gap: 0.7rem;
+	}
+
+	.stat-card {
+		padding: 0.75rem 0.9rem;
+		border-radius: 0.8rem;
+		border: 1px solid var(--border);
+		background: rgba(11, 17, 31, 0.68);
+	}
+
+	.stat-label {
+		display: block;
+		font-size: 0.75rem;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--text-muted);
+	}
+
+	.stat-card strong {
+		font-size: 1.2rem;
+		font-weight: 700;
+	}
+
+	.control-rack {
+		padding: 0.9rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.8rem;
+	}
+
+	.meal-tabs {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.55rem;
+	}
+
+	.meal-tab {
+		appearance: none;
+		border: 1px solid var(--border);
+		background: rgba(11, 17, 31, 0.7);
+		color: var(--text);
+		border-radius: 999px;
+		padding: 0.45rem 0.85rem;
+		font: inherit;
+		display: inline-flex;
+		gap: 0.45rem;
+		align-items: center;
+		cursor: pointer;
+		transition: border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+	}
+
+	.meal-tab:hover,
+	.meal-tab:focus-visible,
+	.meal-tab.active {
+		border-color: var(--accent);
+		color: var(--accent);
+		transform: translateY(-1px);
+	}
+
+	.music-controls {
+		display: flex;
+		align-items: center;
+		gap: 0.45rem;
+		flex-wrap: wrap;
+	}
+
+	.music-label {
+		font-size: 0.8rem;
+		color: var(--text-muted);
+		margin-right: 0.25rem;
+	}
+
+	.music-btn {
+		appearance: none;
+		font: inherit;
+		font-size: 0.75rem;
+		color: var(--text);
+		background: rgba(10, 15, 27, 0.7);
+		border: 1px solid var(--border);
+		padding: 0.36rem 0.58rem;
+		border-radius: 0.55rem;
+		cursor: pointer;
+	}
+
+	.music-btn.active,
+	.music-btn:hover,
+	.music-btn:focus-visible {
+		border-color: var(--accent);
+		color: var(--accent);
+	}
+
+	.music-dock {
+		padding: 0.9rem;
+		display: grid;
+		gap: 0.65rem;
+	}
+
+	.music-dock-head h2 {
+		margin: 0;
+		font-size: 1rem;
+	}
+
+	.music-dock-head p {
+		margin: 0.3rem 0 0;
+		font-size: 0.82rem;
+		color: var(--text-muted);
+	}
+
+	.music-dock-controls {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		gap: 0.5rem;
+	}
+
+	.music-dock-controls input {
+		font: inherit;
+		color: var(--text);
+		background: #060c19;
+		border: 1px solid var(--border);
+		border-radius: 0.6rem;
+		padding: 0.5rem 0.65rem;
+	}
+
+	.music-dock-controls button {
+		font: inherit;
+		color: var(--text);
+		background: rgba(11, 17, 31, 0.85);
+		border: 1px solid var(--border);
+		border-radius: 0.6rem;
+		padding: 0.5rem 0.7rem;
+		cursor: pointer;
+	}
+
+	.music-dock-controls button:hover,
+	.music-dock-controls button:focus-visible {
+		border-color: var(--accent);
+		color: var(--accent);
+	}
+
+	.youtube-wrap {
+		border: 1px solid var(--border);
+		border-radius: 0.8rem;
+		overflow: hidden;
+		aspect-ratio: 16 / 9;
+		background: #03070f;
+	}
+
+	.youtube-wrap iframe {
+		width: 100%;
+		height: 100%;
+		border: 0;
+	}
+
+	.meal-panels {
+		display: grid;
+		gap: 1rem;
+	}
+
+	.meal-panel {
+		padding: 1rem;
+		border-color: color-mix(in srgb, var(--meal-accent) 24%, var(--border));
+	}
+
+	.meal-panel.active {
+		animation: meal-in 220ms ease-out;
+	}
+
+	@keyframes meal-in {
+		from {
+			opacity: 0;
+			transform: translateY(6px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.panel-head h2 {
+		margin: 0;
+		font-size: 1.35rem;
+	}
+
+	.panel-head p {
+		margin: 0.4rem 0 0.9rem;
+		color: var(--text-muted);
+	}
+
+	.mission-action-dock {
+		display: none;
+	}
+
+	.action-pill {
+		appearance: none;
+		font: inherit;
+		font-size: 0.78rem;
+		border-radius: 999px;
+		border: 1px solid var(--border);
+		background: rgba(7, 13, 24, 0.85);
+		color: var(--text);
+		padding: 0.3rem 0.62rem;
+		cursor: pointer;
+	}
+
+	.action-pill:hover,
+	.action-pill:focus-visible {
+		color: var(--meal-accent);
+		border-color: var(--meal-accent);
+	}
+
+	.mission-grid {
+		display: grid;
+		grid-template-columns: 1.3fr 1fr;
+		gap: 0.9rem;
+	}
+
+	.terminal-card,
+	.commands-card,
+	.guide-card {
+		border: 1px solid var(--border);
+		background: rgba(9, 15, 28, 0.74);
+		border-radius: 0.9rem;
+		padding: 0.9rem;
+	}
+
+	.terminal-card h3,
+	.commands-card h3,
+	.guide-card h3 {
+		margin: 0;
+		font-size: 1rem;
+	}
+
+	.drawer-head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.6rem;
+	}
+
+	.drawer-close-btn {
+		display: none;
+		appearance: none;
+		border: 1px solid var(--border);
+		background: rgba(7, 13, 24, 0.86);
+		color: var(--text);
+		border-radius: 0.52rem;
+		font: inherit;
+		padding: 0.22rem 0.45rem;
+		cursor: pointer;
+	}
+
+	.drawer-close-btn:hover,
+	.drawer-close-btn:focus-visible {
+		color: var(--meal-accent);
+		border-color: var(--meal-accent);
+	}
+
+	.muted {
+		color: var(--text-muted);
+		font-size: 0.83rem;
+		margin: 0.4rem 0 0.75rem;
+	}
+
+	.prompt-line {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: 0.55rem;
+		padding: 0.6rem 0.75rem;
+		border-radius: 0.65rem;
+		background: #060c19;
+		border: 1px solid var(--border);
+		margin-bottom: 0.65rem;
+		overflow-x: auto;
+	}
+
+	.prompt-prefix {
+		color: var(--meal-accent);
+	}
+
+	.input-row {
+		display: grid;
+		grid-template-columns: 1fr auto auto auto;
+		gap: 0.5rem;
+		align-items: center;
+	}
+
+	.input-row input {
+		font: inherit;
+		color: var(--text);
+		background: #060c19;
+		border: 1px solid var(--border);
+		border-radius: 0.65rem;
+		padding: 0.52rem 0.62rem;
+	}
+
+	.input-row button,
+	.guide-toggle {
+		font: inherit;
+		color: var(--text);
+		background: rgba(11, 17, 31, 0.85);
+		border: 1px solid var(--border);
+		border-radius: 0.58rem;
+		padding: 0.45rem 0.58rem;
+		cursor: pointer;
+	}
+
+	.input-row button:hover,
+	.input-row button:focus-visible,
+	.guide-toggle:hover,
+	.guide-toggle:focus-visible {
+		border-color: var(--meal-accent);
+		color: var(--meal-accent);
+	}
+
+	.progress-wrap {
+		margin-top: 0.8rem;
+		height: 0.5rem;
+		border-radius: 999px;
+		border: 1px solid var(--border);
+		background: #060c19;
+		overflow: hidden;
+	}
+
+	.progress-bar {
+		height: 100%;
+		width: 0;
+		background: linear-gradient(90deg, var(--meal-accent), color-mix(in srgb, var(--meal-accent), white 14%));
+		transition: width 0.24s ease;
+	}
+
+	.progress-text {
+		font-size: 0.8rem;
+		margin: 0.45rem 0 0;
+		color: var(--text-muted);
+	}
+
+	.terminal-log {
+		list-style: none;
+		padding: 0;
+		margin: 0.8rem 0 0;
+		display: grid;
+		gap: 0.35rem;
+	}
+
+	.terminal-log li {
+		font-size: 0.82rem;
+		padding: 0.45rem 0.55rem;
+		border-radius: 0.5rem;
+		border: 1px solid var(--border);
+		background: rgba(5, 10, 19, 0.8);
+	}
+
+	.log-success {
+		color: #7de3bc;
+	}
+
+	.log-failure {
+		color: #ff9f95;
+	}
+
+	.command-chip-grid {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.45rem;
+	}
+
+	.command-chip {
+		max-width: 100%;
+		font: inherit;
+		font-size: 0.78rem;
+		padding: 0.35rem 0.5rem;
+		border-radius: 0.46rem;
+		background: #060c19;
+		border: 1px solid var(--border);
+		color: var(--text);
+		cursor: pointer;
+		text-align: left;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.command-chip.done {
+		border-color: var(--meal-accent);
+		color: var(--meal-accent);
+		background: color-mix(in srgb, var(--meal-accent) 15%, #060c19);
+	}
+
+	.command-intel-card {
+		margin-top: 0.9rem;
+		border: 1px solid var(--border);
+		background: rgba(9, 15, 28, 0.74);
+		border-radius: 0.9rem;
+		padding: 0.9rem;
+	}
+
+	.study-upgrade-card {
+		margin-top: 0.9rem;
+		border: 1px solid var(--border);
+		background: rgba(9, 15, 28, 0.74);
+		border-radius: 0.9rem;
+		padding: 0.9rem;
+	}
+
+	.study-upgrade-head h3 {
+		margin: 0;
+		font-size: 1rem;
+	}
+
+	.study-upgrade-head p {
+		margin: 0.35rem 0 0.75rem;
+		font-size: 0.82rem;
+		color: var(--text-muted);
+	}
+
+	.study-upgrade-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 0.65rem;
+	}
+
+	.study-box {
+		border: 1px solid var(--border);
+		background: rgba(4, 9, 18, 0.8);
+		border-radius: 0.7rem;
+		padding: 0.65rem;
+	}
+
+	.study-box h4 {
+		margin: 0 0 0.45rem;
+		font-size: 0.8rem;
+		color: var(--meal-accent);
+	}
+
+	.study-box ul {
+		margin: 0;
+		padding-left: 1rem;
+		font-size: 0.82rem;
+		display: grid;
+		gap: 0.35rem;
+	}
+
+	.study-box li code {
+		font-size: 0.9em;
+	}
+
+	.topic-chip-grid {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+	}
+
+	.topic-chip {
+		font-size: 0.76rem;
+		border: 1px solid var(--border);
+		background: #060c19;
+		border-radius: 999px;
+		padding: 0.2rem 0.5rem;
+	}
+
+	.resource-list {
+		list-style: none;
+		padding: 0;
+	}
+
+	.resource-list a {
+		color: var(--text);
+		text-decoration: none;
+		border-bottom: 1px dashed color-mix(in srgb, var(--meal-accent) 45%, var(--border));
+	}
+
+	.resource-list a:hover,
+	.resource-list a:focus-visible {
+		color: var(--meal-accent);
+	}
+
+	.command-intel-card h3 {
+		margin: 0 0 0.65rem;
+		font-size: 1rem;
+	}
+
+	.intel-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.65rem;
+	}
+
+	.intel-box {
+		border: 1px solid var(--border);
+		background: rgba(4, 9, 18, 0.8);
+		border-radius: 0.7rem;
+		padding: 0.65rem;
+	}
+
+	.intel-box h4 {
+		margin: 0 0 0.45rem;
+		font-size: 0.8rem;
+		color: var(--meal-accent);
+	}
+
+	.intel-box p,
+	.intel-box pre {
+		margin: 0;
+		font-size: 0.82rem;
+		color: var(--text);
+		line-height: 1.5;
+		white-space: pre-wrap;
+		word-break: break-word;
+	}
+
+	.guide-card {
+		margin-top: 0.9rem;
+	}
+
+	.guide-head {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 0.6rem;
+	}
+
+	.drawer-backdrop {
+		position: fixed;
+		inset: 0;
+		border: 0;
+		margin: 0;
+		padding: 0;
+		background: rgba(3, 7, 12, 0.62);
+		backdrop-filter: blur(2px);
+		z-index: 170;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.2s ease;
+	}
+
+	.drawer-backdrop.open {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	.guide-body {
+		margin-top: 0.9rem;
+		border-top: 1px solid var(--border);
+		padding-top: 0.8rem;
+	}
+
+	.guide-meta {
+		font-size: 0.76rem;
+		color: var(--text-muted);
+		margin-bottom: 0.7rem;
+	}
+
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		border: 0;
+	}
+
+	.markdown-content {
+		line-height: 1.66;
+	}
+
+	.markdown-content pre {
+		background: #000;
+		padding: 0.95rem;
+		border-radius: 0.6rem;
+		overflow-x: auto;
+		border: 1px solid var(--border);
+		position: relative;
+		margin: 1rem 0;
+	}
+
+	.markdown-content code {
+		background: #1a253a;
+		padding: 0.17rem 0.36rem;
+		border-radius: 0.26rem;
+		font-family: inherit;
+		font-size: 0.92em;
+	}
+
+	.markdown-content h3 {
+		color: var(--accent);
+		margin-top: 1.3rem;
+		margin-bottom: 0.45rem;
+	}
+
+	.markdown-content li {
+		margin-bottom: 0.35rem;
+	}
+
+	@media (max-width: 960px) {
+		.mission-grid {
+			grid-template-columns: 1fr;
+		}
+		.intel-grid {
+			grid-template-columns: 1fr;
+		}
+		.study-upgrade-grid {
+			grid-template-columns: 1fr;
+		}
+		.mission-action-dock {
+			display: flex;
+			gap: 0.45rem;
+			flex-wrap: wrap;
+			margin: 0.25rem 0 0.85rem;
+		}
+		.mobile-drawer-panel {
+			position: fixed;
+			left: 0.55rem;
+			right: 0.55rem;
+			bottom: 0.4rem;
+			max-height: 78dvh;
+			overflow-y: auto;
+			z-index: 180;
+			transform: translateY(108%);
+			transition: transform 0.24s ease;
+			pointer-events: none;
+			margin: 0;
+			border-radius: 0.95rem 0.95rem 0.4rem 0.4rem;
+			box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+		}
+		.mobile-drawer-panel.open {
+			transform: translateY(0);
+			pointer-events: auto;
+		}
+		.drawer-close-btn {
+			display: inline-flex;
+		}
+		.music-dock {
+			padding-bottom: 1rem;
+		}
+		.guide-head {
+			flex-direction: column;
+			align-items: stretch;
+		}
+		.guide-head .drawer-head {
+			width: 100%;
+		}
+	}
+
+	@media (max-width: 720px) {
+		.input-row {
+			grid-template-columns: 1fr 1fr;
+		}
+		.input-row input {
+			grid-column: 1 / -1;
+		}
+		.music-dock-controls {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 180" role="img" aria-label="30 Days of Linux Fundamentals logo">
+  <rect width="720" height="180" rx="20" fill="#040d1d"/>
+  <text x="26" y="90" fill="#7cd1ff" font-size="38" font-family="JetBrains Mono, monospace">$ ./linux-30-days</text>
+  <rect x="30" y="108" width="220" height="16" rx="8" fill="#1c3f6b"/>
+  <rect x="30" y="108" width="164" height="16" rx="8" fill="#79d5ff"/>
+  <text x="276" y="92" fill="#edf4ff" font-size="40" font-family="Inter, Arial, sans-serif" font-weight="700">Linux Fundamentals</text>
+  <text x="276" y="124" fill="#b8cde7" font-size="22" font-family="Inter, Arial, sans-serif">30-day structured command line journey</text>
+</svg>

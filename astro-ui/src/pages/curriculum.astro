@@ -1,0 +1,500 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import MainLayout from '../layouts/MainLayout.astro';
+import { COURSE_WEEKS, TOTAL_DAYS, getWeekForDay } from '../lib/course';
+
+const lessonsDir = path.join(process.cwd(), 'src/content/lessons');
+const mealMap = new Map<number, Set<string>>();
+
+if (fs.existsSync(lessonsDir)) {
+  for (const file of fs.readdirSync(lessonsDir)) {
+    const match = file.match(/^day-(\d+)-(breakfast|lunch|dinner)/);
+    if (!match) continue;
+    const day = Number.parseInt(match[1] || '', 10);
+    const meal = match[2];
+    if (day < 1 || day > TOTAL_DAYS || !meal) continue;
+
+    if (!mealMap.has(day)) mealMap.set(day, new Set());
+    mealMap.get(day)?.add(meal);
+  }
+}
+
+const days = Array.from({ length: TOTAL_DAYS }, (_, idx) => {
+  const day = idx + 1;
+  const week = getWeekForDay(day);
+  const meals = mealMap.get(day) ?? new Set<string>();
+  return {
+    day,
+    weekId: week?.id ?? 0,
+    mealCount: meals.size,
+    hasBreakfast: meals.has('breakfast'),
+    hasLunch: meals.has('lunch'),
+    hasDinner: meals.has('dinner'),
+  };
+});
+
+const lessonsAvailable = days.reduce((sum, item) => sum + item.mealCount, 0);
+---
+
+<MainLayout
+  title="Linux Curriculum Control Center | 30 Days"
+  description="Navigate all 30 Linux learning days with week-level progress, meal coverage, and quick resume controls."
+  activeNav="curriculum"
+>
+  <section class="section surface curriculum-hero">
+    <div>
+      <p class="eyebrow">Curriculum Control Center</p>
+      <h1>30-day Linux roadmap</h1>
+      <p class="muted">
+        Track progress, jump directly into any day, and keep momentum with a consistent study rhythm.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="/day/1">Start Day 1</a>
+        <a class="btn" href="/" data-go-home>Home Overview</a>
+        <a class="btn" href="/day/1" data-resume-link>Resume Next Day</a>
+      </div>
+      <p class="muted hero-note" data-progress-note>Progress metrics update automatically as you train commands.</p>
+    </div>
+    <aside class="hero-metrics" aria-label="Curriculum metrics">
+      <div class="metric">
+        <span>Total Days</span>
+        <strong>{TOTAL_DAYS}</strong>
+      </div>
+      <div class="metric">
+        <span>Weeks</span>
+        <strong>{COURSE_WEEKS.length}</strong>
+      </div>
+      <div class="metric">
+        <span>Guide Files Found</span>
+        <strong>{lessonsAvailable}</strong>
+      </div>
+      <div class="metric">
+        <span>Expected Guides</span>
+        <strong>{TOTAL_DAYS * 3}</strong>
+      </div>
+    </aside>
+  </section>
+
+  <section class="section weeks-grid" aria-label="Weekly curriculum">
+    {COURSE_WEEKS.map((week) => {
+      const weekDays = days.filter((day) => day.weekId === week.id);
+      return (
+        <article class="surface week-panel" data-week={week.id}>
+          <header class="week-head">
+            <div>
+              <p class="eyebrow">Week {week.id}</p>
+              <h2>{week.title}</h2>
+              <p class="muted">{week.summary}</p>
+              <p class="muted week-range">Days {week.startDay}-{week.endDay}</p>
+            </div>
+            <div class="week-progress" aria-label={`Week ${week.id} completion`}>
+              <strong data-week-label={week.id}>0%</strong>
+              <div class="progress-track">
+                <span data-week-bar={week.id}></span>
+              </div>
+            </div>
+          </header>
+
+          <div class="day-grid">
+            {weekDays.map((item) => (
+              <article class="day-card" data-day-card data-day={item.day}>
+                <div class="day-card-top">
+                  <h3>Day {item.day}</h3>
+                  <span class="badge" data-status-badge={item.day}>Not started</span>
+                </div>
+                <p class="meal-row" aria-label={`Day ${item.day} meal guides`}>
+                  <span class:list={['meal-chip', item.hasBreakfast && 'available']}>Breakfast</span>
+                  <span class:list={['meal-chip', item.hasLunch && 'available']}>Lunch</span>
+                  <span class:list={['meal-chip', item.hasDinner && 'available']}>Dinner</span>
+                </p>
+                <p class="muted meal-count">{item.mealCount}/3 guide files available</p>
+                <div class="day-actions">
+                  <a href={`/day/${item.day}`} class="btn small">Open Day</a>
+                  <button class="btn small ghost" type="button" data-toggle-complete={item.day}>Toggle Complete</button>
+                </div>
+              </article>
+            ))}
+          </div>
+        </article>
+      );
+    })}
+  </section>
+</MainLayout>
+
+<script>
+  const PROGRESS_KEY = 'linux30-course-progress-v1';
+
+  function clampDay(day) {
+    return Math.max(1, Math.min(30, Number(day) || 1));
+  }
+
+  function normalizeProgress(progress) {
+    const completedDays = Array.isArray(progress?.completedDays)
+      ? progress.completedDays.map((value) => clampDay(value))
+      : [];
+    return {
+      completedDays: Array.from(new Set(completedDays)).sort((a, b) => a - b),
+      lastVisitedDay: clampDay(progress?.lastVisitedDay || 1),
+      updatedAt: progress?.updatedAt || new Date().toISOString(),
+    };
+  }
+
+  function loadProgress() {
+    try {
+      return normalizeProgress(JSON.parse(localStorage.getItem(PROGRESS_KEY) || 'null'));
+    } catch (_error) {
+      return normalizeProgress(null);
+    }
+  }
+
+  function saveProgress(progress) {
+    const value = normalizeProgress(progress);
+    value.updatedAt = new Date().toISOString();
+    localStorage.setItem(PROGRESS_KEY, JSON.stringify(value));
+    return value;
+  }
+
+  function weekRange(weekId) {
+    if (weekId === 1) return { start: 1, end: 7 };
+    if (weekId === 2) return { start: 8, end: 14 };
+    if (weekId === 3) return { start: 15, end: 21 };
+    if (weekId === 4) return { start: 22, end: 28 };
+    return { start: 29, end: 30 };
+  }
+
+  function renderProgress(progress) {
+    const completed = new Set(progress.completedDays);
+
+    document.querySelectorAll('[data-day-card]').forEach((card) => {
+      const day = Number(card.getAttribute('data-day') || 0);
+      if (!day) return;
+
+      const badge = card.querySelector(`[data-status-badge="${day}"]`);
+      const isComplete = completed.has(day);
+      const isActive = day === progress.lastVisitedDay;
+
+      card.classList.toggle('complete', isComplete);
+      card.classList.toggle('active', isActive);
+
+      if (badge instanceof HTMLElement) {
+        badge.textContent = isComplete ? 'Complete' : isActive ? 'In progress' : 'Not started';
+      }
+    });
+
+    document.querySelectorAll('[data-week]').forEach((weekPanel) => {
+      const weekId = Number(weekPanel.getAttribute('data-week') || 0);
+      if (!weekId) return;
+      const range = weekRange(weekId);
+      const totalDays = range.end - range.start + 1;
+      let completeCount = 0;
+      for (let day = range.start; day <= range.end; day += 1) {
+        if (completed.has(day)) completeCount += 1;
+      }
+      const percent = Math.round((completeCount / totalDays) * 100);
+
+      const label = weekPanel.querySelector(`[data-week-label="${weekId}"]`);
+      const bar = weekPanel.querySelector(`[data-week-bar="${weekId}"]`);
+      if (label instanceof HTMLElement) label.textContent = `${percent}%`;
+      if (bar instanceof HTMLElement) bar.style.width = `${percent}%`;
+    });
+
+    const resumeLink = document.querySelector('[data-resume-link]');
+    const progressNote = document.querySelector('[data-progress-note]');
+    if (resumeLink instanceof HTMLAnchorElement) {
+      const maxComplete = progress.completedDays.length > 0 ? Math.max(...progress.completedDays) : 0;
+      const nextDay = clampDay(maxComplete + 1);
+      resumeLink.href = `/day/${nextDay}`;
+    }
+    if (progressNote instanceof HTMLElement) {
+      progressNote.textContent = `Completed days: ${progress.completedDays.length}. Last visited: Day ${progress.lastVisitedDay}.`;
+    }
+  }
+
+  function initCurriculumProgress() {
+    let progress = loadProgress();
+    renderProgress(progress);
+
+    document.querySelectorAll('[data-toggle-complete]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const day = Number(button.getAttribute('data-toggle-complete') || 0);
+        if (!day) return;
+
+        const set = new Set(progress.completedDays);
+        if (set.has(day)) {
+          set.delete(day);
+        } else {
+          set.add(day);
+        }
+
+        progress = saveProgress({
+          ...progress,
+          completedDays: Array.from(set),
+          lastVisitedDay: progress.lastVisitedDay || day,
+        });
+
+        renderProgress(progress);
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initCurriculumProgress);
+  document.addEventListener('astro:page-load', initCurriculumProgress);
+</script>
+
+<style>
+  h1 {
+    margin: 0.3rem 0 0.5rem;
+    font-size: clamp(1.7rem, 4.9vw, 2.6rem);
+  }
+
+  h2 {
+    margin: 0.1rem 0 0.4rem;
+    font-size: clamp(1.15rem, 3vw, 1.55rem);
+  }
+
+  .curriculum-hero {
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .hero-actions {
+    margin-top: 0.9rem;
+    display: flex;
+    gap: 0.55rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-note {
+    margin: 0.75rem 0 0;
+    font-size: 0.79rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 0.65rem;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.8rem;
+    background: rgba(8, 14, 24, 0.75);
+    cursor: pointer;
+  }
+
+  .btn:hover,
+  .btn:focus-visible {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .btn-primary {
+    border-color: transparent;
+    color: #03131a;
+    background: linear-gradient(120deg, var(--accent), var(--accent-strong));
+    font-weight: 700;
+  }
+
+  .btn-primary:hover,
+  .btn-primary:focus-visible {
+    color: #03131a;
+    border-color: transparent;
+    filter: brightness(1.06);
+  }
+
+  .small {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.55rem;
+  }
+
+  .ghost {
+    background: transparent;
+  }
+
+  .hero-metrics {
+    border: 1px solid var(--border);
+    border-radius: 0.9rem;
+    padding: 0.75rem;
+    background: rgba(6, 10, 19, 0.84);
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .metric {
+    border: 1px solid var(--border);
+    border-radius: 0.6rem;
+    padding: 0.45rem 0.55rem;
+    background: rgba(3, 9, 18, 0.82);
+  }
+
+  .metric span {
+    display: block;
+    font-size: 0.74rem;
+    color: var(--text-muted);
+  }
+
+  .metric strong {
+    font-size: 1rem;
+  }
+
+  .weeks-grid {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .week-panel {
+    padding: 0.9rem;
+  }
+
+  .week-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: end;
+  }
+
+  .week-range {
+    margin: 0.2rem 0 0;
+    font-size: 0.8rem;
+  }
+
+  .week-progress {
+    min-width: 160px;
+  }
+
+  .week-progress strong {
+    display: block;
+    text-align: right;
+    font-size: 0.85rem;
+    color: var(--accent);
+    margin-bottom: 0.2rem;
+  }
+
+  .progress-track {
+    width: 100%;
+    height: 0.55rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    overflow: hidden;
+    background: #071020;
+  }
+
+  .progress-track span {
+    display: block;
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+    transition: width 0.25s ease;
+  }
+
+  .day-grid {
+    margin-top: 0.85rem;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.55rem;
+  }
+
+  .day-card {
+    border: 1px solid var(--border);
+    border-radius: 0.7rem;
+    background: rgba(5, 11, 21, 0.78);
+    padding: 0.55rem;
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .day-card.active {
+    border-color: #e8cd7e;
+    box-shadow: 0 0 0 1px rgba(232, 205, 126, 0.32);
+  }
+
+  .day-card.complete {
+    border-color: #6edab4;
+    background: rgba(5, 17, 22, 0.8);
+  }
+
+  .day-card-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.4rem;
+    align-items: center;
+  }
+
+  .day-card h3 {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  .badge {
+    font-size: 0.68rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.14rem 0.4rem;
+    color: var(--text-muted);
+  }
+
+  .meal-row {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+
+  .meal-chip {
+    font-size: 0.66rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.14rem 0.34rem;
+    color: var(--text-muted);
+    background: rgba(2, 8, 16, 0.7);
+  }
+
+  .meal-chip.available {
+    color: #9fe7ff;
+    border-color: rgba(87, 213, 255, 0.4);
+  }
+
+  .meal-count {
+    margin: 0;
+    font-size: 0.7rem;
+  }
+
+  .day-actions {
+    display: flex;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 1040px) {
+    .day-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 900px) {
+    .curriculum-hero {
+      grid-template-columns: 1fr;
+    }
+
+    .day-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    .day-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 420px) {
+    .day-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
