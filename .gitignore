@@ -1,0 +1,30 @@
+# OS/editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Local Codex metadata
+.codex
+**/.codex
+
+# Node/Astro/Vite generated content
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+.astro/
+**/.astro/
+.vite/
+**/.vite/
+.netlify/
+**/.netlify/
+.vercel/
+**/.vercel/
+coverage/
+**/coverage/
+
+# Env files
+.env
+.env.*
+!.env.example

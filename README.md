@@ -10,6 +10,45 @@
 ```
 **And choose the week, day, and lesson accordingly. At the end of each lesson while using the control-panel app you will be returned to the main menu**
 
+## Repository Layout
+
+- `week-1` through `week-5`: shell lessons and study guides.
+- `control-panel`: native launcher for navigating lessons quickly.
+- `astro-ui/`: Astro frontend app for the web experience.
+
+## Development Workflow
+
+### Root course content
+
+Use the existing lesson files and the control panel from the repository root.
+
+### Astro UI (`astro-ui/`)
+
+```bash
+cd astro-ui
+npm install
+npm run dev
+```
+
+## Git Hygiene (Important)
+
+This repository now ignores generated/dependency artifacts so commits stay clean:
+
+- `node_modules/`
+- `.astro/`
+- `dist/`
+- `.vite/`
+- `.netlify/`
+- `.vercel/`
+- `coverage/`
+
+If any of those were committed in the past, untrack them once:
+
+```bash
+git rm -r --cached astro-ui/node_modules astro-ui/.astro
+git commit -m "chore: stop tracking generated Astro dependencies/build artifacts"
+```
+
 ## Introduction
 
 Welcome to the **30 Days of Linux Fundamentals** program! This self-paced course is designed to take you on a journey from beginner to advanced levels of Linux proficiency over four and a half weeks. Whether you're completely new to Linux or have some prior knowledge, this course is structured to enhance your understanding and skills in Linux.
