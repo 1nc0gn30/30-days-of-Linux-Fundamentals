@@ -1,17 +1,16 @@
----
-export const prerender = false;
-
 import MainLayout from '../../layouts/MainLayout.astro';
 import fs from 'node:fs';
 import path from 'node:path';
 import { getNextDay, getPreviousDay, TOTAL_DAYS } from '../../lib/course';
 
+export function getStaticPaths() {
+	return Array.from({ length: TOTAL_DAYS }, (_, idx) => ({
+		params: { id: String(idx + 1) },
+	}));
+}
+
 const { id } = Astro.params;
 const dayNum = Number.parseInt(id ?? '', 10);
-
-if (!Number.isInteger(dayNum) || dayNum < 1 || dayNum > TOTAL_DAYS) {
-	return Astro.redirect('/curriculum');
-}
 
 const previousDay = getPreviousDay(dayNum);
 const nextDay = getNextDay(dayNum);

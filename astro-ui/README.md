@@ -11,6 +11,16 @@ npm run build
 npm run preview
 ```
 
+## Netlify Settings
+
+Configure the Netlify site with:
+
+- Base directory: `astro-ui`
+- Build command: `npm run build`
+- Publish directory: `dist`
+
+Canonical production domain should be a `*.nealfrazier.tech` subdomain. This is set in [`astro.config.mjs`](./astro.config.mjs) via `site`.
+
 ## Git Notes
 
 Do not commit generated files from local runs. The repository `.gitignore` is configured to ignore:
