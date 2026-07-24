@@ -1,9 +1,9 @@
 <!-- xonettn -->
 <div align="center">
 
-# 📚 30 Days Of Linux Fundamentals
+# 📚 30 Days of Linux Fundamentals
 
-Welcome to the 30 Days of Linux Fundamentals. Get ready to learn Linux Commands that will expand your workflow dramatically!
+**In the root directory of 30-Days-Of-Linux-Fundamentals run**
 
 
 ![Deploy](https://img.shields.io/badge/Deployed-Netlify-00C7B7?logo=netlify&logoColor=white)
@@ -11,36 +11,6 @@ Welcome to the 30 Days of Linux Fundamentals. Get ready to learn Linux Commands 
 </div>
 
 ---
-
-## 📋 Overview
-Welcome to the 30 Days of Linux Fundamentals. Get ready to learn Linux Commands that will expand your workflow dramatically!
-
-## 📦 Tech Stack
-- C
-
-## 🗂️ Project Structure
-```
-30-days-of-Linux-Fundamentals/
-  - astro-ui
-  - week-1
-  - week-2
-  - week-3
-  - week-4
-  - week-5
-  (364 files total)
-```
-
-## 🚀 Getting Started
-
-### 📖 Usage
-Open index.html in your browser or serve locally.
-Use: npx serve .
-
-## 📂 Original README
-<details>
-<summary>Click to expand original README</summary>
-
-# 30 Days of Linux Fundamentals
 
 <img src="30-Days-Of-Linux-Fundamentals-Logo.png" alt="30 Days Of Linux Fundamentals" width="500" height="500">
 
@@ -264,29 +234,6 @@ Additional Resources
 - [Linux Command Line Basics](https://linuxjourney.com/)
 
 <p>Embark on this exciting journey and become proficient in Linux over the next 30 days. Let's get started!</p>
-
-</details>
-
-## 📝 TODO / Roadmap
-- [ ] Add unit tests
-- [ ] Add LICENSE file
-- [ ] Add CI/CD pipeline
-- [ ] Add contribution guidelines (CONTRIBUTING.md)
-- [ ] Improve error handling and edge cases
-- [ ] Add environment variable documentation
-- [ ] Add code comments and inline documentation
-
-## 🚀 Deployment
-This project can be deployed to Netlify, Vercel, or any static host.
-
-## 👤 Author
-**Neal Frazier** - [@AshAmplifies](https://github.com/1nc0gn30)
-
-## 🔗 Links
-- GitHub: https://github.com/1nc0gn30/30-days-of-Linux-Fundamentals
-
----
-*This README was enhanced as part of the neals-projects-2026 batch update.*
 
 ---
 
