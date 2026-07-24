@@ -1,14 +1,24 @@
-# 30-days-of-Linux-Fundamentals
+<!-- xonettn -->
+<div align="center">
+
+# 📚 30 Days Of Linux Fundamentals
 
 Welcome to the 30 Days of Linux Fundamentals. Get ready to learn Linux Commands that will expand your workflow dramatically!
 
-## Overview
+
+![Deploy](https://img.shields.io/badge/Deployed-Netlify-00C7B7?logo=netlify&logoColor=white)
+
+</div>
+
+---
+
+## 📋 Overview
 Welcome to the 30 Days of Linux Fundamentals. Get ready to learn Linux Commands that will expand your workflow dramatically!
 
-## Tech Stack
+## 📦 Tech Stack
 - C
 
-## Project Structure
+## 🗂️ Project Structure
 ```
 30-days-of-Linux-Fundamentals/
   - astro-ui
@@ -20,13 +30,13 @@ Welcome to the 30 Days of Linux Fundamentals. Get ready to learn Linux Commands 
   (364 files total)
 ```
 
-## Getting Started
+## 🚀 Getting Started
 
-### Usage
+### 📖 Usage
 Open index.html in your browser or serve locally.
 Use: npx serve .
 
-## Original README
+## 📂 Original README
 <details>
 <summary>Click to expand original README</summary>
 
@@ -48,7 +58,7 @@ Use: npx serve .
 - `control-panel`: native launcher for navigating lessons quickly.
 - `astro-ui/`: Astro frontend app for the web experience.
 
-## Development Workflow
+## 💻 Development Workflow
 
 ### Root course content
 
@@ -62,7 +72,7 @@ npm install
 npm run dev
 ```
 
-## Git Hygiene (Important)
+## ⚠️ Git Hygiene (Important)
 
 This repository now ignores generated/dependency artifacts so commits stay clean:
 
@@ -85,9 +95,9 @@ git commit -m "chore: stop tracking generated Astro dependencies/build artifacts
 
 Welcome to the **30 Days of Linux Fundamentals** program! This self-paced course is designed to take you on a journey from beginner to advanced levels of Linux proficiency over four and a half weeks. Whether you're completely new to Linux or have some prior knowledge, this course is structured to enhance your understanding and skills in Linux.
 
-## Course Overview
+## 📋 Course Overview
 
-### Structure
+### 🗂️ Structure
 
 - **Duration**: 4.5 weeks
 - **Pacing**: Self-paced
@@ -98,14 +108,14 @@ Welcome to the **30 Days of Linux Fundamentals** program! This self-paced course
 
 Each day is divided into three parts—Breakfast, Lunch, and Dinner—to ensure a steady and manageable learning pace.
 
-### Requirements for Linux Setup
+### ⚙️ Requirements for Linux Setup
 
 - **No Prior Linux Experience Required**: Although familiarity with Linux or basic tech knowledge is beneficial, it is not required.
 - **Recommended Setup**:
   - **Operating System**: CentOS, or any Linux distribution of your choice.
   - **Environment**: VirtualBox, VMware, or USB drive.
 
-### Getting Started
+### 🚀 Getting Started
 
 To begin the course, you'll need to set up your Linux environment. You can do this using a virtual machine such as VirtualBox or VMware, or by running Linux directly from a USB drive. Below are step-by-step instructions for both options, and several Linux distributions to choose from.
 
@@ -175,7 +185,7 @@ If you'd prefer to run Linux natively from your hardware without installing it, 
 - **Parrot OS**: An alternative to Kali for penetration testing, with more focus on usability.
 - **Manjaro**: A good Arch-based system that is easier to use, with a focus on user-friendliness.
 
-### General Troubleshooting Tips
+### 🔧 General Troubleshooting Tips
 
 - **VirtualBox Issues**: Ensure that **hardware virtualization** (VT-x or AMD-V) is enabled in your BIOS settings.
 - **Low Performance**: Increase RAM or CPU cores allocated to your virtual machine.
@@ -187,7 +197,7 @@ These instructions should help you set up a Linux environment that fits your nee
 
 Each day's study guides are divided into Breakfast, Lunch, and Dinner sections, ensuring comprehensive coverage of Linux fundamentals.
 
-### Running Lessons Per Day
+### 🚀 Running Lessons Per Day
 
 To run the lesson for each meal, use the following commands in your terminal:
 
@@ -257,7 +267,7 @@ Additional Resources
 
 </details>
 
-## TODO / Roadmap
+## 📝 TODO / Roadmap
 - [ ] Add unit tests
 - [ ] Add LICENSE file
 - [ ] Add CI/CD pipeline
@@ -266,14 +276,22 @@ Additional Resources
 - [ ] Add environment variable documentation
 - [ ] Add code comments and inline documentation
 
-## Deployment
+## 🚀 Deployment
 This project can be deployed to Netlify, Vercel, or any static host.
 
-## Author
+## 👤 Author
 **Neal Frazier** - [@AshAmplifies](https://github.com/1nc0gn30)
 
-## Links
+## 🔗 Links
 - GitHub: https://github.com/1nc0gn30/30-days-of-Linux-Fundamentals
 
 ---
 *This README was enhanced as part of the neals-projects-2026 batch update.*
+
+---
+
+<div align="center">
+
+**[xonettn]** · Built by [Neal Frazier](https://github.com/1nc0gn30) · [@AshAmplifies](https://twitter.com/AshAmplifies)
+
+</div>
