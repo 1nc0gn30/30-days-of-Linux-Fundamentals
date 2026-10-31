@@ -159,7 +159,6 @@ Each day's study guides are divided into Breakfast, Lunch, and Dinner sections, 
 
 To run the lesson for each meal, use the following commands in your terminal:
 
-
 1. cd 30-Days-Of-Linux
 2. cd week-*
 3. cd day*
