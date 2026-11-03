@@ -77,7 +77,7 @@ echo "User: $user"
 echo "Path: $path"
 ```
 
-* This allows for custom flags like `-u zoth -p /home/zoth`
+* This allows for custom flags like `-u zoth -p ~`
 
 ---
 

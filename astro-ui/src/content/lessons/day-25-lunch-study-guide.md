@@ -72,7 +72,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 MAILTO="your@email.com"
 SHELL=/bin/bash
 
-0 2 * * * /home/zoth/scripts/backup.sh
+0 2 * * * ~/scripts/backup.sh
 ```
 
 ---

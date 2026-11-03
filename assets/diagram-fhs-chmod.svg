@@ -11,7 +11,7 @@
   <text x="68" y="174" fill="#39D353" font-size="14" font-family="JetBrains Mono, monospace">├── /bin   <tspan fill="#8B949E">Core user binaries (bash, ls, cp, mv, cat, grep)</tspan></text>
   <text x="68" y="200" fill="#39D353" font-size="14" font-family="JetBrains Mono, monospace">├── /sbin  <tspan fill="#8B949E">System admin binaries (iptables, fsck, sysctl, ip)</tspan></text>
   <text x="68" y="226" fill="#58A6FF" font-size="14" font-family="JetBrains Mono, monospace">├── /etc   <tspan fill="#8B949E">Host configs (passwd, fstab, ssh/sshd_config)</tspan></text>
-  <text x="68" y="252" fill="#58A6FF" font-size="14" font-family="JetBrains Mono, monospace">├── /home  <tspan fill="#8B949E">Operator workspaces (/home/zoth/.bashrc)</tspan></text>
+  <text x="68" y="252" fill="#58A6FF" font-size="14" font-family="JetBrains Mono, monospace">├── /home  <tspan fill="#8B949E">Operator workspaces (~/.bashrc)</tspan></text>
   <text x="68" y="278" fill="#D2A8FF" font-size="14" font-family="JetBrains Mono, monospace">├── /var   <tspan fill="#8B949E">Runtime logs &amp; spools (/var/log/syslog, auth.log)</tspan></text>
   <text x="68" y="304" fill="#D2A8FF" font-size="14" font-family="JetBrains Mono, monospace">├── /proc  <tspan fill="#8B949E">Virtual kernel &amp; PID telemetry (/proc/cpuinfo)</tspan></text>
   <text x="68" y="330" fill="#FF7B72" font-size="14" font-family="JetBrains Mono, monospace">├── /dev   <tspan fill="#8B949E">Hardware &amp; virtual device nodes (nvme0n1, null)</tspan></text>

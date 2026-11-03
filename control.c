@@ -421,7 +421,7 @@ void showVisualAtlas(int interactive) {
            "  ├── /bin -> /usr/bin   Essential user command binaries (ls, cp, bash, cat)\n"
            "  ├── /sbin -> /usr/sbin System administration binaries (iptables, fsck, mount)\n"
            "  ├── /etc               Host-specific system configuration (passwd, fstab, ssh/)\n"
-           "  ├── /home              User workspaces & dotfiles (/home/zoth/.bashrc)\n"
+           "  ├── /home              User workspaces & dotfiles (~/.bashrc)\n"
            "  ├── /var               Variable runtime data, spools & logs (/var/log/syslog)\n"
            "  ├── /proc              Virtual kernel & process telemetry (/proc/cpuinfo, /proc/PID)\n"
            "  ├── /dev               Device nodes (/dev/nvme0n1, /dev/null, /dev/urandom)\n"

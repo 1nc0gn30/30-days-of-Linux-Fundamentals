@@ -240,7 +240,7 @@ Nov 02 20:14:09 zoth-node sshd[4199]: Failed password for root from 198.51.100.4
 Nov 02 20:14:11 zoth-node sshd[4201]: Failed password for root from 198.51.100.42 port 39108 ssh2
 Nov 02 20:14:15 zoth-node sshd[4208]: Failed password for admin from 203.0.113.88 port 44120 ssh2
 Nov 02 20:14:18 zoth-node sshd[4215]: Failed password for root from 198.51.100.42 port 39119 ssh2
-Nov 02 20:14:22 zoth-node sudo[4250]:     zoth : TTY=pts/0 ; PWD=/home/zoth ; USER=root ; COMMAND=/usr/bin/ss -tulpen</pre>
+Nov 02 20:14:22 zoth-node sudo[4250]:     zoth : TTY=pts/0 ; PWD=~ ; USER=root ; COMMAND=/usr/bin/ss -tulpen</pre>
       </div>
     </article>
   </section>
@@ -423,7 +423,7 @@ Nov 02 20:14:22 zoth-node sudo[4250]:     zoth : TTY=pts/0 ; PWD=/home/zoth ; US
         title: '/home — Operator Home Directories & Dotfiles',
         days: 'Days 01, 05, 20, 21',
         desc: 'Personal workspaces for non-root users, storing SSH keys, shell configurations (~/.bashrc), and project repositories.',
-        files: '/home/zoth/.bashrc, /home/zoth/.profile, /home/zoth/.ssh/authorized_keys',
+        files: '~/.bashrc, ~/.profile, ~/.ssh/authorized_keys',
         cmd: 'cd ~ && ls -la && cat ~/.bashrc',
       },
       '/dev': {
@@ -480,7 +480,7 @@ Nov 02 20:14:09 zoth-node sshd[4199]: Failed password for root from 198.51.100.4
 Nov 02 20:14:11 zoth-node sshd[4201]: Failed password for root from 198.51.100.42 port 39108 ssh2
 Nov 02 20:14:15 zoth-node sshd[4208]: Failed password for admin from 203.0.113.88 port 44120 ssh2
 Nov 02 20:14:18 zoth-node sshd[4215]: Failed password for root from 198.51.100.42 port 39119 ssh2
-Nov 02 20:14:22 zoth-node sudo[4250]:     zoth : TTY=pts/0 ; PWD=/home/zoth ; USER=root ; COMMAND=/usr/bin/ss -tulpen`,
+Nov 02 20:14:22 zoth-node sudo[4250]:     zoth : TTY=pts/0 ; PWD=~ ; USER=root ; COMMAND=/usr/bin/ss -tulpen`,
       },
       '2': {
         cmd: 'cat /var/log/auth.log | grep "Failed password"',
@@ -549,7 +549,7 @@ Nov 02 20:14:18 zoth-node sshd[4215]: Failed password for root from 198.51.100.4
           lines.push('  ├── /etc   -> [passwd, fstab, sshd_config]');
           lines.push('  ├── /proc  -> [cpuinfo, meminfo, /proc/PID]');
           lines.push('  ├── /var   -> [/var/log/syslog, journald]');
-          lines.push('  ├── /home  -> [/home/zoth/.bashrc, .ssh/]');
+          lines.push('  ├── /home  -> [~/.bashrc, .ssh/]');
           lines.push('  ├── /dev   -> [nvme0n1, null, zero, tty0]');
           lines.push('  └── /tmp   -> [drwxrwxrwt /tmp/linux-dojo]');
           lines.push('');
