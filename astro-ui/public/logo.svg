@@ -1,8 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 180" role="img" aria-label="30 Days of Linux Fundamentals logo">
-  <rect width="720" height="180" rx="20" fill="#040d1d"/>
-  <text x="26" y="90" fill="#7cd1ff" font-size="38" font-family="JetBrains Mono, monospace">$ ./linux-30-days</text>
-  <rect x="30" y="108" width="220" height="16" rx="8" fill="#1c3f6b"/>
-  <rect x="30" y="108" width="164" height="16" rx="8" fill="#79d5ff"/>
-  <text x="276" y="92" fill="#edf4ff" font-size="40" font-family="Inter, Arial, sans-serif" font-weight="700">Linux Fundamentals</text>
-  <text x="276" y="124" fill="#b8cde7" font-size="22" font-family="Inter, Arial, sans-serif">30-day structured command line journey</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 180" role="img" aria-label="30 Days of Linux Fundamentals — ZothOS x 1nc0gn30 Edition logo">
+  <rect width="720" height="180" rx="18" fill="#05070B" stroke="#F5B82E" stroke-width="2" stroke-opacity="0.45"/>
+  <rect x="16" y="16" width="688" height="148" rx="12" fill="#0D1117" stroke="#212836" stroke-width="1"/>
+  <text x="34" y="54" fill="#F5B82E" font-size="16" font-family="JetBrains Mono, monospace" font-weight="700">⣿ ZOTHOS × 1NC0GN30 // SOVEREIGN LINUX DOJO v3.4</text>
+  <text x="34" y="98" fill="#39D353" font-size="32" font-family="JetBrains Mono, monospace" font-weight="700">$ ./control-panel</text>
+  <rect x="34" y="116" width="240" height="14" rx="7" fill="#161B22" stroke="#30363D"/>
+  <rect x="34" y="116" width="192" height="14" rx="7" fill="#39D353"/>
+  <text x="310" y="95" fill="#F0F6FC" font-size="34" font-family="Syne, Space Grotesk, Inter, sans-serif" font-weight="800">30 Days of Linux</text>
+  <text x="310" y="128" fill="#8B949E" font-size="19" font-family="JetBrains Mono, monospace">TUI + Web GUI • 90 Missions • 100% Free</text>
 </svg>

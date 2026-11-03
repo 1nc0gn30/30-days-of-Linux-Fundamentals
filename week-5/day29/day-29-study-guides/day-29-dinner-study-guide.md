@@ -1,3 +1,31 @@
+# Day 29 · Dinner — Capstone Sprint I: Multi-Tier Linux Infrastructure Deployment
+
+> **ZothOS × 1nc0gn30 Linux Dojo** · **Phase**: `Week 5 (Capstone Sprint)` · **Session**: `Dinner (Evening Hardening, Pipelines & Verification Lab)`  
+> **Core Commands**: `systemctl`, `nginx/caddy`, `ufw`, `rsync`, `crontab`, `journalctl`
+
+### ⚡ 60-Second Mental Model (Student Digest)
+
+```text
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  ZOTHOS × 1NC0GN30 // SOVEREIGN LINUX OPERATOR CAPSTONE VERIFICATION         ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║                                                                              ║
+║   1. PROVISION & MOUNT    ──►  lsblk • mkfs • /etc/fstab • chmod 750         ║
+║   2. SERVICE ORCHESTRATION ──► systemctl enable --now • journalctl -u        ║
+║   3. NETWORK & FIREWALL    ──► ss -tulpen • iptables / ufw • sshd_config     ║
+║   4. AUDIT & BACKUP        ──► lynis audit • rsync -avz • sha256sum -c       ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+```
+
+| Learning Pillar | How to Practice This Session |
+| :--- | :--- |
+| **1. Native TUI (`./control-panel`)** | Run `./control-panel` from repo root → Select **Week 5 → Day 29 → Dinner** to drill interactive C lessons & quizzes. |
+| **2. Web Workstation (`astro-ui`)** | Open `/day/29` → Select **Dinner** tab → Type each target command in the live Mission Terminal to earn XP & streak mastery. |
+| **3. Safe Local Sandbox** | Run `mkdir -p /tmp/linux-dojo-day-29 && cd /tmp/linux-dojo-day-29` to test every flag below without touching production files. |
+
+---
+<!-- ZOTH-1NC0GN30-DIGESTIBLE-BLUEPRINT -->
+
 ## 🍽️ Day 29 Dinner: Lab Session - Hardening Practice
 
 ### 🌟 Objective

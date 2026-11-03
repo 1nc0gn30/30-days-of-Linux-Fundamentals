@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" role="img" aria-label="30 Days of Linux 5-Week Curriculum Progression Roadmap">
+  <rect width="1200" height="320" rx="18" fill="#05070B" stroke="#30363D" stroke-width="2"/>
+  <text x="44" y="44" fill="#F5B82E" font-size="18" font-family="JetBrains Mono, monospace" font-weight="700">⣿ VISUAL ATLAS 03 // 5-WEEK SOVEREIGN LINUX PROGRESSION BLUEPRINT (DAYS 01–30)</text>
+  <line x1="44" y1="60" x2="1156" y2="60" stroke="#212836" stroke-width="1"/>
+
+  <!-- Week 1 -->
+  <rect x="44" y="82" width="210" height="210" rx="12" fill="#0D1117" stroke="#F5B82E" stroke-width="1.5"/>
+  <text x="60" y="110" fill="#F5B82E" font-size="14" font-family="JetBrains Mono, monospace" font-weight="700">WEEK 01 · DAYS 01–07</text>
+  <text x="60" y="136" fill="#F0F6FC" font-size="17" font-family="Syne, Inter, sans-serif" font-weight="700">Foundations</text>
+  <text x="60" y="164" fill="#8B949E" font-size="13" font-family="JetBrains Mono, monospace">• ls, cd, pwd, mkdir</text>
+  <text x="60" y="186" fill="#8B949E" font-size="13" font-family="JetBrains Mono, monospace">• cp, mv, rm, ln -s</text>
+  <text x="60" y="208" fill="#8B949E" font-size="13" font-family="JetBrains Mono, monospace">• chmod &amp; chown</text>
+  <text x="60" y="230" fill="#8B949E" font-size="13" font-family="JetBrains Mono, monospace">• find, grep, tar</text>
+  <text x="60" y="268" fill="#F5B82E" font-size="12" font-family="JetBrains Mono, monospace">21 Guided Missions →</text>
+
+  <!-- Week 2 -->
+  <rect x="269" y="82" width="210" height="210" rx="12" fill="#0D1117" stroke="#39D353" stroke-width="1.5"/>
+  <text x="285" y="110" fill="#39D353" font-size="14" font-family="JetBrains Mono, monospace" font-weight="700">WEEK 02 · DAYS 08–14</text>
+  <text x="285" y="136" fill="#F0F6FC" font-size="17" font-family="Syne, Inter, sans-serif" font-weight="700">System Ops</text>
+  <text x="285" y="164" fill="#8B949E" font-size="13" font-family="JetBrains Mono, monospace">• Bash Scripting</text>
+  <text x="285" y="186" fill="#8B949E" font-size="13" font-family="JetBrains Mono, monospace">• ps, top, kill, nice</text>
+  <text x="285" y="208" fill="#8B949E" font-size="13" font-family="JetBrains Mono, monospace">• ip, ss, dig, ssh</text>
+  <text x="285" y="230" fill="#8B949E" font-size="13" font-family="JetBrains Mono, monospace">• fstab, modprobe</text>
+  <text x="285" y="268" fill="#39D353" font-size="12" font-family="JetBrains Mono, monospace">21 Guided Missions →</text>
+
+  <!-- Week 3 -->
+  <rect x="494" y="82" width="210" height="210" rx="12" fill="#0D1117" stroke="#58A6FF" stroke-width="1.5"/>
+  <text x="510" y="110" fill="#58A6FF" font-size="14" font-family="JetBrains Mono, monospace" font-weight="700">WEEK 03 · DAYS 15–21</text>
+  <text x="510" y="136" fill="#F0F6FC" font-size="17" font-family="Syne, Inter, sans-serif" font-weight="700">Sec &amp; Pipelines</text>
+  <text x="510" y="164" fill="#8B949E" font-size="13" font-family="JetBrains Mono, monospace">• iptables / nftables</text>
+  <text x="510" y="186" fill="#8B949E" font-size="13" font-family="JetBrains Mono, monospace">• auditd, lynis, nmap</text>
+  <text x="510" y="208" fill="#8B949E" font-size="13" font-family="JetBrains Mono, monospace">• Snort IDS &amp; NAT</text>
+  <text x="510" y="230" fill="#8B949E" font-size="13" font-family="JetBrains Mono, monospace">• sed, awk, visudo</text>
+  <text x="510" y="268" fill="#58A6FF" font-size="12" font-family="JetBrains Mono, monospace">21 Guided Missions →</text>
+
+  <!-- Week 4 -->
+  <rect x="719" y="82" width="210" height="210" rx="12" fill="#0D1117" stroke="#D2A8FF" stroke-width="1.5"/>
+  <text x="735" y="110" fill="#D2A8FF" font-size="14" font-family="JetBrains Mono, monospace" font-weight="700">WEEK 04 · DAYS 22–28</text>
+  <text x="735" y="136" fill="#F0F6FC" font-size="17" font-family="Syne, Inter, sans-serif" font-weight="700">Production Ops</text>
+  <text x="735" y="164" fill="#8B949E" font-size="13" font-family="JetBrains Mono, monospace">• systemd Unit Files</text>
+  <text x="735" y="186" fill="#8B949E" font-size="13" font-family="JetBrains Mono, monospace">• vmstat, iostat, sar</text>
+  <text x="735" y="208" fill="#8B949E" font-size="13" font-family="JetBrains Mono, monospace">• rsync &amp; sha256sum</text>
+  <text x="735" y="230" fill="#8B949E" font-size="13" font-family="JetBrains Mono, monospace">• cgroups &amp; Podman</text>
+  <text x="735" y="268" fill="#D2A8FF" font-size="12" font-family="JetBrains Mono, monospace">21 Guided Missions →</text>
+
+  <!-- Week 5 -->
+  <rect x="944" y="82" width="212" height="210" rx="12" fill="#0D1117" stroke="#FF7B72" stroke-width="1.5"/>
+  <text x="960" y="110" fill="#FF7B72" font-size="14" font-family="JetBrains Mono, monospace" font-weight="700">WEEK 05 · DAYS 29–30</text>
+  <text x="960" y="136" fill="#F0F6FC" font-size="17" font-family="Syne, Inter, sans-serif" font-weight="700">Capstone Sprint</text>
+  <text x="960" y="164" fill="#8B949E" font-size="13" font-family="JetBrains Mono, monospace">• Multi-Tier Stack</text>
+  <text x="960" y="186" fill="#8B949E" font-size="13" font-family="JetBrains Mono, monospace">• Incident Triage</text>
+  <text x="960" y="208" fill="#8B949E" font-size="13" font-family="JetBrains Mono, monospace">• Security Hardening</text>
+  <text x="960" y="230" fill="#8B949E" font-size="13" font-family="JetBrains Mono, monospace">• Final Verification</text>
+  <text x="960" y="268" fill="#FF7B72" font-size="12" font-family="JetBrains Mono, monospace">6 Capstone Missions ★</text>
+</svg>

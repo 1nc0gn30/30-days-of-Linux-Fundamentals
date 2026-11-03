@@ -1,4 +1,35 @@
-# Day 05 Breakfast Study Guide: Processes and System Monitoring
+# Day 05 · Breakfast — Permissions Architecture, Users & Process Signals
+
+> **ZothOS × 1nc0gn30 Linux Dojo** · **Phase**: `Week 1 (Foundations)` · **Session**: `Breakfast (Morning Foundation & Core Command Syntax)`  
+> **Core Commands**: `chmod`, `chown`, `chgrp`, `umask`, `useradd`, `passwd`
+
+### ⚡ 60-Second Mental Model (Student Digest)
+
+```text
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  ZOTHOS × 1NC0GN30 // LINUX FILESYSTEM & SHELL EXECUTION ARCHITECTURE       ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║                                                                              ║
+║   [ USER TERMINAL / TUI ]  ──( stdin 0 )──►  [ BASH / ZSH SHELL PARSER ]     ║
+║                                                       │                      ║
+║                                              ( glibc / syscalls )            ║
+║                                                       ▼                      ║
+║   [ VFS / INODE TABLE ]    ◄───────────────  [ LINUX KERNEL RING 0 ]         ║
+║     ├── /bin  (Core Binaries)                  ├── Process Scheduler         ║
+║     ├── /etc  (System Configs)                 ├── Memory Manager            ║
+║     ├── /home (Operator Workspaces)            └── Netfilter / I/O           ║
+║     └── /var  (Logs & Runtime State)                                         ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+```
+
+| Learning Pillar | How to Practice This Session |
+| :--- | :--- |
+| **1. Native TUI (`./control-panel`)** | Run `./control-panel` from repo root → Select **Week 1 → Day 05 → Breakfast** to drill interactive C lessons & quizzes. |
+| **2. Web Workstation (`astro-ui`)** | Open `/day/5` → Select **Breakfast** tab → Type each target command in the live Mission Terminal to earn XP & streak mastery. |
+| **3. Safe Local Sandbox** | Run `mkdir -p /tmp/linux-dojo-day-05 && cd /tmp/linux-dojo-day-05` to test every flag below without touching production files. |
+
+---
+<!-- ZOTH-1NC0GN30-DIGESTIBLE-BLUEPRINT -->
 
 Welcome to Day 5 Breakfast! Today we will delve into processes and system monitoring, covering essential commands and their advanced usages.
 

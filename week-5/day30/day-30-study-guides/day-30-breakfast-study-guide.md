@@ -1,3 +1,31 @@
+# Day 30 · Breakfast — Capstone Sprint II: Incident Triage, Security Audit & Certification
+
+> **ZothOS × 1nc0gn30 Linux Dojo** · **Phase**: `Week 5 (Capstone Sprint)` · **Session**: `Breakfast (Morning Foundation & Core Command Syntax)`  
+> **Core Commands**: `lynis`, `nmap`, `auditctl`, `iptables`, `tar`, `sha256sum`
+
+### ⚡ 60-Second Mental Model (Student Digest)
+
+```text
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  ZOTHOS × 1NC0GN30 // SOVEREIGN LINUX OPERATOR CAPSTONE VERIFICATION         ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║                                                                              ║
+║   1. PROVISION & MOUNT    ──►  lsblk • mkfs • /etc/fstab • chmod 750         ║
+║   2. SERVICE ORCHESTRATION ──► systemctl enable --now • journalctl -u        ║
+║   3. NETWORK & FIREWALL    ──► ss -tulpen • iptables / ufw • sshd_config     ║
+║   4. AUDIT & BACKUP        ──► lynis audit • rsync -avz • sha256sum -c       ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+```
+
+| Learning Pillar | How to Practice This Session |
+| :--- | :--- |
+| **1. Native TUI (`./control-panel`)** | Run `./control-panel` from repo root → Select **Week 5 → Day 30 → Breakfast** to drill interactive C lessons & quizzes. |
+| **2. Web Workstation (`astro-ui`)** | Open `/day/30` → Select **Breakfast** tab → Type each target command in the live Mission Terminal to earn XP & streak mastery. |
+| **3. Safe Local Sandbox** | Run `mkdir -p /tmp/linux-dojo-day-30 && cd /tmp/linux-dojo-day-30` to test every flag below without touching production files. |
+
+---
+<!-- ZOTH-1NC0GN30-DIGESTIBLE-BLUEPRINT -->
+
 ### Day 30: Capstone Project and Week 4 Review
 
 ---

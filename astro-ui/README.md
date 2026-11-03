@@ -1,40 +1,30 @@
-# Astro UI (30 Days of Linux Fundamentals)
+# Astro UI — 30 Days of Linux Fundamentals (ZothOS × 1nc0gn30 Edition)
 
-This folder contains the Astro frontend for the Linux fundamentals project.
+This directory contains the interactive **ZothOS × 1nc0gn30** Web Workstation (`astro-ui`) for **30 Days of Linux Fundamentals**.
 
-## Commands
+## Quick Start
 
 ```bash
+cd astro-ui
 npm install
 npm run dev
+# Build production static bundle:
 npm run build
 npm run preview
 ```
 
+## Features
+
+- **30 Interactive Day Mission Terminals (`/day/1` – `/day/30`)**: Drill commands across Breakfast, Lunch, and Dinner sessions with live XP, streak tracking, Command Intel cards, and full Markdown study guides.
+- **90 Digestible Study Guides**: Every meal across all 30 days includes a 60-Second Mental Model, ASCII architecture diagram, TUI vs. GUI workflow table, and safe `/tmp/linux-dojo-day-XX` sandbox instructions.
+- **Interactive Visual Linux Labs (`/`)**:
+  - Live `chmod` Octal & Symbolic Permission Calculator (`755`, `644`, `600`, `750`)
+  - Interactive Linux Filesystem Hierarchy (`/`, `/etc`, `/var`, `/proc`, `/home`, `/bin`, `/dev`, `/tmp`) Explorer
+  - Interactive Standard Streams & Pipeline (`|`, `grep`, `awk`, `sort`, `uniq`) Simulator
+  - 60fps Unicode `U+2800` Braille & Ordered Bayer Dither Linux Kernel Canvas
+
 ## Netlify Settings
 
-Configure the Netlify site with:
-
-- Base directory: `astro-ui`
-- Build command: `npm run build`
-- Publish directory: `dist`
-
-Canonical production domain should be a `*.nealfrazier.tech` subdomain. This is set in [`astro.config.mjs`](./astro.config.mjs) via `site`.
-
-## Git Notes
-
-Do not commit generated files from local runs. The repository `.gitignore` is configured to ignore:
-
-- `node_modules/`
-- `.astro/`
-- `dist/`
-- `.vite/`
-- `.netlify/`
-- `.vercel/`
-- `coverage/`
-
-If these files were previously committed, remove them from Git tracking (without deleting local copies):
-
-```bash
-git rm -r --cached node_modules .astro
-```
+- **Base directory**: `astro-ui`
+- **Build command**: `npm run build`
+- **Publish directory**: `dist`

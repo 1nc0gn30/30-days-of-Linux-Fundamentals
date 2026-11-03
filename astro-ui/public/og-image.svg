@@ -1,20 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="30 Days of Linux Fundamentals open graph image">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="30 Days of Linux Fundamentals — ZothOS x 1nc0gn30 Edition">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#1d4ed8"/>
-      <stop offset="100%" stop-color="#020617"/>
+      <stop offset="0%" stop-color="#05070B"/>
+      <stop offset="55%" stop-color="#0D1117"/>
+      <stop offset="100%" stop-color="#111927"/>
     </linearGradient>
-    <radialGradient id="glow" cx="0.2" cy="0.2" r="0.9">
-      <stop offset="0%" stop-color="#93c5fd" stop-opacity="0.6"/>
-      <stop offset="100%" stop-color="#93c5fd" stop-opacity="0"/>
+    <radialGradient id="goldGlow" cx="0.2" cy="0.2" r="0.7">
+      <stop offset="0%" stop-color="#F5B82E" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#F5B82E" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="emeraldGlow" cx="0.85" cy="0.8" r="0.7">
+      <stop offset="0%" stop-color="#39D353" stop-opacity="0.24"/>
+      <stop offset="100%" stop-color="#39D353" stop-opacity="0"/>
     </radialGradient>
   </defs>
-  <rect width="1200" height="630" fill="#050913"/>
-  <rect width="1200" height="630" fill="url(#bg)" opacity="0.26"/>
-  <circle cx="260" cy="180" r="260" fill="url(#glow)"/>
-  <rect x="58" y="58" width="1084" height="514" rx="34" fill="#070d1b" opacity="0.68" stroke="#9cb4e4" stroke-opacity="0.22"/>
-  <text x="120" y="255" fill="#e9f0ff" font-size="74" font-family="Inter, Segoe UI, Arial, sans-serif" font-weight="800">30 Days of Linux Fundamentals</text>
-  <text x="120" y="328" fill="#b9c9e8" font-size="34" font-family="Inter, Segoe UI, Arial, sans-serif">Structured CLI skill-building curriculum</text>
-  <text x="120" y="520" fill="#8ca0c8" font-size="24" font-family="Inter, Segoe UI, Arial, sans-serif">by Neal Frazier</text>
-  <rect x="730" y="120" width="360" height="390" rx="22" fill="#0a0f1e" opacity="0.86"/><text x="760" y="190" fill="#9ee8ff" font-size="26" font-family="JetBrains Mono, monospace">$ sudo learn --daily</text><text x="760" y="238" fill="#8fd19e" font-size="22" font-family="JetBrains Mono, monospace">[#####.....] day 12/30</text><text x="760" y="286" fill="#d4def6" font-size="22" font-family="JetBrains Mono, monospace">skills: shell, perms, grep</text>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="240" cy="140" r="360" fill="url(#goldGlow)"/>
+  <circle cx="980" cy="500" r="360" fill="url(#emeraldGlow)"/>
+  <rect x="48" y="48" width="1104" height="534" rx="24" fill="#090D14" opacity="0.9" stroke="#F5B82E" stroke-opacity="0.4" stroke-width="2"/>
+  <text x="96" y="120" fill="#F5B82E" font-size="22" font-family="JetBrains Mono, monospace" font-weight="700">⣿ ZOTHOS × 1NC0GN30 // OPEN-ACCESS LINUX CURRICULUM</text>
+  <text x="96" y="215" fill="#F0F6FC" font-size="64" font-family="Syne, Inter, sans-serif" font-weight="800">30 Days of Linux</text>
+  <text x="96" y="285" fill="#39D353" font-size="56" font-family="Syne, Inter, sans-serif" font-weight="800">Fundamentals Dojo</text>
+  <text x="96" y="350" fill="#8B949E" font-size="26" font-family="JetBrains Mono, monospace">Digestible TUI (./control-panel) + Interactive Web GUI</text>
+  <text x="96" y="392" fill="#58A6FF" font-size="24" font-family="JetBrains Mono, monospace">5 Weeks • 30 Days • 90 Guided Missions • Visual Atlas</text>
+  <text x="96" y="520" fill="#F5B82E" font-size="24" font-family="JetBrains Mono, monospace" font-weight="700">Engineered by 1nc0gn30 • 1nc0gn30.si • zothos.nullai.tech</text>
+  <rect x="740" y="110" width="368" height="410" rx="18" fill="#0D1117" stroke="#30363D" stroke-width="2"/>
+  <text x="768" y="162" fill="#F5B82E" font-size="22" font-family="JetBrains Mono, monospace">$ ./control-panel</text>
+  <text x="768" y="206" fill="#39D353" font-size="20" font-family="JetBrains Mono, monospace">[████████████████░░░░] 80%</text>
+  <text x="768" y="252" fill="#F0F6FC" font-size="19" font-family="JetBrains Mono, monospace">▸ 🍳 Breakfast: Core Syntax</text>
+  <text x="768" y="290" fill="#F0F6FC" font-size="19" font-family="JetBrains Mono, monospace">▸ 🥪 Lunch:     Flag Mastery</text>
+  <text x="768" y="328" fill="#F0F6FC" font-size="19" font-family="JetBrains Mono, monospace">▸ 🍽️ Dinner:    Hardening Lab</text>
+  <text x="768" y="382" fill="#58A6FF" font-size="18" font-family="JetBrains Mono, monospace">chmod 755 • ss -tulpen</text>
+  <text x="768" y="416" fill="#D2A8FF" font-size="18" font-family="JetBrains Mono, monospace">grep -RIn • systemctl</text>
+  <text x="768" y="450" fill="#39D353" font-size="18" font-family="JetBrains Mono, monospace">iptables  • journalctl</text>
 </svg>

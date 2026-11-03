@@ -1,3 +1,34 @@
+# Day 25 · Breakfast — Backup Architecture, Rsync Mirrors, Cron & Disaster Recovery
+
+> **ZothOS × 1nc0gn30 Linux Dojo** · **Phase**: `Week 4 (Advanced Ops)` · **Session**: `Breakfast (Morning Foundation & Core Command Syntax)`  
+> **Core Commands**: `rsync -avz`, `tar -czvf`, `sha256sum`, `crontab`, `dd`, `scp`
+
+### ⚡ 60-Second Mental Model (Student Digest)
+
+```text
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  ZOTHOS × 1NC0GN30 // PRODUCTION TELEMETRY, SYSTEMD & RECOVERY MATRIX        ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║                                                                              ║
+║   ┌──────────────┐   ┌──────────────┐   ┌──────────────┐   ┌──────────────┐  ║
+║   │ CPU & SCHED  │   │ MEMORY / VM  │   │ DISK & VFS   │   │ NET SOCKETS  │  ║
+║   │ top / mpstat │   │ free / vmstat│   │ iostat / df  │   │ ss -tulpen   │  ║
+║   └──────┬───────┘   └──────┬───────┘   └──────┬───────┘   └──────┬───────┘  ║
+║          └──────────────────┴─────────┬────────┴──────────────────┘          ║
+║                                       ▼                                      ║
+║                  [ Automated Remediation: systemd + cron + rsync ]           ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+```
+
+| Learning Pillar | How to Practice This Session |
+| :--- | :--- |
+| **1. Native TUI (`./control-panel`)** | Run `./control-panel` from repo root → Select **Week 4 → Day 25 → Breakfast** to drill interactive C lessons & quizzes. |
+| **2. Web Workstation (`astro-ui`)** | Open `/day/25` → Select **Breakfast** tab → Type each target command in the live Mission Terminal to earn XP & streak mastery. |
+| **3. Safe Local Sandbox** | Run `mkdir -p /tmp/linux-dojo-day-25 && cd /tmp/linux-dojo-day-25` to test every flag below without touching production files. |
+
+---
+<!-- ZOTH-1NC0GN30-DIGESTIBLE-BLUEPRINT -->
+
 # 🍞 Day 25: Cron Jobs and Task Scheduling
 
 ## 🌿 Breakfast: Introduction to Cron

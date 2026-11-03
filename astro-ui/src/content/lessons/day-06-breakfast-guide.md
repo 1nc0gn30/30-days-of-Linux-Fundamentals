@@ -1,4 +1,35 @@
-# Day 06 Breakfast: Networking Basics
+# Day 06 · Breakfast — Disk Partitioning, Archiving & Compression
+
+> **ZothOS × 1nc0gn30 Linux Dojo** · **Phase**: `Week 1 (Foundations)` · **Session**: `Breakfast (Morning Foundation & Core Command Syntax)`  
+> **Core Commands**: `df -h`, `du -sh`, `fdisk`, `mount`, `umount`, `tar -czvf`
+
+### ⚡ 60-Second Mental Model (Student Digest)
+
+```text
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  ZOTHOS × 1NC0GN30 // LINUX FILESYSTEM & SHELL EXECUTION ARCHITECTURE       ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║                                                                              ║
+║   [ USER TERMINAL / TUI ]  ──( stdin 0 )──►  [ BASH / ZSH SHELL PARSER ]     ║
+║                                                       │                      ║
+║                                              ( glibc / syscalls )            ║
+║                                                       ▼                      ║
+║   [ VFS / INODE TABLE ]    ◄───────────────  [ LINUX KERNEL RING 0 ]         ║
+║     ├── /bin  (Core Binaries)                  ├── Process Scheduler         ║
+║     ├── /etc  (System Configs)                 ├── Memory Manager            ║
+║     ├── /home (Operator Workspaces)            └── Netfilter / I/O           ║
+║     └── /var  (Logs & Runtime State)                                         ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+```
+
+| Learning Pillar | How to Practice This Session |
+| :--- | :--- |
+| **1. Native TUI (`./control-panel`)** | Run `./control-panel` from repo root → Select **Week 1 → Day 06 → Breakfast** to drill interactive C lessons & quizzes. |
+| **2. Web Workstation (`astro-ui`)** | Open `/day/6` → Select **Breakfast** tab → Type each target command in the live Mission Terminal to earn XP & streak mastery. |
+| **3. Safe Local Sandbox** | Run `mkdir -p /tmp/linux-dojo-day-06 && cd /tmp/linux-dojo-day-06` to test every flag below without touching production files. |
+
+---
+<!-- ZOTH-1NC0GN30-DIGESTIBLE-BLUEPRINT -->
 
 ## Overview
 
@@ -58,5 +89,3 @@ The `nc` command is a versatile networking tool for reading from and writing to 
 
 2. **Question:** Which command would you use to send 4 ICMP ECHO_REQUEST packets to google.com?
    - **Answer:** `ping -c 4 google.com`
-
-

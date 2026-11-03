@@ -2,7 +2,7 @@
 import MainLayout from '../../layouts/MainLayout.astro';
 import fs from 'node:fs';
 import path from 'node:path';
-import { getNextDay, getPreviousDay, TOTAL_DAYS } from '../../lib/course';
+import { getDayMeta, getNextDay, getPreviousDay, TOTAL_DAYS } from '../../lib/course';
 
 export function getStaticPaths() {
 	return Array.from({ length: TOTAL_DAYS }, (_, idx) => ({
@@ -12,15 +12,16 @@ export function getStaticPaths() {
 
 const { id } = Astro.params;
 const dayNum = Number.parseInt(id ?? '', 10);
+const dayMeta = getDayMeta(dayNum);
 
 const previousDay = getPreviousDay(dayNum);
 const nextDay = getNextDay(dayNum);
-const dayDescription = `Day ${dayNum} Linux mission with command drills, guided study sessions, and progress tracking.`;
+const dayDescription = `Day ${dayNum}: ${dayMeta.title} — ${dayMeta.summary}`;
 
 const mealMeta = [
-	{ id: 'breakfast', label: 'Breakfast', icon: '🍳', accent: '#f4c768' },
-	{ id: 'lunch', label: 'Lunch', icon: '🥪', accent: '#49d7a8' },
-	{ id: 'dinner', label: 'Dinner', icon: '🍽️', accent: '#ff8b7a' },
+	{ id: 'breakfast', label: 'Breakfast (Syntax)', icon: '🍳', accent: '#f5b82e' },
+	{ id: 'lunch', label: 'Lunch (Workflows)', icon: '🥪', accent: '#39d353' },
+	{ id: 'dinner', label: 'Dinner (Hardening)', icon: '🍽️', accent: '#58a6ff' },
 ];
 
 const commandHeads = new Set([
@@ -59,19 +60,68 @@ const mealFallbackPools = {
 	],
 };
 
+function escapeHtml(raw) {
+	return String(raw)
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;');
+}
+
 function simpleMarkdown(text) {
 	if (!text) return '';
 
-	return text
-		.replace(/`\$([\s\S]*?)`/g, '<pre><code>$1</code></pre>')
-		.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
+	const codeBlocks = [];
+	let cleaned = text.replace(/<!--[\s\S]*?-->/g, '');
+
+	cleaned = cleaned.replace(/```([a-zA-Z0-9_-]*)\n([\s\S]*?)```/g, (_match, _lang, code) => {
+		const idx = codeBlocks.length;
+		codeBlocks.push(`<pre><code>${escapeHtml(code.trimEnd())}</code></pre>`);
+		return `@@CODEBLOCK_${idx}@@`;
+	});
+
+	cleaned = cleaned.replace(/`\$([\s\S]*?)`/g, (_match, code) => {
+		const idx = codeBlocks.length;
+		codeBlocks.push(`<pre><code>${escapeHtml(code.trim())}</code></pre>`);
+		return `@@CODEBLOCK_${idx}@@`;
+	});
+
+	// Convert markdown tables
+	cleaned = cleaned.replace(/((?:^\|.*\|\s*\n)+)/gm, (tableBlock) => {
+		const rows = tableBlock
+			.trim()
+			.split('\n')
+			.map((r) => r.trim())
+			.filter((r) => r.startsWith('|') && !/^\|[\s:|-]+\|$/.test(r));
+		if (rows.length === 0) return tableBlock;
+		const htmlRows = rows
+			.map((row, rIdx) => {
+				const cells = row
+					.replace(/^\||\|$/g, '')
+					.split('|')
+					.map((c) => c.trim());
+				const tag = rIdx === 0 ? 'th' : 'td';
+				return `<tr>${cells.map((c) => `<${tag}>${c}</${tag}>`).join('')}</tr>`;
+			})
+			.join('');
+		return `<div class="md-table-wrap"><table class="md-table">${htmlRows}</table></div>\n`;
+	});
+
+	cleaned = cleaned
 		.replace(/^### (.*$)/gm, '<h3>$1</h3>')
 		.replace(/^## (.*$)/gm, '<h3>$1</h3>')
 		.replace(/^# (.*$)/gm, '<h3>$1</h3>')
+		.replace(/^> (.*$)/gm, '<div class="md-callout">$1</div>')
+		.replace(/^---$/gm, '<hr class="md-hr" />')
+		.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+		.replace(/`([^`\n]+)`/g, '<code>$1</code>')
 		.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
 		.replace(/\*(.*?)\*/g, '<em>$1</em>')
 		.replace(/^- (.*$)/gm, '<li>$1</li>')
+		.replace(/\n{2,}/g, '<br><br>')
 		.replace(/\n/g, '<br>');
+
+	cleaned = cleaned.replace(/@@CODEBLOCK_(\d+)@@/g, (_m, idx) => codeBlocks[Number(idx)] || '');
+	return cleaned;
 }
 
 function normalizeCandidate(line) {
@@ -252,16 +302,17 @@ const dayPayload = {
 ---
 
 <MainLayout
-	title={`Day ${dayNum} Mission Terminal - 30 Days of Linux`}
+	title={`Day ${String(dayNum).padStart(2, '0')}: ${dayMeta.title} — 30 Days of Linux`}
 	description={dayDescription}
 	activeNav="curriculum"
 >
 	<div class="day-shell" data-day-terminal data-day={dayNum}>
 		<header class="surface hero-panel">
 			<div>
-				<a href="/curriculum" class="back-link">← Back to Curriculum</a>
-				<h1>Day {dayNum} Mission Terminal</h1>
-				<p>Train commands in a live simulation, track XP, and unlock each guide when you're ready.</p>
+				<a href="/curriculum" class="back-link">← Back to 30-Day Curriculum</a>
+				<p class="eyebrow" style="margin-top: 0.45rem;">WEEK {dayMeta.weekId} · {dayMeta.phase.toUpperCase()} · TUI: <code>./control-panel --day {dayNum}</code></p>
+				<h1>Day {String(dayNum).padStart(2, '0')}: {dayMeta.title}</h1>
+				<p>{dayMeta.summary}</p>
 			</div>
 			<div class="mission-stats" aria-label="Mission stats">
 				<div class="stat-card">
@@ -468,13 +519,13 @@ const dayPayload = {
 					<article class="guide-card mobile-drawer-panel" data-drawer-panel={`${meal.id}:guide`}>
 						<div class="guide-head">
 							<div class="drawer-head">
-								<h3>Study Guide Source</h3>
+								<h3>📖 Digestible Study Guide &amp; Visual Architecture</h3>
 								<button type="button" class="drawer-close-btn" data-close-drawer aria-label="Close panel">✕</button>
 							</div>
-							<button type="button" class="guide-toggle" data-toggle-guide={meal.id}>Show Guide</button>
+							<button type="button" class="guide-toggle" data-toggle-guide={meal.id}>Hide Guide</button>
 						</div>
-						<div class="guide-body" data-guide-body={meal.id} hidden>
-							<div class="guide-meta">Source: {meal.file ?? 'No file found'}</div>
+						<div class="guide-body" data-guide-body={meal.id}>
+							<div class="guide-meta">Source: {meal.file ?? 'No file found'} · Synced with <code>./control-panel --day {dayNum}</code></div>
 							<div class="markdown-content" set:html={meal.html} />
 						</div>
 					</article>
@@ -736,7 +787,7 @@ const dayPayload = {
 			streak: 0,
 			musicEmbed: '',
 			solved: Object.fromEntries(meals.map((meal) => [meal.id, []])),
-			guideOpen: Object.fromEntries(meals.map((meal) => [meal.id, false])),
+			guideOpen: Object.fromEntries(meals.map((meal) => [meal.id, true])),
 			lastRun: Object.fromEntries(meals.map((meal) => [meal.id, 'Run a command to see result feedback.'])),
 		};
 
@@ -1755,34 +1806,87 @@ const dayPayload = {
 
 	.markdown-content {
 		line-height: 1.66;
+		font-size: 0.92rem;
 	}
 
-	.markdown-content pre {
-		background: #000;
-		padding: 0.95rem;
-		border-radius: 0.6rem;
+	.markdown-content :global(pre) {
+		background: #04070d;
+		padding: 0.9rem;
+		border-radius: 0.65rem;
 		overflow-x: auto;
-		border: 1px solid var(--border);
+		border: 1px solid rgba(57, 211, 83, 0.28);
 		position: relative;
-		margin: 1rem 0;
+		margin: 0.9rem 0;
+		color: var(--emerald);
+		font-size: 0.78rem;
+		line-height: 1.4;
 	}
 
-	.markdown-content code {
-		background: #1a253a;
-		padding: 0.17rem 0.36rem;
-		border-radius: 0.26rem;
-		font-family: inherit;
-		font-size: 0.92em;
+	.markdown-content :global(pre code) {
+		background: transparent;
+		padding: 0;
+		color: inherit;
 	}
 
-	.markdown-content h3 {
+	.markdown-content :global(code) {
+		background: #121a29;
+		color: var(--cyan);
+		padding: 0.15rem 0.38rem;
+		border-radius: 0.3rem;
+		font-family: var(--font-mono);
+		font-size: 0.88em;
+	}
+
+	.markdown-content :global(h3) {
 		color: var(--accent);
-		margin-top: 1.3rem;
+		font-family: var(--font-display);
+		margin-top: 1.2rem;
 		margin-bottom: 0.45rem;
 	}
 
-	.markdown-content li {
+	.markdown-content :global(li) {
 		margin-bottom: 0.35rem;
+	}
+
+	.markdown-content :global(.md-callout) {
+		border-left: 3px solid var(--accent);
+		background: rgba(245, 184, 46, 0.08);
+		padding: 0.55rem 0.8rem;
+		border-radius: 0 0.5rem 0.5rem 0;
+		margin: 0.5rem 0;
+		font-size: 0.85rem;
+	}
+
+	.markdown-content :global(.md-hr) {
+		border: 0;
+		border-top: 1px solid var(--border);
+		margin: 1rem 0;
+	}
+
+	.markdown-content :global(.md-table-wrap) {
+		overflow-x: auto;
+		margin: 0.85rem 0;
+	}
+
+	.markdown-content :global(.md-table) {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.82rem;
+		background: #060a12;
+		border: 1px solid var(--border);
+	}
+
+	.markdown-content :global(.md-table th),
+	.markdown-content :global(.md-table td) {
+		border: 1px solid var(--border);
+		padding: 0.5rem 0.65rem;
+		text-align: left;
+	}
+
+	.markdown-content :global(.md-table th) {
+		background: rgba(245, 184, 46, 0.12);
+		color: var(--accent);
+		font-family: var(--font-mono);
 	}
 
 	@media (max-width: 960px) {

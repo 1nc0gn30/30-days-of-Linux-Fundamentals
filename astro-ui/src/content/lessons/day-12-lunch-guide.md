@@ -1,4 +1,35 @@
-# Day 12 Lunch: Linux Kernel Basics
+# Day 12 · Lunch — Storage Engineering: Filesystems, Mounts, fstab & LVM
+
+> **ZothOS × 1nc0gn30 Linux Dojo** · **Phase**: `Week 2 (System Ops)` · **Session**: `Lunch (Midday Operational Workflows & Flag Mastery)`  
+> **Core Commands**: `lsblk`, `blkid`, `mkfs.ext4`, `mount`, `umount`, `/etc/fstab`
+
+### ⚡ 60-Second Mental Model (Student Digest)
+
+```text
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  ZOTHOS × 1NC0GN30 // PROCESS, KERNEL & NETWORK OPERATIONS PIPELINE          ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║                                                                              ║
+║  ┌─────────────────┐    fork() / execve()    ┌────────────────────────────┐  ║
+║  │  PID 1: systemd │ ──────────────────────► │  Active Daemons & Tasks    │  ║
+║  └────────┬────────┘                         │  • nice / renice [-20..19] │  ║
+║           │                                  │  • SIGTERM(15) / SIGKILL(9)│  ║
+║           ▼                                  └─────────────┬──────────────┘  ║
+║  ┌─────────────────┐    /proc & sysctl       ┌─────────────▼──────────────┐  ║
+║  │ Kernel Modules  │ ◄─────────────────────► │ Network & Storage Stack    │  ║
+║  │ lsmod / modprobe│                         │ ip route • ss • /etc/fstab │  ║
+║  └─────────────────┘                         └────────────────────────────┘  ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+```
+
+| Learning Pillar | How to Practice This Session |
+| :--- | :--- |
+| **1. Native TUI (`./control-panel`)** | Run `./control-panel` from repo root → Select **Week 2 → Day 12 → Lunch** to drill interactive C lessons & quizzes. |
+| **2. Web Workstation (`astro-ui`)** | Open `/day/12` → Select **Lunch** tab → Type each target command in the live Mission Terminal to earn XP & streak mastery. |
+| **3. Safe Local Sandbox** | Run `mkdir -p /tmp/linux-dojo-day-12 && cd /tmp/linux-dojo-day-12` to test every flag below without touching production files. |
+
+---
+<!-- ZOTH-1NC0GN30-DIGESTIBLE-BLUEPRINT -->
 
 Welcome to Day 12 Lunch! In this session, we'll delve deeper into the Linux kernel. We will cover more advanced aspects of kernel modules, kernel parameters, and kernel versioning. By the end of this lesson, you should have a solid understanding of these concepts and how to apply them practically.
 

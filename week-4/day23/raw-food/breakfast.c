@@ -85,8 +85,8 @@ int main() {
         {
             "Variables and Echo",
             "Learn how to declare and use variables in Bash scripts.",
-            "name=Neal\necho \"Welcome, $name!\"",
-            "Variables in Bash are assigned without spaces (e.g., name=Neal). Access them with the $ prefix. Echo is used to print to the terminal.",
+            "name=zoth\necho \"Welcome, $name!\"",
+            "Variables in Bash are assigned without spaces (e.g., name=zoth). Access them with the $ prefix. Echo is used to print to the terminal.",
             {"https://www.gnu.org/software/bash/manual/", NULL, NULL, NULL, NULL}
         },
         {
@@ -119,8 +119,8 @@ int main() {
     Question questions[] = {
         {
             "What is the correct way to declare a variable in Bash?",
-            {"name = Neal", "name Neal", "name=Neal", "let name=Neal"},
-            "name=Neal"
+            {"name = zoth", "name zoth", "name=zoth", "let name=zoth"},
+            "name=zoth"
         },
         {
             "What symbol is used to access a variable in Bash?",

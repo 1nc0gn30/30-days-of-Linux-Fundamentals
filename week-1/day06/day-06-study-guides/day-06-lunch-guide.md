@@ -1,4 +1,35 @@
-# Day 06 Lunch: Advanced Networking Basics
+# Day 06 · Lunch — Disk Partitioning, Archiving & Compression
+
+> **ZothOS × 1nc0gn30 Linux Dojo** · **Phase**: `Week 1 (Foundations)` · **Session**: `Lunch (Midday Operational Workflows & Flag Mastery)`  
+> **Core Commands**: `df -h`, `du -sh`, `fdisk`, `mount`, `umount`, `tar -czvf`
+
+### ⚡ 60-Second Mental Model (Student Digest)
+
+```text
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  ZOTHOS × 1NC0GN30 // LINUX FILESYSTEM & SHELL EXECUTION ARCHITECTURE       ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║                                                                              ║
+║   [ USER TERMINAL / TUI ]  ──( stdin 0 )──►  [ BASH / ZSH SHELL PARSER ]     ║
+║                                                       │                      ║
+║                                              ( glibc / syscalls )            ║
+║                                                       ▼                      ║
+║   [ VFS / INODE TABLE ]    ◄───────────────  [ LINUX KERNEL RING 0 ]         ║
+║     ├── /bin  (Core Binaries)                  ├── Process Scheduler         ║
+║     ├── /etc  (System Configs)                 ├── Memory Manager            ║
+║     ├── /home (Operator Workspaces)            └── Netfilter / I/O           ║
+║     └── /var  (Logs & Runtime State)                                         ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+```
+
+| Learning Pillar | How to Practice This Session |
+| :--- | :--- |
+| **1. Native TUI (`./control-panel`)** | Run `./control-panel` from repo root → Select **Week 1 → Day 06 → Lunch** to drill interactive C lessons & quizzes. |
+| **2. Web Workstation (`astro-ui`)** | Open `/day/6` → Select **Lunch** tab → Type each target command in the live Mission Terminal to earn XP & streak mastery. |
+| **3. Safe Local Sandbox** | Run `mkdir -p /tmp/linux-dojo-day-06 && cd /tmp/linux-dojo-day-06` to test every flag below without touching production files. |
+
+---
+<!-- ZOTH-1NC0GN30-DIGESTIBLE-BLUEPRINT -->
 
 ## Overview
 
@@ -59,5 +90,3 @@ The `curl` command transfers data from or to a server, using one of the supporte
 
 2. **Question:** Which command combines `traceroute` and `ping` functionalities?
    - **Answer:** `mtr`
-
-

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 440" role="img" aria-label="Linux Operating System Architecture and Standard Streams Diagram">
+  <rect width="1200" height="440" rx="18" fill="#05070B" stroke="#30363D" stroke-width="2"/>
+  <text x="44" y="46" fill="#F5B82E" font-size="18" font-family="JetBrains Mono, monospace" font-weight="700">⣿ VISUAL ATLAS 01 // LINUX RING ARCHITECTURE &amp; STANDARD STREAMS (FD 0, 1, 2)</text>
+  <line x1="44" y1="62" x2="1156" y2="62" stroke="#212836" stroke-width="1"/>
+
+  <!-- Left Panel: Kernel to User Space Stack -->
+  <rect x="44" y="84" width="530" height="324" rx="14" fill="#0D1117" stroke="#212836" stroke-width="1.5"/>
+  <text x="68" y="116" fill="#F0F6FC" font-size="18" font-family="Syne, Inter, sans-serif" font-weight="700">A. Linux Execution Stack (User Space → Ring 0)</text>
+
+  <rect x="68" y="134" width="482" height="54" rx="8" fill="#121A2A" stroke="#F5B82E" stroke-opacity="0.7"/>
+  <text x="86" y="158" fill="#F5B82E" font-size="15" font-family="JetBrains Mono, monospace" font-weight="700">1. USER APPLICATIONS &amp; INTERFACES (Ring 3)</text>
+  <text x="86" y="178" fill="#8B949E" font-size="13" font-family="JetBrains Mono, monospace">./control-panel (TUI) • Astro Web GUI • vim • ssh • nginx</text>
+
+  <rect x="68" y="200" width="482" height="54" rx="8" fill="#0F1E19" stroke="#39D353" stroke-opacity="0.7"/>
+  <text x="86" y="224" fill="#39D353" font-size="15" font-family="JetBrains Mono, monospace" font-weight="700">2. SHELL &amp; GNU COREUTILS</text>
+  <text x="86" y="244" fill="#8B949E" font-size="13" font-family="JetBrains Mono, monospace">bash / zsh • ls, cp, mv, chmod, grep, sed, awk, find, tar</text>
+
+  <rect x="68" y="266" width="482" height="54" rx="8" fill="#101B2D" stroke="#58A6FF" stroke-opacity="0.7"/>
+  <text x="86" y="290" fill="#58A6FF" font-size="15" font-family="JetBrains Mono, monospace" font-weight="700">3. SYSTEM CALL INTERFACE (glibc / syscalls)</text>
+  <text x="86" y="310" fill="#8B949E" font-size="13" font-family="JetBrains Mono, monospace">openat() • read() • write() • fork() • execve() • ioctl()</text>
+
+  <rect x="68" y="332" width="482" height="58" rx="8" fill="#1F1318" stroke="#FF7B72" stroke-opacity="0.7"/>
+  <text x="86" y="356" fill="#FF7B72" font-size="15" font-family="JetBrains Mono, monospace" font-weight="700">4. LINUX KERNEL (Ring 0) &amp; HARDWARE</text>
+  <text x="86" y="376" fill="#8B949E" font-size="13" font-family="JetBrains Mono, monospace">CFS Scheduler • Virtual Memory • VFS/ext4 • Netfilter • CPU/NVMe</text>
+
+  <!-- Right Panel: Standard Streams & Pipe Plumbing -->
+  <rect x="602" y="84" width="554" height="324" rx="14" fill="#0D1117" stroke="#212836" stroke-width="1.5"/>
+  <text x="626" y="116" fill="#F0F6FC" font-size="18" font-family="Syne, Inter, sans-serif" font-weight="700">B. Standard Streams &amp; Pipeline Plumbing</text>
+
+  <!-- stdin -->
+  <rect x="626" y="168" width="136" height="64" rx="8" fill="#121A2A" stroke="#58A6FF"/>
+  <text x="642" y="196" fill="#58A6FF" font-size="15" font-family="JetBrains Mono, monospace" font-weight="700">stdin (FD 0)</text>
+  <text x="642" y="216" fill="#8B949E" font-size="12" font-family="JetBrains Mono, monospace">&lt; input.txt</text>
+
+  <!-- Process Box -->
+  <rect x="796" y="152" width="168" height="96" rx="10" fill="#161F18" stroke="#F5B82E" stroke-width="2"/>
+  <text x="816" y="186" fill="#F5B82E" font-size="15" font-family="JetBrains Mono, monospace" font-weight="700">LINUX PROCESS</text>
+  <text x="816" y="208" fill="#F0F6FC" font-size="13" font-family="JetBrains Mono, monospace">grep / awk / sed</text>
+  <text x="816" y="228" fill="#39D353" font-size="12" font-family="JetBrains Mono, monospace">PID • UID • ENV</text>
+
+  <!-- stdout -->
+  <rect x="996" y="138" width="138" height="58" rx="8" fill="#0F1E19" stroke="#39D353"/>
+  <text x="1010" y="164" fill="#39D353" font-size="14" font-family="JetBrains Mono, monospace" font-weight="700">stdout (FD 1)</text>
+  <text x="1010" y="182" fill="#8B949E" font-size="12" font-family="JetBrains Mono, monospace">&gt; / &gt;&gt; / | pipe</text>
+
+  <!-- stderr -->
+  <rect x="996" y="210" width="138" height="58" rx="8" fill="#231419" stroke="#FF7B72"/>
+  <text x="1010" y="236" fill="#FF7B72" font-size="14" font-family="JetBrains Mono, monospace" font-weight="700">stderr (FD 2)</text>
+  <text x="1010" y="254" fill="#8B949E" font-size="12" font-family="JetBrains Mono, monospace">2&gt; err.log / 2&gt;&amp;1</text>
+
+  <!-- Cheatsheet Box inside Right Panel -->
+  <rect x="626" y="286" width="508" height="104" rx="8" fill="#060911" stroke="#30363D"/>
+  <text x="644" y="312" fill="#F5B82E" font-size="14" font-family="JetBrains Mono, monospace" font-weight="700">Redirection &amp; Pipe Operators Quick Reference:</text>
+  <text x="644" y="336" fill="#39D353" font-size="13" font-family="JetBrains Mono, monospace">cmd1 | cmd2        # Pipe stdout of cmd1 into stdin of cmd2</text>
+  <text x="644" y="356" fill="#58A6FF" font-size="13" font-family="JetBrains Mono, monospace">cmd &gt; out.txt      # Overwrite file   |  cmd &gt;&gt; out.txt  (Append)</text>
+  <text x="644" y="376" fill="#D2A8FF" font-size="13" font-family="JetBrains Mono, monospace">cmd 2&gt;&amp;1 | tee log # Merge stderr+stdout and write to screen &amp; file</text>
+</svg>

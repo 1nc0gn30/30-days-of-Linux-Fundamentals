@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 430" role="img" aria-label="Linux Filesystem Hierarchy Standard (FHS) and Chmod Octal Matrix Diagram">
+  <rect width="1200" height="430" rx="18" fill="#05070B" stroke="#30363D" stroke-width="2"/>
+  <text x="44" y="46" fill="#F5B82E" font-size="18" font-family="JetBrains Mono, monospace" font-weight="700">⣿ VISUAL ATLAS 02 // FILESYSTEM HIERARCHY (/) &amp; CHMOD OCTAL PERMISSION MATRIX</text>
+  <line x1="44" y1="62" x2="1156" y2="62" stroke="#212836" stroke-width="1"/>
+
+  <!-- Left: FHS Tree -->
+  <rect x="44" y="82" width="540" height="324" rx="14" fill="#0D1117" stroke="#212836" stroke-width="1.5"/>
+  <text x="68" y="114" fill="#F0F6FC" font-size="18" font-family="Syne, Inter, sans-serif" font-weight="700">A. Filesystem Hierarchy Standard (/)</text>
+
+  <text x="68" y="146" fill="#F5B82E" font-size="15" font-family="JetBrains Mono, monospace" font-weight="700">/ (Root Directory)</text>
+  <text x="68" y="174" fill="#39D353" font-size="14" font-family="JetBrains Mono, monospace">├── /bin   <tspan fill="#8B949E">Core user binaries (bash, ls, cp, mv, cat, grep)</tspan></text>
+  <text x="68" y="200" fill="#39D353" font-size="14" font-family="JetBrains Mono, monospace">├── /sbin  <tspan fill="#8B949E">System admin binaries (iptables, fsck, sysctl, ip)</tspan></text>
+  <text x="68" y="226" fill="#58A6FF" font-size="14" font-family="JetBrains Mono, monospace">├── /etc   <tspan fill="#8B949E">Host configs (passwd, fstab, ssh/sshd_config)</tspan></text>
+  <text x="68" y="252" fill="#58A6FF" font-size="14" font-family="JetBrains Mono, monospace">├── /home  <tspan fill="#8B949E">Operator workspaces (/home/zoth/.bashrc)</tspan></text>
+  <text x="68" y="278" fill="#D2A8FF" font-size="14" font-family="JetBrains Mono, monospace">├── /var   <tspan fill="#8B949E">Runtime logs &amp; spools (/var/log/syslog, auth.log)</tspan></text>
+  <text x="68" y="304" fill="#D2A8FF" font-size="14" font-family="JetBrains Mono, monospace">├── /proc  <tspan fill="#8B949E">Virtual kernel &amp; PID telemetry (/proc/cpuinfo)</tspan></text>
+  <text x="68" y="330" fill="#FF7B72" font-size="14" font-family="JetBrains Mono, monospace">├── /dev   <tspan fill="#8B949E">Hardware &amp; virtual device nodes (nvme0n1, null)</tspan></text>
+  <text x="68" y="356" fill="#F5B82E" font-size="14" font-family="JetBrains Mono, monospace">├── /tmp   <tspan fill="#8B949E">Volatile scratch space (/tmp/linux-dojo-day-XX)</tspan></text>
+  <text x="68" y="382" fill="#39D353" font-size="14" font-family="JetBrains Mono, monospace">└── /usr   <tspan fill="#8B949E">Multi-user apps, libraries &amp; man pages (/usr/bin)</tspan></text>
+
+  <!-- Right: Chmod Matrix -->
+  <rect x="606" y="82" width="550" height="324" rx="14" fill="#0D1117" stroke="#212836" stroke-width="1.5"/>
+  <text x="630" y="114" fill="#F0F6FC" font-size="18" font-family="Syne, Inter, sans-serif" font-weight="700">B. Chmod Octal (4+2+1) &amp; Symbolic Matrix</text>
+
+  <rect x="630" y="132" width="156" height="92" rx="8" fill="#121A2A" stroke="#F5B82E"/>
+  <text x="646" y="156" fill="#F5B82E" font-size="14" font-family="JetBrains Mono, monospace" font-weight="700">OWNER (u)</text>
+  <text x="646" y="182" fill="#F0F6FC" font-size="18" font-family="JetBrains Mono, monospace" font-weight="700">r(4)+w(2)+x(1)</text>
+  <text x="646" y="208" fill="#39D353" font-size="15" font-family="JetBrains Mono, monospace" font-weight="700">= 7 (rwx)</text>
+
+  <rect x="802" y="132" width="156" height="92" rx="8" fill="#0F1E19" stroke="#39D353"/>
+  <text x="818" y="156" fill="#39D353" font-size="14" font-family="JetBrains Mono, monospace" font-weight="700">GROUP (g)</text>
+  <text x="818" y="182" fill="#F0F6FC" font-size="18" font-family="JetBrains Mono, monospace" font-weight="700">r(4)+-(0)+x(1)</text>
+  <text x="818" y="208" fill="#39D353" font-size="15" font-family="JetBrains Mono, monospace" font-weight="700">= 5 (r-x)</text>
+
+  <rect x="974" y="132" width="156" height="92" rx="8" fill="#101B2D" stroke="#58A6FF"/>
+  <text x="990" y="156" fill="#58A6FF" font-size="14" font-family="JetBrains Mono, monospace" font-weight="700">OTHERS (o)</text>
+  <text x="990" y="182" fill="#F0F6FC" font-size="18" font-family="JetBrains Mono, monospace" font-weight="700">r(4)+-(0)+x(1)</text>
+  <text x="990" y="208" fill="#58A6FF" font-size="15" font-family="JetBrains Mono, monospace" font-weight="700">= 5 (r-x)</text>
+
+  <rect x="630" y="240" width="500" height="146" rx="8" fill="#060911" stroke="#30363D"/>
+  <text x="648" y="266" fill="#F5B82E" font-size="14" font-family="JetBrains Mono, monospace" font-weight="700">Essential Production Permission Presets:</text>
+  <text x="648" y="292" fill="#39D353" font-size="13" font-family="JetBrains Mono, monospace">chmod 755 script.sh      # -rwxr-xr-x (Executable script / directory)</text>
+  <text x="648" y="316" fill="#58A6FF" font-size="13" font-family="JetBrains Mono, monospace">chmod 750 /srv/ops       # -rwxr-x--- (Team directory; world blocked)</text>
+  <text x="648" y="340" fill="#D2A8FF" font-size="13" font-family="JetBrains Mono, monospace">chmod 644 config.yaml    # -rw-r--r-- (Standard readable config file)</text>
+  <text x="648" y="364" fill="#FF7B72" font-size="13" font-family="JetBrains Mono, monospace">chmod 600 ~/.ssh/id_rsa  # -rw------- (Strict private key protection)</text>
+</svg>

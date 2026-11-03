@@ -1,6 +1,17 @@
-# 30 Days of Linux Fundamentals Table of Contents
+# ⣿ 30 Days of Linux Fundamentals — Master Table of Contents (ZothOS × 1nc0gn30 Edition)
 
-**Week 1**
+<img src="assets/diagram-30day-roadmap.svg" alt="30 Days of Linux 5-Week Curriculum Progression Roadmap" width="100%" />
+
+> **Quick Navigation**: Run `./control-panel` in your terminal for the interactive C TUI, or `cd astro-ui && npm run dev` for the Web Mission Terminal.
+> - **Week 1 (Days 01–07)**: Linux Foundations, Shell Navigation, Permissions & Archiving
+> - **Week 2 (Days 08–14)**: Bash Scripting, Process Control, Package Managers, Networking & Kernel Modules
+> - **Week 3 (Days 15–21)**: Security Hardening, Firewalls, Auditd, Nmap/Snort IDS & Text Pipelines
+> - **Week 4 (Days 22–28)**: Systemd Units, Performance Telemetry, Rsync Backups, Containers & Forensics
+> - **Week 5 (Days 29–30)**: Multi-Tier Deployment & Incident Triage Capstone Sprint
+
+---
+
+## Week 1: Linux Foundations
 
 # Day 1 Study Guide
 

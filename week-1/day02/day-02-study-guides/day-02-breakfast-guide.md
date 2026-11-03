@@ -1,4 +1,35 @@
-# Day 02 Breakfast Study Guide
+# Day 02 · Breakfast — Ownership, Process Control & Disk/Network Telemetry
+
+> **ZothOS × 1nc0gn30 Linux Dojo** · **Phase**: `Week 1 (Foundations)` · **Session**: `Breakfast (Morning Foundation & Core Command Syntax)`  
+> **Core Commands**: `chown`, `chattr`, `ps`, `top`, `kill`, `tar`
+
+### ⚡ 60-Second Mental Model (Student Digest)
+
+```text
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  ZOTHOS × 1NC0GN30 // LINUX FILESYSTEM & SHELL EXECUTION ARCHITECTURE       ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║                                                                              ║
+║   [ USER TERMINAL / TUI ]  ──( stdin 0 )──►  [ BASH / ZSH SHELL PARSER ]     ║
+║                                                       │                      ║
+║                                              ( glibc / syscalls )            ║
+║                                                       ▼                      ║
+║   [ VFS / INODE TABLE ]    ◄───────────────  [ LINUX KERNEL RING 0 ]         ║
+║     ├── /bin  (Core Binaries)                  ├── Process Scheduler         ║
+║     ├── /etc  (System Configs)                 ├── Memory Manager            ║
+║     ├── /home (Operator Workspaces)            └── Netfilter / I/O           ║
+║     └── /var  (Logs & Runtime State)                                         ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+```
+
+| Learning Pillar | How to Practice This Session |
+| :--- | :--- |
+| **1. Native TUI (`./control-panel`)** | Run `./control-panel` from repo root → Select **Week 1 → Day 02 → Breakfast** to drill interactive C lessons & quizzes. |
+| **2. Web Workstation (`astro-ui`)** | Open `/day/2` → Select **Breakfast** tab → Type each target command in the live Mission Terminal to earn XP & streak mastery. |
+| **3. Safe Local Sandbox** | Run `mkdir -p /tmp/linux-dojo-day-02 && cd /tmp/linux-dojo-day-02` to test every flag below without touching production files. |
+
+---
+<!-- ZOTH-1NC0GN30-DIGESTIBLE-BLUEPRINT -->
 
 Welcome to Day 2's breakfast study guide! This guide covers new commands related to file and directory attributes, process management, and permissions. Use this guide to review and reinforce your understanding of the commands introduced in the Day 2 breakfast challenge.
 

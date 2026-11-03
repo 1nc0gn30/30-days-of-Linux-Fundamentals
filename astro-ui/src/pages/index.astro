@@ -1,149 +1,698 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
-import { COURSE_WEEKS, TOTAL_DAYS } from '../lib/course';
+import { COURSE_WEEKS, DAY_METADATA, TOTAL_DAYS } from '../lib/course';
 
 const totalWeeks = COURSE_WEEKS.length;
 const totalStudyBlocks = TOTAL_DAYS * 3;
 ---
 
 <MainLayout
-  title="30 Days of Linux Fundamentals | Hands-On Linux Roadmap"
-  description="Train Linux with a complete 30-day roadmap, daily command practice, progress tracking, and guided study sessions."
+  title="30 Days of Linux Fundamentals — ZothOS × 1nc0gn30 Interactive Linux Dojo"
+  description="Master Linux from shell navigation to kernel modules, firewalls, and systemd in 30 digestible days through the native C TUI (./control-panel) and Web Mission Terminal."
   activeNav="home"
 >
   <section class="section surface hero">
-    <div>
-      <p class="eyebrow">Linux Training Program</p>
-      <h1>Master Linux in 30 focused days.</h1>
+    <div class="hero-copy">
+      <p class="eyebrow">⣿ ZOTHOS × 1NC0GN30 // SOVEREIGN LINUX DOJO v3.4</p>
+      <h1>
+        Master Linux from Kernel to Production in <span class="gold-text">30 Digestible Days.</span>
+      </h1>
       <p class="muted lead">
-        A full beginner-to-advanced path with daily command drills, practical missions, and guided study blocks designed to build confidence fast.
+        Built for rapid student comprehension and muscle memory. Every day is broken into three bite-sized sessions—<strong>🍳 Breakfast</strong> (Core Syntax), <strong>🥪 Lunch</strong> (Operational Flags), and <strong>🍽️ Dinner</strong> (Hardening &amp; Pipelines)—available in both the <strong>native C TUI (<code>./control-panel</code>)</strong> and this <strong>interactive Web Mission Terminal</strong>.
       </p>
+
+      <div class="cli-bar" aria-label="Terminal quickstart command">
+        <span class="cli-prompt">$</span>
+        <code id="hero-cli-cmd">git clone https://github.com/1nc0gn30/30-days-of-Linux-Fundamentals.git &amp;&amp; cd 30-days-of-Linux-Fundamentals &amp;&amp; ./control-panel</code>
+        <button type="button" class="cli-copy-btn" data-copy-hero-cli>Copy TUI</button>
+      </div>
+
       <div class="hero-actions">
-        <a class="btn btn-primary" href="/day/1">Start Day 1</a>
-        <a class="btn" href="/curriculum">Explore Curriculum</a>
-        <a class="btn btn-resume" href="/curriculum" data-resume-link>Resume Progress</a>
+        <a class="btn btn-primary" href="/day/1">⚡ Start Day 01 Terminal</a>
+        <a class="btn btn-emerald" href="/curriculum">🗺️ 30-Day Curriculum (90/90)</a>
+        <a class="btn" href="#interactive-labs">🧪 Interactive Visual Labs</a>
+        <a class="btn btn-resume" href="/curriculum" data-resume-link>▶ Resume Progress</a>
       </div>
-      <p class="resume-note muted" data-resume-note>Progress-aware resume is ready after your first day session.</p>
+      <p class="resume-note muted" data-resume-note>Progress-aware resume syncs automatically as you complete drills.</p>
     </div>
-    <aside class="hero-stats" aria-label="Program overview">
-      <div class="stat-box">
-        <span>Duration</span>
-        <strong>{TOTAL_DAYS} Days</strong>
+
+    <aside class="hero-visual-panel" aria-label="Interactive ZothOS x 1nc0gn30 Braille Kernel Visualizer">
+      <div class="canvas-header">
+        <span class="canvas-title">⣿ KERNEL LATTICE // 60FPS ASCII-BRAILLE</span>
+        <div class="mode-pills" role="group" aria-label="Visualizer shader mode">
+          <button type="button" class="mode-pill active" data-viz-mode="braille">⣿ Braille</button>
+          <button type="button" class="mode-pill" data-viz-mode="dither">▦ Dither</button>
+          <button type="button" class="mode-pill" data-viz-mode="fhs">/_ FHS</button>
+          <button type="button" class="mode-pill" data-viz-mode="streams">◈ Streams</button>
+        </div>
       </div>
-      <div class="stat-box">
-        <span>Structure</span>
-        <strong>{totalWeeks} Weeks</strong>
-      </div>
-      <div class="stat-box">
-        <span>Daily Sessions</span>
-        <strong>3 Meals</strong>
-      </div>
-      <div class="stat-box">
-        <span>Total Study Blocks</span>
-        <strong>{totalStudyBlocks}</strong>
+      <pre class="braille-stage" id="linux-braille-stage" aria-hidden="true">Initializing ZothOS × 1nc0gn30 Kernel Lattice...</pre>
+      <div class="hero-stats">
+        <div class="stat-box">
+          <span>Curriculum</span>
+          <strong>{TOTAL_DAYS} Days · {totalWeeks} Weeks</strong>
+        </div>
+        <div class="stat-box">
+          <span>Study Guides</span>
+          <strong class="emerald-text">{totalStudyBlocks}/90 Complete</strong>
+        </div>
+        <div class="stat-box">
+          <span>Native C TUI</span>
+          <strong class="gold-text">./control-panel</strong>
+        </div>
+        <div class="stat-box">
+          <span>Access Tier</span>
+          <strong class="cyan-text">100% Free &amp; Open</strong>
+        </div>
       </div>
     </aside>
   </section>
 
-  <section class="section flow">
-    <h2>How each day works</h2>
-    <div class="flow-grid">
-      <article class="surface flow-card">
-        <h3>1. Warm-up Session</h3>
-        <p class="muted">Open your day terminal, select a meal tab, and start command drills with hints and XP scoring.</p>
+  <!-- DUAL-TRACK LEARNING ARCHITECTURE: TUI + WEB GUI -->
+  <section class="section dual-track">
+    <div class="section-head">
+      <p class="eyebrow">DUAL-INTERFACE LEARNING ARCHITECTURE</p>
+      <h2>Learn through the Terminal TUI and the Web GUI simultaneously</h2>
+      <p class="muted">Whether you are inside a headless SSH session, a ZothOS Live ISO workstation, or your browser, every lesson and command drill stays in sync.</p>
+    </div>
+
+    <div class="dual-grid">
+      <article class="surface track-card">
+        <div class="track-badge gold-badge">TERMINAL INTERFACE (C BINARY)</div>
+        <h3>1. Native C Dojo TUI (<code>./control-panel</code>)</h3>
+        <p class="muted">Compiled zero-dependency C control deck with 90 interactive meal binaries (<code>breakfast-day-01</code>..<code>dinner-day-30</code>).</p>
+        <pre class="mini-terminal"><code>╔══════════════════════════════════════════════════════════════╗
+║ ⣿ ZOTHOS × 1NC0GN30 // 30 DAYS OF LINUX DOJO TUI v3.4       ║
+╠══════════════════════════════════════════════════════════════╣
+║ [1] 🗺️ 30-Day Curriculum Navigator (90 C Drills &amp; Guides)    ║
+║ [2] ⚡ Direct Day Jump (Day 01–30)                           ║
+║ [3] 📋 Master Linux Cheat-Sheet (--cheatsheet)               ║
+║ [4] 🏛️ Visual Architecture Atlas (--atlas)                   ║
+║ [5] 🎯 Rapid-Fire Flashcard Arena (XP &amp; Streak Tracker)      ║
+║ [6] 🧪 Safe Practice Subshell (/tmp/linux-dojo-day-XX)       ║
+╚══════════════════════════════════════════════════════════════╝</code></pre>
       </article>
-      <article class="surface flow-card">
-        <h3>2. Command Repetition</h3>
-        <p class="muted">Repeat commands until mastery climbs, then use command intel to understand output and use-cases.</p>
-      </article>
-      <article class="surface flow-card">
-        <h3>3. Knowledge Lock-In</h3>
-        <p class="muted">Read the source guide, complete mini missions, and capture applied takeaways in your own terminal.</p>
+
+      <article class="surface track-card">
+        <div class="track-badge emerald-badge">BROWSER WORKSTATION (ASTRO UI)</div>
+        <h3>2. Interactive Web Mission Terminal (<code>astro-ui</code>)</h3>
+        <p class="muted">Practice typing exact command flags with real-time syntax verification, Command Intel cards, and visual architecture calculators.</p>
+        <ul class="feature-checklist">
+          <li><strong>🍳 Breakfast (Morning Syntax)</strong>: Build foundational muscle memory on 6–10 core commands with instant hints.</li>
+          <li><strong>🥪 Lunch (Midday Workflows)</strong>: Combine flags, pipes, and process/disk/network diagnostics.</li>
+          <li><strong>🍽️ Dinner (Evening Hardening)</strong>: Apply security permissions, firewall rules, systemd units, and shell automation.</li>
+          <li><strong>📖 Built-In Visual Study Guides</strong>: Every session opens with a 60-Second Mental Model diagram and cheat-sheet table.</li>
+        </ul>
       </article>
     </div>
   </section>
 
+  <!-- INTERACTIVE VISUAL LINUX LABS -->
+  <section class="section" id="interactive-labs">
+    <div class="section-head">
+      <p class="eyebrow">HANDS-ON VISUAL MENTAL MODELS</p>
+      <h2>Interactive Linux Architecture Labs</h2>
+      <p class="muted">Stop memorizing numbers blindly—interact with Linux permissions, the filesystem hierarchy, and stream pipelines right here.</p>
+    </div>
+
+    <div class="labs-grid">
+      <!-- LAB 1: INTERACTIVE CHMOD CALCULATOR -->
+      <article class="surface lab-card">
+        <div class="lab-head">
+          <div>
+            <p class="eyebrow">VISUAL LAB 01 · PERMISSIONS</p>
+            <h3>Interactive <code>chmod</code> Octal &amp; Bitwise Matrix</h3>
+          </div>
+          <div class="chmod-presets">
+            <button type="button" class="preset-btn" data-chmod-preset="755">755 Script</button>
+            <button type="button" class="preset-btn" data-chmod-preset="644">644 Config</button>
+            <button type="button" class="preset-btn" data-chmod-preset="600">600 SSH Key</button>
+            <button type="button" class="preset-btn" data-chmod-preset="750">750 Team</button>
+          </div>
+        </div>
+        <p class="muted">Toggle Read (<code>4</code>), Write (<code>2</code>), and Execute (<code>1</code>) bits to see how octal numbers map to <code>ls -l</code> permission strings.</p>
+
+        <div class="chmod-matrix">
+          <div class="chmod-col">
+            <h4>Owner (<code>u</code>)</h4>
+            <label><input type="checkbox" data-bit="u-4" checked /> Read (r = 4)</label>
+            <label><input type="checkbox" data-bit="u-2" checked /> Write (w = 2)</label>
+            <label><input type="checkbox" data-bit="u-1" checked /> Execute (x = 1)</label>
+          </div>
+          <div class="chmod-col">
+            <h4>Group (<code>g</code>)</h4>
+            <label><input type="checkbox" data-bit="g-4" checked /> Read (r = 4)</label>
+            <label><input type="checkbox" data-bit="g-2" /> Write (w = 2)</label>
+            <label><input type="checkbox" data-bit="g-1" checked /> Execute (x = 1)</label>
+          </div>
+          <div class="chmod-col">
+            <h4>Others (<code>o</code>)</h4>
+            <label><input type="checkbox" data-bit="o-4" checked /> Read (r = 4)</label>
+            <label><input type="checkbox" data-bit="o-2" /> Write (w = 2)</label>
+            <label><input type="checkbox" data-bit="o-1" checked /> Execute (x = 1)</label>
+          </div>
+        </div>
+
+        <div class="chmod-readout">
+          <div class="readout-pill">
+            <span>Octal Mode</span>
+            <strong id="chmod-octal-out" class="gold-text">755</strong>
+          </div>
+          <div class="readout-pill">
+            <span>Symbolic Mode</span>
+            <strong id="chmod-sym-out" class="emerald-text">-rwxr-xr-x</strong>
+          </div>
+          <div class="readout-pill wide">
+            <span>Terminal Command</span>
+            <code id="chmod-cmd-out">chmod 755 deploy.sh &amp;&amp; ls -l deploy.sh</code>
+          </div>
+        </div>
+        <p class="chmod-insight muted" id="chmod-insight-out">
+          Standard mode for executable scripts and public directories: Owner has full control (7), Group and Others can read and execute (5).
+        </p>
+      </article>
+
+      <!-- LAB 2: INTERACTIVE FHS EXPLORER -->
+      <article class="surface lab-card">
+        <div class="lab-head">
+          <div>
+            <p class="eyebrow">VISUAL LAB 02 · FILESYSTEM HIERARCHY (FHS)</p>
+            <h3>Interactive Linux Root (<code>/</code>) Directory Explorer</h3>
+          </div>
+        </div>
+        <p class="muted">Click any directory in the Linux Filesystem Hierarchy Standard to inspect what lives there and which commands query it.</p>
+
+        <div class="fhs-buttons" role="tablist" aria-label="Linux root directories">
+          <button type="button" class="fhs-btn active" data-fhs="/etc">/etc</button>
+          <button type="button" class="fhs-btn" data-fhs="/var">/var</button>
+          <button type="button" class="fhs-btn" data-fhs="/proc">/proc</button>
+          <button type="button" class="fhs-btn" data-fhs="/bin">/bin</button>
+          <button type="button" class="fhs-btn" data-fhs="/home">/home</button>
+          <button type="button" class="fhs-btn" data-fhs="/dev">/dev</button>
+          <button type="button" class="fhs-btn" data-fhs="/tmp">/tmp</button>
+          <button type="button" class="fhs-btn" data-fhs="/usr">/usr</button>
+        </div>
+
+        <div class="fhs-detail-box">
+          <div class="fhs-detail-top">
+            <strong id="fhs-title" class="gold-text">/etc — Host-Specific System Configuration</strong>
+            <span id="fhs-day-ref" class="fhs-badge">Days 01, 11, 12, 15, 21</span>
+          </div>
+          <p id="fhs-desc" class="muted">
+            Contains static plain-text configuration files for the operating system and installed daemons. Zero binaries live here—only declarative configuration.
+          </p>
+          <div class="fhs-meta-grid">
+            <div>
+              <span class="meta-label">Critical Files Inside</span>
+              <code id="fhs-files">/etc/passwd, /etc/fstab, /etc/ssh/sshd_config, /etc/sudoers</code>
+            </div>
+            <div>
+              <span class="meta-label">Operator Inspection Command</span>
+              <code id="fhs-cmd">ls -la /etc &amp;&amp; cat /etc/os-release</code>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- LAB 3: PIPELINE & STANDARD STREAMS SIMULATOR -->
+    <article class="surface lab-card pipeline-lab">
+      <div class="lab-head">
+        <div>
+          <p class="eyebrow">VISUAL LAB 03 · UNIX PHILOSOPHY &amp; STREAMS</p>
+          <h3>Interactive Linux Pipe (<code>|</code>) &amp; Log Triage Simulator</h3>
+        </div>
+        <div class="pipeline-steps" role="group" aria-label="Pipeline stage selector">
+          <button type="button" class="pipe-btn active" data-pipe-stage="1">Stage 1: cat</button>
+          <button type="button" class="pipe-btn" data-pipe-stage="2">Stage 2: | grep</button>
+          <button type="button" class="pipe-btn" data-pipe-stage="3">Stage 3: | awk</button>
+          <button type="button" class="pipe-btn" data-pipe-stage="4">Stage 4: | sort | uniq -c</button>
+        </div>
+      </div>
+      <p class="muted">Click each stage to watch how raw security logs flow through <code>stdout (FD 1)</code> into <code>stdin (FD 0)</code> of the next tool to isolate an attacker IP.</p>
+      <div class="pipeline-display">
+        <div class="pipeline-cmd-bar">
+          <span class="cli-prompt">pipeline$</span>
+          <code id="pipe-cmd-text">cat /var/log/auth.log</code>
+        </div>
+        <pre class="pipeline-output" id="pipe-output-text">Nov 02 20:14:01 zoth-node sshd[4102]: Accepted publickey for zoth from 10.0.0.5 port 51204 ssh2
+Nov 02 20:14:09 zoth-node sshd[4199]: Failed password for root from 198.51.100.42 port 39102 ssh2
+Nov 02 20:14:11 zoth-node sshd[4201]: Failed password for root from 198.51.100.42 port 39108 ssh2
+Nov 02 20:14:15 zoth-node sshd[4208]: Failed password for admin from 203.0.113.88 port 44120 ssh2
+Nov 02 20:14:18 zoth-node sshd[4215]: Failed password for root from 198.51.100.42 port 39119 ssh2
+Nov 02 20:14:22 zoth-node sudo[4250]:     zoth : TTY=pts/0 ; PWD=/home/zoth ; USER=root ; COMMAND=/usr/bin/ss -tulpen</pre>
+      </div>
+    </article>
+  </section>
+
+  <!-- 5-WEEK ROADMAP & 30-DAY QUICK MATRIX -->
   <section class="section week-breakdown">
-    <h2>Week-by-week roadmap</h2>
+    <div class="section-head">
+      <p class="eyebrow">COMPLETE 5-WEEK CURRICULUM</p>
+      <h2>Week-by-Week Sovereign Linux Roadmap</h2>
+      <p class="muted">Click any day pill to jump directly into its interactive Mission Terminal and 3-meal study guides.</p>
+    </div>
+
     <div class="week-grid">
-      {COURSE_WEEKS.map((week) => (
-        <article class="surface week-card">
-          <p class="eyebrow">Week {week.id}</p>
-          <h3>{week.title}</h3>
-          <p class="muted">{week.summary}</p>
-          <p class="range">Days {week.startDay}-{week.endDay}</p>
-        </article>
-      ))}
+      {COURSE_WEEKS.map((week) => {
+        const weekDays = DAY_METADATA.filter((d) => d.weekId === week.id);
+        return (
+          <article class="surface week-card" style={`--week-accent: ${week.accent}`}>
+            <div class="week-card-head">
+              <p class="eyebrow" style={`color: ${week.accent}`}>Week {week.id} · Days {week.startDay}–{week.endDay}</p>
+              <h3>{week.title}</h3>
+              <p class="muted">{week.summary}</p>
+            </div>
+            <div class="week-day-pills">
+              {weekDays.map((d) => (
+                <a href={`/day/${d.day}`} class="day-jump-pill" title={`Day ${d.day}: ${d.title}`}>
+                  <span class="day-num">D{String(d.day).padStart(2, '0')}</span>
+                  <span class="day-short">{d.title}</span>
+                </a>
+              ))}
+            </div>
+          </article>
+        );
+      })}
     </div>
   </section>
 
   <section class="section surface cta-panel">
-    <h2>Ready to operate Linux daily?</h2>
-    <p class="muted">The curriculum view gives you day-by-day access, progress visibility, and fast jump links.</p>
-    <a class="btn btn-primary" href="/curriculum">Open Curriculum Control Center</a>
+    <p class="eyebrow">100% OPEN-ACCESS • ZERO PAYWALLS</p>
+    <h2>Ready to operate Linux with total confidence?</h2>
+    <p class="muted">Open the Curriculum Control Center to track your 30-day completion bar, search by command, or jump straight into Day 1.</p>
+    <div class="hero-actions" style="justify-content: center;">
+      <a class="btn btn-primary" href="/day/1">⚡ Launch Day 01 Mission</a>
+      <a class="btn btn-emerald" href="/curriculum">🗺️ Open Curriculum Control Center</a>
+      <a class="btn" href="https://github.com/1nc0gn30/30-days-of-Linux-Fundamentals" target="_blank" rel="noopener noreferrer">★ Star on GitHub</a>
+    </div>
   </section>
 </MainLayout>
 
 <script>
   const PROGRESS_KEY = 'linux30-course-progress-v1';
 
-  function initHomeResume() {
+  function initHomePage() {
+    // 1. Progress-aware resume
     const resumeLink = document.querySelector('[data-resume-link]');
     const resumeNote = document.querySelector('[data-resume-note]');
-    if (!(resumeLink instanceof HTMLAnchorElement)) return;
-
-    let progress = null;
-    try {
-      progress = JSON.parse(localStorage.getItem(PROGRESS_KEY) || 'null');
-    } catch (_error) {
-      progress = null;
+    if (resumeLink instanceof HTMLAnchorElement) {
+      let progress = null;
+      try {
+        progress = JSON.parse(localStorage.getItem(PROGRESS_KEY) || 'null');
+      } catch (_error) {
+        progress = null;
+      }
+      const completed = Array.isArray(progress?.completedDays) ? progress.completedDays : [];
+      const lastVisitedDay = Number(progress?.lastVisitedDay || 0);
+      const nextTarget = Math.max(1, Math.min(30, completed.length > 0 ? Math.max(...completed) + 1 : lastVisitedDay || 1));
+      resumeLink.href = `/day/${nextTarget}`;
+      if (resumeNote instanceof HTMLElement) {
+        resumeNote.textContent =
+          completed.length === 0 && lastVisitedDay <= 1
+            ? 'No saved progress yet — start with Day 01 Breakfast or run ./control-panel locally.'
+            : `Resume target: Day ${String(nextTarget).padStart(2, '0')} · Completed days: ${completed.length}/30.`;
+      }
     }
 
-    const completed = Array.isArray(progress?.completedDays) ? progress.completedDays : [];
-    const lastVisitedDay = Number(progress?.lastVisitedDay || 0);
-    const nextTarget = Math.max(1, Math.min(30, completed.length > 0 ? Math.max(...completed) + 1 : lastVisitedDay || 1));
+    // 2. Hero CLI copy button
+    const copyCliBtn = document.querySelector('[data-copy-hero-cli]');
+    const heroCliCmd = document.getElementById('hero-cli-cmd');
+    if (copyCliBtn instanceof HTMLButtonElement && heroCliCmd && copyCliBtn.dataset.bound !== 'true') {
+      copyCliBtn.dataset.bound = 'true';
+      copyCliBtn.addEventListener('click', async () => {
+        await navigator.clipboard.writeText(heroCliCmd.textContent || '');
+        copyCliBtn.textContent = 'Copied!';
+        setTimeout(() => {
+          copyCliBtn.textContent = 'Copy TUI';
+        }, 1400);
+      });
+    }
 
-    resumeLink.href = `/day/${nextTarget}`;
+    // 3. Interactive Chmod Calculator
+    const chmodCheckboxes = document.querySelectorAll<HTMLInputElement>('[data-bit]');
+    const octalOut = document.getElementById('chmod-octal-out');
+    const symOut = document.getElementById('chmod-sym-out');
+    const cmdOut = document.getElementById('chmod-cmd-out');
+    const insightOut = document.getElementById('chmod-insight-out');
 
-    if (resumeNote instanceof HTMLElement) {
-      if (completed.length === 0 && lastVisitedDay <= 1) {
-        resumeNote.textContent = 'No saved progress detected yet. Start with Day 1.';
-      } else {
-        resumeNote.textContent = `Resume target: Day ${nextTarget}. Completed days tracked: ${completed.length}.`;
+    const updateChmod = () => {
+      if (!octalOut || !symOut || !cmdOut || !insightOut) return;
+      const roles = ['u', 'g', 'o'];
+      let octal = '';
+      let sym = '-';
+      roles.forEach((r) => {
+        const b4 = document.querySelector<HTMLInputElement>(`[data-bit="${r}-4"]`)?.checked ? 4 : 0;
+        const b2 = document.querySelector<HTMLInputElement>(`[data-bit="${r}-2"]`)?.checked ? 2 : 0;
+        const b1 = document.querySelector<HTMLInputElement>(`[data-bit="${r}-1"]`)?.checked ? 1 : 0;
+        octal += String(b4 + b2 + b1);
+        sym += (b4 ? 'r' : '-') + (b2 ? 'w' : '-') + (b1 ? 'x' : '-');
+      });
+      octalOut.textContent = octal;
+      symOut.textContent = sym;
+      cmdOut.textContent = `chmod ${octal} target.sh && ls -la target.sh`;
+      const insights: Record<string, string> = {
+        '755': 'Standard mode for executable scripts & public directories: Owner has full rwx (7), Group & Others have r-x (5).',
+        '644': 'Standard mode for configuration files & docs: Owner can read/write (6), Group & Others can only read (4).',
+        '600': 'Strict secret protection (required by OpenSSH for ~/.ssh/id_ed25519): Only Owner can read/write (6); zero access for others.',
+        '750': 'Sovereign team workspace mode: Owner has full control (7), Group can read/traverse (5), World has zero access (0).',
+        '777': '⚠️ Security Warning: World-writable & executable (777) allows any local user to modify and execute the file. Avoid in production!',
+      };
+      insightOut.textContent =
+        insights[octal] ||
+        `Custom permission mask ${octal} (${sym}): Owner=${octal[0]}, Group=${octal[1]}, Others=${octal[2]}.`;
+    };
+
+    chmodCheckboxes.forEach((cb) => {
+      if (cb.dataset.bound !== 'true') {
+        cb.dataset.bound = 'true';
+        cb.addEventListener('change', updateChmod);
       }
+    });
+
+    document.querySelectorAll<HTMLButtonElement>('[data-chmod-preset]').forEach((btn) => {
+      if (btn.dataset.bound === 'true') return;
+      btn.dataset.bound = 'true';
+      btn.addEventListener('click', () => {
+        const preset = btn.dataset.chmodPreset || '755';
+        const roles = ['u', 'g', 'o'];
+        roles.forEach((r, idx) => {
+          const digit = Number(preset[idx] || 0);
+          const c4 = document.querySelector<HTMLInputElement>(`[data-bit="${r}-4"]`);
+          const c2 = document.querySelector<HTMLInputElement>(`[data-bit="${r}-2"]`);
+          const c1 = document.querySelector<HTMLInputElement>(`[data-bit="${r}-1"]`);
+          if (c4) c4.checked = Boolean(digit & 4);
+          if (c2) c2.checked = Boolean(digit & 2);
+          if (c1) c1.checked = Boolean(digit & 1);
+        });
+        updateChmod();
+      });
+    });
+
+    // 4. Interactive FHS Explorer
+    const fhsData: Record<string, { title: string; days: string; desc: string; files: string; cmd: string }> = {
+      '/etc': {
+        title: '/etc — Host-Specific System Configuration',
+        days: 'Days 01, 11, 12, 15, 21',
+        desc: 'Contains static plain-text configuration files for the operating system, users, mounts, and daemons.',
+        files: '/etc/passwd, /etc/fstab, /etc/ssh/sshd_config, /etc/sudoers',
+        cmd: 'ls -la /etc && cat /etc/os-release',
+      },
+      '/var': {
+        title: '/var — Variable Runtime Data & System Logs',
+        days: 'Days 04, 13, 16, 18, 27',
+        desc: 'Stores files that grow dynamically during system operation: system logs, package caches, cron spools, and web roots.',
+        files: '/var/log/syslog, /var/log/auth.log, /var/log/journal/, /var/spool/cron',
+        cmd: 'ls -lh /var/log && tail -n 25 /var/log/syslog',
+      },
+      '/proc': {
+        title: '/proc — Virtual Kernel & Process Telemetry Filesystem',
+        days: 'Days 02, 09, 14, 24, 26',
+        desc: 'An in-memory pseudo-filesystem generated on the fly by the Linux kernel exposing live process states and hardware metrics.',
+        files: '/proc/cpuinfo, /proc/meminfo, /proc/mounts, /proc/<PID>/fd',
+        cmd: 'cat /proc/cpuinfo | head -n 20 && cat /proc/loadavg',
+      },
+      '/bin': {
+        title: '/bin (/usr/bin) — Essential User Command Binaries',
+        days: 'Days 01, 03, 08, 18',
+        desc: 'Holds the core executable binaries required for single-user mode and daily shell operations.',
+        files: '/bin/bash, /bin/ls, /bin/cp, /bin/mv, /bin/mkdir, /bin/grep',
+        cmd: 'which bash ls grep && ls -lh /bin/bash',
+      },
+      '/home': {
+        title: '/home — Operator Home Directories & Dotfiles',
+        days: 'Days 01, 05, 20, 21',
+        desc: 'Personal workspaces for non-root users, storing SSH keys, shell configurations (~/.bashrc), and project repositories.',
+        files: '/home/zoth/.bashrc, /home/zoth/.profile, /home/zoth/.ssh/authorized_keys',
+        cmd: 'cd ~ && ls -la && cat ~/.bashrc',
+      },
+      '/dev': {
+        title: '/dev — Hardware & Virtual Device Nodes',
+        days: 'Days 06, 12, 25',
+        desc: 'Exposes block storage disks, character devices, pseudo-terminals, and special streams as files ("Everything is a file").',
+        files: '/dev/sda, /dev/nvme0n1, /dev/null, /dev/zero, /dev/urandom',
+        cmd: 'lsblk && ls -la /dev/null /dev/urandom',
+      },
+      '/tmp': {
+        title: '/tmp — Volatile Scratch Workspace (1777 Sticky Bit)',
+        days: 'Days 01, 05, 08, 19',
+        desc: 'Temporary scratch storage writable by all users (protected by the sticky bit so users can only delete their own files).',
+        files: '/tmp/linux-dojo-day-01, /tmp/systemd-private-*',
+        cmd: 'mkdir -p /tmp/linux-dojo-day-01 && ls -ld /tmp',
+      },
+      '/usr': {
+        title: '/usr — User System Resources, Libraries & Applications',
+        days: 'Days 10, 14, 22',
+        desc: 'Contains the majority of multi-user utilities, C header files, shared libraries (/usr/lib), and man pages (/usr/share/man).',
+        files: '/usr/bin/env, /usr/sbin/iptables, /usr/local/bin/, /usr/share/man',
+        cmd: 'du -sh /usr/* 2>/dev/null | sort -h',
+      },
+    };
+
+    document.querySelectorAll<HTMLButtonElement>('[data-fhs]').forEach((btn) => {
+      if (btn.dataset.bound === 'true') return;
+      btn.dataset.bound = 'true';
+      btn.addEventListener('click', () => {
+        const key = btn.dataset.fhs || '/etc';
+        const info = fhsData[key];
+        if (!info) return;
+        document.querySelectorAll('[data-fhs]').forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        const t = document.getElementById('fhs-title');
+        const d = document.getElementById('fhs-day-ref');
+        const desc = document.getElementById('fhs-desc');
+        const files = document.getElementById('fhs-files');
+        const cmd = document.getElementById('fhs-cmd');
+        if (t) t.textContent = info.title;
+        if (d) d.textContent = info.days;
+        if (desc) desc.textContent = info.desc;
+        if (files) files.textContent = info.files;
+        if (cmd) cmd.textContent = info.cmd;
+      });
+    });
+
+    // 5. Interactive Pipeline Simulator
+    const pipeStages: Record<string, { cmd: string; out: string }> = {
+      '1': {
+        cmd: 'cat /var/log/auth.log',
+        out: `Nov 02 20:14:01 zoth-node sshd[4102]: Accepted publickey for zoth from 10.0.0.5 port 51204 ssh2
+Nov 02 20:14:09 zoth-node sshd[4199]: Failed password for root from 198.51.100.42 port 39102 ssh2
+Nov 02 20:14:11 zoth-node sshd[4201]: Failed password for root from 198.51.100.42 port 39108 ssh2
+Nov 02 20:14:15 zoth-node sshd[4208]: Failed password for admin from 203.0.113.88 port 44120 ssh2
+Nov 02 20:14:18 zoth-node sshd[4215]: Failed password for root from 198.51.100.42 port 39119 ssh2
+Nov 02 20:14:22 zoth-node sudo[4250]:     zoth : TTY=pts/0 ; PWD=/home/zoth ; USER=root ; COMMAND=/usr/bin/ss -tulpen`,
+      },
+      '2': {
+        cmd: 'cat /var/log/auth.log | grep "Failed password"',
+        out: `Nov 02 20:14:09 zoth-node sshd[4199]: Failed password for root from 198.51.100.42 port 39102 ssh2
+Nov 02 20:14:11 zoth-node sshd[4201]: Failed password for root from 198.51.100.42 port 39108 ssh2
+Nov 02 20:14:15 zoth-node sshd[4208]: Failed password for admin from 203.0.113.88 port 44120 ssh2
+Nov 02 20:14:18 zoth-node sshd[4215]: Failed password for root from 198.51.100.42 port 39119 ssh2`,
+      },
+      '3': {
+        cmd: 'cat /var/log/auth.log | grep "Failed password" | awk \'{print $11}\'',
+        out: `198.51.100.42
+198.51.100.42
+203.0.113.88
+198.51.100.42`,
+      },
+      '4': {
+        cmd: 'cat /var/log/auth.log | grep "Failed password" | awk \'{print $11}\' | sort | uniq -c | sort -nr',
+        out: `      3 198.51.100.42   <-- [!] Brute-force source identified (ban via iptables / fail2ban)
+      1 203.0.113.88`,
+      },
+    };
+
+    document.querySelectorAll<HTMLButtonElement>('[data-pipe-stage]').forEach((btn) => {
+      if (btn.dataset.bound === 'true') return;
+      btn.dataset.bound = 'true';
+      btn.addEventListener('click', () => {
+        const st = btn.dataset.pipeStage || '1';
+        const data = pipeStages[st];
+        if (!data) return;
+        document.querySelectorAll('[data-pipe-stage]').forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        const cmdEl = document.getElementById('pipe-cmd-text');
+        const outEl = document.getElementById('pipe-output-text');
+        if (cmdEl) cmdEl.textContent = data.cmd;
+        if (outEl) outEl.textContent = data.out;
+      });
+    });
+
+    // 6. 60fps Unicode Braille / Bayer Dither Kernel Visualizer
+    const stage = document.getElementById('linux-braille-stage');
+    if (stage && stage.dataset.running !== 'true') {
+      stage.dataset.running = 'true';
+      let mode = 'braille';
+      let tick = 0;
+
+      document.querySelectorAll<HTMLButtonElement>('[data-viz-mode]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          mode = btn.dataset.vizMode || 'braille';
+          document.querySelectorAll('[data-viz-mode]').forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+        });
+      });
+
+      const renderFrame = () => {
+        tick += 0.08;
+        const W = 44;
+        const H = 13;
+        const lines: string[] = [];
+
+        if (mode === 'fhs') {
+          const pulse = Math.floor(tick * 2) % 4;
+          const marker = ['◈', '⣿', '▸', '⠿'][pulse];
+          lines.push(`  ${marker} LINUX VFS INODE & DIRECTORY TREE (/)`);
+          lines.push('  ┌── /bin   -> [ls, cp, mv, bash, grep, awk]');
+          lines.push('  ├── /sbin  -> [iptables, fsck, sysctl, ip]');
+          lines.push('  ├── /etc   -> [passwd, fstab, sshd_config]');
+          lines.push('  ├── /proc  -> [cpuinfo, meminfo, /proc/PID]');
+          lines.push('  ├── /var   -> [/var/log/syslog, journald]');
+          lines.push('  ├── /home  -> [/home/zoth/.bashrc, .ssh/]');
+          lines.push('  ├── /dev   -> [nvme0n1, null, zero, tty0]');
+          lines.push('  └── /tmp   -> [drwxrwxrwt /tmp/linux-dojo]');
+          lines.push('');
+          lines.push('  SYSCALL: openat(AT_FDCWD, "/etc/passwd", O_RDONLY)');
+          lines.push('  RING 0 : vfs_read() -> ext4_file_read_iter()');
+          lines.push('  STATUS : [████████████████████] 90/90 GUIDES');
+        } else if (mode === 'streams') {
+          const p = Math.floor(tick * 3) % 12;
+          const streamBar = Array.from({ length: 12 }, (_, i) => (i === p ? '██' : '══')).join('');
+          lines.push('  ╔══ LINUX PROCESS DESCRIPTOR TABLE ════════╗');
+          lines.push('  ║ FD 0 (stdin)  ──► [ keyboard / pipe ]    ║');
+          lines.push('  ║ FD 1 (stdout) ──► [ terminal / > file ]  ║');
+          lines.push('  ║ FD 2 (stderr) ──► [ 2>&1 / error.log ]   ║');
+          lines.push('  ╚══════════════════════════════════════════╝');
+          lines.push('');
+          lines.push(`  [cat log] ${streamBar}► [grep ERR] ${streamBar}► [awk]`);
+          lines.push('');
+          lines.push('  OCTAL BITMASK : r(4) + w(2) + x(1) = 7');
+          lines.push('  CHMOD 755     : -rwxr-xr-x (u=rwx,g=rx,o=rx)');
+          lines.push('  CHMOD 600     : -rw------- (SSH key lock)');
+          lines.push('  NETFILTER     : iptables -A INPUT -p tcp -j ACCEPT');
+          lines.push('  SYSTEMD PID 1 : multi-user.target [ACTIVE]');
+        } else {
+          const brailleChars = ' ⠁⠃⠇⠏⠟⠿⣿';
+          const ditherChars = ' ·░▒▓█';
+          const palette = mode === 'braille' ? brailleChars : ditherChars;
+          for (let y = 0; y < H; y++) {
+            let row = '';
+            const ny = (y - H / 2) / (H / 2);
+            for (let x = 0; x < W; x++) {
+              const nx = (x - W / 2) / (W / 2.4);
+              const r = Math.sqrt(nx * nx + ny * ny);
+              const angle = Math.atan2(ny, nx);
+              const wave =
+                Math.sin(r * 6.5 - tick * 1.8) * 0.5 +
+                Math.cos(angle * 4 + tick) * 0.35 +
+                Math.exp(-r * 2.2) * 0.7;
+              const norm = Math.max(0, Math.min(0.999, (wave + 0.85) / 1.9));
+              const idx = Math.floor(norm * palette.length);
+              row += palette[idx];
+            }
+            lines.push(row);
+          }
+          lines[0] = ' ⣿ ZOTHOS × 1NC0GN30 // RING-0 KERNEL LATTICE ';
+          lines[H - 1] = ` [TUI: ./control-panel]  [GUI: 30 DAYS / 90 LABS] `;
+        }
+
+        stage.textContent = lines.join('\n');
+      };
+
+      renderFrame();
+      setInterval(renderFrame, 90);
     }
   }
 
-  document.addEventListener('DOMContentLoaded', initHomeResume);
-  document.addEventListener('astro:page-load', initHomeResume);
+  document.addEventListener('DOMContentLoaded', initHomePage);
+  document.addEventListener('astro:page-load', initHomePage);
 </script>
 
 <style>
   .hero {
-    padding: clamp(1rem, 3vw, 1.7rem);
+    padding: clamp(1.1rem, 3vw, 1.85rem);
     display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: 0.95rem;
+    grid-template-columns: 1.25fr 1fr;
+    gap: 1.25rem;
+    align-items: stretch;
+    border-color: var(--border-gold);
   }
 
   h1 {
-    margin: 0.35rem 0 0.6rem;
-    font-size: clamp(1.8rem, 5.3vw, 3rem);
-    line-height: 1.15;
+    font-family: var(--font-display);
+    margin: 0.45rem 0 0.75rem;
+    font-size: clamp(1.85rem, 4.4vw, 2.85rem);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
   }
 
   h2 {
-    margin: 0 0 0.8rem;
-    font-size: clamp(1.3rem, 3.8vw, 1.85rem);
+    font-family: var(--font-display);
+    margin: 0.25rem 0 0.5rem;
+    font-size: clamp(1.35rem, 3.2vw, 1.95rem);
+  }
+
+  .gold-text {
+    color: var(--accent);
+  }
+
+  .emerald-text {
+    color: var(--emerald);
+  }
+
+  .cyan-text {
+    color: var(--cyan);
   }
 
   .lead {
-    max-width: 64ch;
+    max-width: 62ch;
     margin-top: 0;
+    font-size: 0.96rem;
+  }
+
+  .cli-bar {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.55rem;
+    background: #060911;
+    border: 1px solid var(--border-gold);
+    border-radius: 0.7rem;
+    padding: 0.55rem 0.75rem;
+    margin: 0.95rem 0;
+    overflow-x: auto;
+  }
+
+  .cli-prompt {
+    color: var(--emerald);
+    font-family: var(--font-mono);
+    font-weight: 700;
+  }
+
+  .cli-bar code {
+    font-size: 0.76rem;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .cli-copy-btn {
+    appearance: none;
+    background: rgba(245, 184, 46, 0.16);
+    color: var(--accent);
+    border: 1px solid var(--border-gold);
+    border-radius: 0.45rem;
+    padding: 0.28rem 0.62rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    cursor: pointer;
   }
 
   .hero-actions {
-    margin-top: 1rem;
+    margin-top: 0.95rem;
     display: flex;
     gap: 0.55rem;
     flex-wrap: wrap;
@@ -156,11 +705,12 @@ const totalStudyBlocks = TOTAL_DAYS * 3;
     text-decoration: none;
     color: var(--text);
     border: 1px solid var(--border);
-    border-radius: 0.7rem;
-    padding: 0.5rem 0.8rem;
-    font-size: 0.84rem;
-    background: rgba(9, 15, 28, 0.7);
-    transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    border-radius: 0.68rem;
+    padding: 0.54rem 0.88rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    background: rgba(9, 14, 24, 0.85);
+    transition: color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
   }
 
   .btn:hover,
@@ -172,103 +722,458 @@ const totalStudyBlocks = TOTAL_DAYS * 3;
 
   .btn-primary {
     border-color: transparent;
-    color: #03131a;
+    color: #06080e;
     background: linear-gradient(120deg, var(--accent), var(--accent-strong));
     font-weight: 700;
   }
 
   .btn-primary:hover,
   .btn-primary:focus-visible {
-    color: #03131a;
+    color: #06080e;
     border-color: transparent;
     filter: brightness(1.06);
   }
 
+  .btn-emerald {
+    border-color: rgba(57, 211, 83, 0.45);
+    color: var(--emerald);
+    background: rgba(57, 211, 83, 0.1);
+    font-weight: 600;
+  }
+
   .resume-note {
     margin: 0.65rem 0 0;
-    font-size: 0.78rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+
+  .hero-visual-panel {
+    border: 1px solid var(--border);
+    border-radius: 0.9rem;
+    background: #060911;
+    padding: 0.8rem;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 0.65rem;
+  }
+
+  .canvas-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .canvas-title {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .mode-pills {
+    display: flex;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+  }
+
+  .mode-pill {
+    appearance: none;
+    background: #0d1117;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: 0.4rem;
+    padding: 0.2rem 0.45rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    cursor: pointer;
+  }
+
+  .mode-pill.active,
+  .mode-pill:hover {
+    color: var(--accent);
+    border-color: var(--border-gold);
+    background: rgba(245, 184, 46, 0.12);
+  }
+
+  .braille-stage {
+    margin: 0;
+    padding: 0.65rem;
+    border-radius: 0.65rem;
+    background: #04060a;
+    border: 1px solid rgba(57, 211, 83, 0.24);
+    color: var(--emerald);
+    font-family: var(--font-mono);
+    font-size: clamp(0.62rem, 1.1vw, 0.74rem);
+    line-height: 1.28;
+    overflow-x: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .hero-stats {
-    border: 1px solid var(--border);
-    border-radius: 0.9rem;
-    background: rgba(8, 14, 25, 0.78);
-    padding: 0.8rem;
     display: grid;
-    gap: 0.55rem;
-    align-content: start;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.45rem;
   }
 
   .stat-box {
     border: 1px solid var(--border);
-    border-radius: 0.6rem;
-    background: rgba(5, 11, 21, 0.8);
-    padding: 0.52rem 0.6rem;
+    border-radius: 0.55rem;
+    background: rgba(13, 17, 23, 0.9);
+    padding: 0.45rem 0.6rem;
   }
 
   .stat-box span {
     color: var(--text-muted);
-    font-size: 0.74rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
     display: block;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
   }
 
   .stat-box strong {
-    font-size: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.86rem;
   }
 
-  .flow-grid,
+  .section-head {
+    margin-bottom: 0.9rem;
+  }
+
+  .section-head p.muted {
+    margin: 0.25rem 0 0;
+    max-width: 72ch;
+  }
+
+  .dual-grid,
+  .labs-grid,
   .week-grid {
     display: grid;
-    gap: 0.7rem;
-  }
-
-  .flow-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .week-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
   }
 
-  .flow-card,
-  .week-card,
-  .cta-panel {
-    padding: 0.9rem;
+  .track-card,
+  .lab-card,
+  .week-card {
+    padding: 1.05rem;
   }
 
-  .flow-card h3,
-  .week-card h3 {
-    margin: 0.2rem 0 0.35rem;
-    font-size: 1rem;
+  .track-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    margin-bottom: 0.4rem;
   }
 
-  .range {
+  .gold-badge {
     color: var(--accent);
+    background: rgba(245, 184, 46, 0.12);
+    border: 1px solid var(--border-gold);
+  }
+
+  .emerald-badge {
+    color: var(--emerald);
+    background: rgba(57, 211, 83, 0.12);
+    border: 1px solid rgba(57, 211, 83, 0.35);
+  }
+
+  .mini-terminal {
     margin: 0.7rem 0 0;
-    font-size: 0.82rem;
+    padding: 0.75rem;
+    border-radius: 0.65rem;
+    background: #05070b;
+    border: 1px solid var(--border);
+    color: var(--accent);
+    font-size: 0.72rem;
+    line-height: 1.4;
+    overflow-x: auto;
+  }
+
+  .feature-checklist {
+    margin: 0.65rem 0 0;
+    padding-left: 1.15rem;
+    display: grid;
+    gap: 0.48rem;
+    font-size: 0.88rem;
+  }
+
+  .lab-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+  }
+
+  .lab-head h3 {
+    margin: 0.2rem 0 0;
+    font-size: 1.08rem;
+  }
+
+  .chmod-presets,
+  .fhs-buttons,
+  .pipeline-steps {
+    display: flex;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+  }
+
+  .preset-btn,
+  .fhs-btn,
+  .pipe-btn {
+    appearance: none;
+    background: #080c14;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 0.45rem;
+    padding: 0.3rem 0.58rem;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    cursor: pointer;
+  }
+
+  .preset-btn:hover,
+  .fhs-btn.active,
+  .fhs-btn:hover,
+  .pipe-btn.active,
+  .pipe-btn:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: rgba(245, 184, 46, 0.12);
+  }
+
+  .chmod-matrix {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.55rem;
+    margin: 0.75rem 0;
+  }
+
+  .chmod-col {
+    background: #060911;
+    border: 1px solid var(--border);
+    border-radius: 0.65rem;
+    padding: 0.65rem;
+    display: grid;
+    gap: 0.38rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+
+  .chmod-col h4 {
+    margin: 0 0 0.25rem;
+    color: var(--accent);
+    font-size: 0.8rem;
+  }
+
+  .chmod-col label {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    cursor: pointer;
+  }
+
+  .chmod-readout {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .readout-pill {
+    background: #060911;
+    border: 1px solid var(--border);
+    border-radius: 0.6rem;
+    padding: 0.45rem 0.65rem;
+    font-family: var(--font-mono);
+  }
+
+  .readout-pill span {
+    display: block;
+    font-size: 0.66rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .readout-pill strong,
+  .readout-pill code {
+    font-size: 0.86rem;
+  }
+
+  .chmod-insight {
+    margin: 0.6rem 0 0;
+    font-size: 0.8rem;
+  }
+
+  .fhs-detail-box {
+    margin-top: 0.75rem;
+    background: #060911;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    padding: 0.85rem;
+  }
+
+  .fhs-detail-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .fhs-badge {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--emerald);
+    border: 1px solid rgba(57, 211, 83, 0.35);
+    border-radius: 999px;
+    padding: 0.15rem 0.5rem;
+  }
+
+  .fhs-meta-grid {
+    display: grid;
+    gap: 0.55rem;
+    margin-top: 0.65rem;
+  }
+
+  .meta-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 0.18rem;
+  }
+
+  .fhs-meta-grid code {
+    display: block;
+    background: #0b101b;
+    border: 1px solid var(--border);
+    border-radius: 0.45rem;
+    padding: 0.38rem 0.55rem;
+    font-size: 0.76rem;
+    color: var(--cyan);
+    overflow-x: auto;
+  }
+
+  .pipeline-lab {
+    margin-top: 0.9rem;
+  }
+
+  .pipeline-display {
+    margin-top: 0.7rem;
+    background: #05070b;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    overflow: hidden;
+  }
+
+  .pipeline-cmd-bar {
+    padding: 0.55rem 0.8rem;
+    background: #0b101b;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    overflow-x: auto;
+  }
+
+  .pipeline-output {
+    margin: 0;
+    padding: 0.8rem;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--emerald);
+    overflow-x: auto;
+    line-height: 1.5;
+  }
+
+  .week-card {
+    border-top: 3px solid var(--week-accent);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.8rem;
+  }
+
+  .week-card h3 {
+    margin: 0.25rem 0 0.35rem;
+    font-size: 1.08rem;
+  }
+
+  .week-day-pills {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.4rem;
+  }
+
+  .day-jump-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    text-decoration: none;
+    background: #070b13;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 0.36rem 0.52rem;
+    color: var(--text);
+    font-size: 0.76rem;
+    overflow: hidden;
+    transition: border-color 0.18s ease, color 0.18s ease;
+  }
+
+  .day-jump-pill:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .day-num {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 0.72rem;
+    flex-shrink: 0;
+  }
+
+  .day-short {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .cta-panel {
+    padding: 1.5rem 1.1rem;
     text-align: center;
-    display: grid;
-    gap: 0.65rem;
-    place-items: center;
+    border-color: var(--border-gold);
   }
 
-  .cta-panel h2,
-  .cta-panel p {
-    margin: 0;
-  }
-
-  @media (max-width: 900px) {
-    .hero {
+  @media (max-width: 960px) {
+    .hero,
+    .dual-grid,
+    .labs-grid,
+    .week-grid {
       grid-template-columns: 1fr;
     }
+    .chmod-readout {
+      grid-template-columns: 1fr 1fr;
+    }
+    .readout-pill.wide {
+      grid-column: 1 / -1;
+    }
+  }
 
-    .flow-grid,
-    .week-grid {
+  @media (max-width: 600px) {
+    .chmod-matrix,
+    .week-day-pills {
       grid-template-columns: 1fr;
     }
   }

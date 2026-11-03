@@ -1,3 +1,34 @@
+# Day 23 · Breakfast — Parameterized CLI Scripts, Getopts & Production Tooling
+
+> **ZothOS × 1nc0gn30 Linux Dojo** · **Phase**: `Week 4 (Advanced Ops)` · **Session**: `Breakfast (Morning Foundation & Core Command Syntax)`  
+> **Core Commands**: `getopts`, `shift`, `bash -x`, `shellcheck`, `printf`, `jq`
+
+### ⚡ 60-Second Mental Model (Student Digest)
+
+```text
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  ZOTHOS × 1NC0GN30 // PRODUCTION TELEMETRY, SYSTEMD & RECOVERY MATRIX        ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║                                                                              ║
+║   ┌──────────────┐   ┌──────────────┐   ┌──────────────┐   ┌──────────────┐  ║
+║   │ CPU & SCHED  │   │ MEMORY / VM  │   │ DISK & VFS   │   │ NET SOCKETS  │  ║
+║   │ top / mpstat │   │ free / vmstat│   │ iostat / df  │   │ ss -tulpen   │  ║
+║   └──────┬───────┘   └──────┬───────┘   └──────┬───────┘   └──────┬───────┘  ║
+║          └──────────────────┴─────────┬────────┴──────────────────┘          ║
+║                                       ▼                                      ║
+║                  [ Automated Remediation: systemd + cron + rsync ]           ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+```
+
+| Learning Pillar | How to Practice This Session |
+| :--- | :--- |
+| **1. Native TUI (`./control-panel`)** | Run `./control-panel` from repo root → Select **Week 4 → Day 23 → Breakfast** to drill interactive C lessons & quizzes. |
+| **2. Web Workstation (`astro-ui`)** | Open `/day/23` → Select **Breakfast** tab → Type each target command in the live Mission Terminal to earn XP & streak mastery. |
+| **3. Safe Local Sandbox** | Run `mkdir -p /tmp/linux-dojo-day-23 && cd /tmp/linux-dojo-day-23` to test every flag below without touching production files. |
+
+---
+<!-- ZOTH-1NC0GN30-DIGESTIBLE-BLUEPRINT -->
+
 # 🥣 Day 23 Breakfast: Shell Scripting Refresher
 
 ## 🧠 Objective
@@ -11,7 +42,7 @@ Refresh your knowledge of Bash scripting basics: variables, conditionals, loops,
 ### 💡 Variables
 
 ```bash
-name="Neal"
+name="zoth"
 echo "Welcome, $name!"
 ```
 

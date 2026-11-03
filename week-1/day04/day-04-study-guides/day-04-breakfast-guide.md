@@ -1,90 +1,62 @@
-# Day 04 Breakfast Study Guide
+# Day 04 · Breakfast — File Viewing, Stream Editing & Text Editors
 
-1. Viewing File Contents
+> **ZothOS × 1nc0gn30 Linux Dojo** · **Phase**: `Week 1 (Foundations)` · **Session**: `Breakfast (Morning Foundation & Core Command Syntax)`  
+> **Core Commands**: `cat`, `less`, `more`, `head`, `tail`, `nano`
 
-Commands:
+### ⚡ 60-Second Mental Model (Student Digest)
 
-    cat: Display and concatenate file contents.
-    more: View file contents one page at a time.
-    less: View file contents with navigation capabilities.
+```text
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  ZOTHOS × 1NC0GN30 // LINUX FILESYSTEM & SHELL EXECUTION ARCHITECTURE       ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║                                                                              ║
+║   [ USER TERMINAL / TUI ]  ──( stdin 0 )──►  [ BASH / ZSH SHELL PARSER ]     ║
+║                                                       │                      ║
+║                                              ( glibc / syscalls )            ║
+║                                                       ▼                      ║
+║   [ VFS / INODE TABLE ]    ◄───────────────  [ LINUX KERNEL RING 0 ]         ║
+║     ├── /bin  (Core Binaries)                  ├── Process Scheduler         ║
+║     ├── /etc  (System Configs)                 ├── Memory Manager            ║
+║     ├── /home (Operator Workspaces)            └── Netfilter / I/O           ║
+║     └── /var  (Logs & Runtime State)                                         ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+```
 
-Examples:
+| Learning Pillar | How to Practice This Session |
+| :--- | :--- |
+| **1. Native TUI (`./control-panel`)** | Run `./control-panel` from repo root → Select **Week 1 → Day 04 → Breakfast** to drill interactive C lessons & quizzes. |
+| **2. Web Workstation (`astro-ui`)** | Open `/day/4` → Select **Breakfast** tab → Type each target command in the live Mission Terminal to earn XP & streak mastery. |
+| **3. Safe Local Sandbox** | Run `mkdir -p /tmp/linux-dojo-day-04 && cd /tmp/linux-dojo-day-04` to test every flag below without touching production files. |
 
-bash
+---
+<!-- ZOTH-1NC0GN30-DIGESTIBLE-BLUEPRINT -->
 
-* cat file.txt                # Display the contents of 'file.txt'
-* cat file1.txt file2.txt     # Concatenate 'file1.txt' and 'file2.txt' and display the result
-* cat file.txt > newfile.txt  # Redirect the contents of 'file.txt' to 'newfile.txt'
-* cat file.txt | less         # View the contents of 'file.txt' page by page
+## Lesson Overview
+<p><strong>Topic:</strong> Kernel Modules Management</p>
+<p><strong>Description:</strong> In this lesson, we focus on managing kernel modules in Linux. Kernel modules are pieces of code that can be loaded and unloaded into the kernel upon demand, providing flexibility and efficiency. You'll learn how to load, unload, and query these modules, as well as modify kernel parameters.</p>
 
-* more file.txt               # View 'file.txt' one page at a time
-* less file.txt               # View 'file.txt' with navigation capabilities
-* less +G file.txt            # Start viewing at the end of the file
-
-Description:
-
-*    cat is useful for displaying and combining file contents.
-*    more and less are used for viewing large files, allowing you to scroll through the content.
-
-2. Basic Text Editing with nano and vim
-
-Commands:
-
-*    nano: A simple, user-friendly text editor.
-*    vim: A powerful text editor with a steeper learning curve.
-
-Examples:
-
-bash
-
-* nano file.txt               # Open 'file.txt' for editing
-* nano +5 file.txt            # Open 'file.txt' and jump to line 5
-* nano -c file.txt            # Show line numbers while editing
-
-* vim file.txt                # Open 'file.txt' in vim
-* vim +5 file.txt             # Open 'file.txt' and jump to line 5
-* :wq                         # Save changes and exit vim
-* :q!                         # Quit vim without saving changes
-
-Description:
-
-*    nano is straightforward and easy for quick edits.
-*    vim offers advanced features for editing, but requires practice to master.
-
-3. Searching within Files with grep
-
-Commands:
-
-*    grep: Search for text patterns within files.
-
-Examples:
-
-bash
-
-* grep 'pattern' file.txt      # Search for 'pattern' in 'file.txt'
-* grep -r 'pattern' directory/ # Recursively search for 'pattern' in 'directory/'
-* grep -i 'pattern' file.txt   # Perform a case-insensitive search
-
-Description:
-
-*    grep is essential for searching text within files, and supports various options for customization.
-
-4. Editing Files with sed
-
-Commands:
-
-*    sed: Stream editor for basic text transformations.
-
-Examples:
-
-bash
-
-* sed 's/old/new/' file.txt    # Replace 'old' with 'new' in 'file.txt'
-* sed -i 's/old/new/' file.txt  # Edit 'file.txt' in-place to replace 'old' with 'new'
-* sed -n '1,5p' file.txt       # Print lines 1 through 5 of 'file.txt'
-
-Description:
-
-*    sed is used for performing text substitutions and transformations in a stream or file.
-
-This guide provides a solid foundation for understanding file viewing and editing. Mastery of these commands will greatly enhance your efficiency in managing and manipulating files on a Linux system. Happy learning!
+## Practical Commands
+- **Load a module:** 
+```bash
+  modprobe <module_name>
+```
+Unload a module:
+``` bash
+rmmod <module_name>
+```
+View loaded modules:
+``` bash
+lsmod
+```
+Modify kernel parameters:
+``` bash
+sysctl -w <parameter>=<value>
+```
+### Practice Question
+#### Question: What command is used to load a kernel module?
+- A) insmod
+- B) modprobe
+- C) lsmod
+- D) rmmod
+#### Answer: B) modprobe
+<p><em>Make sure to practice these commands in a terminal to reinforce your understanding.</em></p>

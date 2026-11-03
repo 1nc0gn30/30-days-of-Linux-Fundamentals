@@ -1,4 +1,35 @@
-# Day 10 Lunch: Remote Access, Management, and System Recovery
+# Day 10 · Lunch — Package Management, Repositories & System Updates
+
+> **ZothOS × 1nc0gn30 Linux Dojo** · **Phase**: `Week 2 (System Ops)` · **Session**: `Lunch (Midday Operational Workflows & Flag Mastery)`  
+> **Core Commands**: `apt`, `apt-get`, `dpkg`, `dnf`, `yum`, `rpm`
+
+### ⚡ 60-Second Mental Model (Student Digest)
+
+```text
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  ZOTHOS × 1NC0GN30 // PROCESS, KERNEL & NETWORK OPERATIONS PIPELINE          ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║                                                                              ║
+║  ┌─────────────────┐    fork() / execve()    ┌────────────────────────────┐  ║
+║  │  PID 1: systemd │ ──────────────────────► │  Active Daemons & Tasks    │  ║
+║  └────────┬────────┘                         │  • nice / renice [-20..19] │  ║
+║           │                                  │  • SIGTERM(15) / SIGKILL(9)│  ║
+║           ▼                                  └─────────────┬──────────────┘  ║
+║  ┌─────────────────┐    /proc & sysctl       ┌─────────────▼──────────────┐  ║
+║  │ Kernel Modules  │ ◄─────────────────────► │ Network & Storage Stack    │  ║
+║  │ lsmod / modprobe│                         │ ip route • ss • /etc/fstab │  ║
+║  └─────────────────┘                         └────────────────────────────┘  ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+```
+
+| Learning Pillar | How to Practice This Session |
+| :--- | :--- |
+| **1. Native TUI (`./control-panel`)** | Run `./control-panel` from repo root → Select **Week 2 → Day 10 → Lunch** to drill interactive C lessons & quizzes. |
+| **2. Web Workstation (`astro-ui`)** | Open `/day/10` → Select **Lunch** tab → Type each target command in the live Mission Terminal to earn XP & streak mastery. |
+| **3. Safe Local Sandbox** | Run `mkdir -p /tmp/linux-dojo-day-10 && cd /tmp/linux-dojo-day-10` to test every flag below without touching production files. |
+
+---
+<!-- ZOTH-1NC0GN30-DIGESTIBLE-BLUEPRINT -->
 
 Welcome to Day 10 Lunch! In this session, we will explore **Remote Access and Management** and **System Recovery and Rescue**. We'll cover essential commands and techniques for managing and recovering Linux systems.
 

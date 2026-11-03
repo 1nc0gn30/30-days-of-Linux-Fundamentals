@@ -2,58 +2,123 @@
 interface Props {
   title: string;
   description?: string;
-  activeNav?: 'home' | 'curriculum' | null;
+  activeNav?: 'home' | 'curriculum' | 'labs' | null;
 }
 
 const {
   title,
-  description = 'A practical 30-day Linux learning track with daily lessons and hands-on challenges.',
+  description = 'Master Linux in 30 digestible days through the native C TUI (./control-panel) and interactive ZothOS × 1nc0gn30 Web Mission Terminal.',
   activeNav = null,
 } = Astro.props;
 
 import { ClientRouter } from 'astro:transitions';
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
 const navItems = [
-  { href: '/', label: 'Home', id: 'home' },
-  { href: '/curriculum', label: 'Curriculum', id: 'curriculum' },
+  { href: '/', label: 'Dojo Deck', id: 'home' },
+  { href: '/#interactive-labs', label: 'Visual Labs & Atlas', id: 'labs' },
+  { href: '/curriculum', label: '30-Day Curriculum', id: 'curriculum' },
+  { href: '/day/1', label: 'Day 01 Terminal', id: null },
 ] as const;
+
+const schemaGraph = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebApplication',
+      name: '30 Days of Linux Fundamentals — ZothOS × 1nc0gn30 Edition',
+      url: 'https://30-days-of-linux.netlify.app/',
+      applicationCategory: 'EducationalApplication',
+      operatingSystem: 'Linux, Web Browser',
+      description:
+        'Interactive 30-day Linux fundamentals curriculum featuring a native C TUI (./control-panel), 90 digestible study guides, visual FHS & chmod calculators, and live browser mission terminals.',
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'USD',
+      },
+      creator: {
+        '@type': 'Organization',
+        name: '1nc0gn30',
+        url: 'https://1nc0gn30.si',
+      },
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'How do I learn using both the TUI and the Web GUI?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Clone https://github.com/1nc0gn30/30-days-of-Linux-Fundamentals and run ./control-panel for the native C terminal TUI (with built-in Markdown reader, Flashcard Arena, and /tmp sandbox shells), or use the Astro Web GUI for browser command drills, XP tracking, and visual chmod/FHS calculators.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Is 30 Days of Linux Fundamentals completely free?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Yes, 100% of the 30 days, 90 study guides, C TUI drills, and web tools are open-source and unlocked by default with zero paywalls.',
+          },
+        },
+      ],
+    },
+  ],
+};
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="author" content="Neal Frazier" />
+    <meta name="author" content="1nc0gn30" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonicalUrl} />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="30 Days of Linux Fundamentals" />
+    <meta property="og:site_name" content="30 Days of Linux Fundamentals — ZothOS × 1nc0gn30" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:image" content={`${Astro.site}og-image.png?v=20260421`} />
-    <meta property="og:image:alt" content="30 Days of Linux Fundamentals preview image" />
+    <meta property="og:image" content={`${Astro.site}og-image.png?v=20261102`} />
+    <meta property="og:image:alt" content="30 Days of Linux Fundamentals — ZothOS × 1nc0gn30 Edition" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@1nc0gn30" />
+    <meta name="twitter:creator" content="@1nc0gn30" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={`${Astro.site}og-image.png?v=20260421`} />
+    <meta name="twitter:image" content={`${Astro.site}og-image.png?v=20261102`} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
     <style>
       :root {
-        --bg: #070b14;
-        --bg-soft: #10192b;
-        --card-bg: #131f34;
-        --card-glass: rgba(16, 25, 43, 0.74);
-        --accent: #57d5ff;
-        --accent-strong: #22c0ff;
-        --accent-warm: #f4c768;
-        --text: #e9f2ff;
-        --text-muted: #9aaec9;
-        --border: #2b3b58;
-        --shadow: 0 20px 55px rgb(0 0 0 / 0.3);
+        --bg: #05070b;
+        --bg-soft: #0d1117;
+        --card-bg: #101622;
+        --card-glass: rgba(13, 17, 23, 0.88);
+        --accent: #f5b82e;
+        --accent-strong: #ffca4b;
+        --accent-warm: #f5b82e;
+        --emerald: #39d353;
+        --cyan: #58a6ff;
+        --purple: #d2a8ff;
+        --coral: #ff7b72;
+        --text: #f0f6fc;
+        --text-muted: #8b949e;
+        --border: #212836;
+        --border-gold: rgba(245, 184, 46, 0.35);
+        --shadow: 0 20px 55px rgb(0 0 0 / 0.45);
+        --font-display: 'Syne', 'Space Grotesk', sans-serif;
+        --font-sans: 'Space Grotesk', system-ui, sans-serif;
+        --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       }
 
       * {
@@ -64,25 +129,33 @@ const navItems = [
       body {
         margin: 0;
         padding: 0;
+        overflow-x: hidden;
       }
 
       body {
         background:
-          radial-gradient(circle at 8% 0%, #1b375f 0%, transparent 30%),
-          radial-gradient(circle at 94% 18%, #12334b 0%, transparent 36%),
-          linear-gradient(160deg, #070b14 0%, #0c1425 65%, #0f1a30 100%);
+          radial-gradient(circle at 12% 0%, rgba(245, 184, 46, 0.11) 0%, transparent 34%),
+          radial-gradient(circle at 88% 14%, rgba(57, 211, 83, 0.09) 0%, transparent 38%),
+          radial-gradient(circle at 50% 90%, rgba(88, 166, 255, 0.08) 0%, transparent 40%),
+          linear-gradient(180deg, #05070b 0%, #090d14 55%, #060910 100%);
         color: var(--text);
-        font-family: 'JetBrains Mono', 'Fira Code', 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-family: var(--font-sans);
         line-height: 1.6;
         min-height: 100vh;
+      }
+
+      code,
+      pre,
+      .mono {
+        font-family: var(--font-mono);
       }
 
       .skip-link {
         position: absolute;
         left: -9999px;
         top: 0;
-        background: #040915;
-        color: var(--text);
+        background: #05070b;
+        color: var(--accent);
         border: 1px solid var(--accent);
         border-radius: 0.5rem;
         padding: 0.4rem 0.65rem;
@@ -94,90 +167,243 @@ const navItems = [
         top: 0.5rem;
       }
 
-      .app-shell {
-        max-width: 1080px;
-        margin: 0 auto;
-        min-height: 100vh;
-        border-inline: 1px solid rgba(255, 255, 255, 0.04);
-        background: linear-gradient(180deg, rgba(7, 11, 20, 0.82), rgba(7, 11, 20, 0.62));
-      }
-
-      .site-nav {
-        background: linear-gradient(180deg, rgba(12, 20, 37, 0.95) 0%, rgba(12, 20, 37, 0.85) 100%);
-        padding: 0.95rem clamp(0.9rem, 3vw, 2.2rem);
+      .top-telemetry-ribbon {
+        background: rgba(5, 7, 11, 0.96);
+        border-bottom: 1px solid rgba(245, 184, 46, 0.22);
+        padding: 0.38rem clamp(0.75rem, 2.5vw, 1.8rem);
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--text-muted);
         display: flex;
         justify-content: space-between;
         align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      .ribbon-left {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        flex-wrap: wrap;
+      }
+
+      .ribbon-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 999px;
+        background: var(--emerald);
+        box-shadow: 0 0 8px var(--emerald);
+        display: inline-block;
+      }
+
+      .ribbon-pill {
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      .ribbon-links {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        flex-wrap: wrap;
+      }
+
+      .ribbon-links a {
+        color: var(--text-muted);
+        text-decoration: none;
+        transition: color 0.18s ease;
+      }
+
+      .ribbon-links a:hover {
+        color: var(--accent);
+      }
+
+      .app-shell {
+        max-width: 1180px;
+        margin: 0 auto;
+        min-height: 100vh;
+        border-inline: 1px solid rgba(245, 184, 46, 0.08);
+        background: linear-gradient(180deg, rgba(8, 12, 20, 0.85), rgba(5, 7, 11, 0.75));
+      }
+
+      .site-nav {
+        background: rgba(13, 17, 23, 0.92);
+        padding: 0.85rem clamp(0.9rem, 2.6vw, 1.8rem);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.75rem;
         border-bottom: 1px solid var(--border);
         position: sticky;
         top: 0;
         z-index: 100;
-        backdrop-filter: blur(10px);
+        backdrop-filter: blur(12px);
+      }
+
+      .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        text-decoration: none;
+      }
+
+      .brand-glyph {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.1rem;
+        height: 2.1rem;
+        border-radius: 0.55rem;
+        background: linear-gradient(135deg, rgba(245, 184, 46, 0.2), rgba(57, 211, 83, 0.16));
+        border: 1px solid var(--border-gold);
+        color: var(--accent);
+        font-family: var(--font-mono);
+        font-weight: 700;
+        font-size: 0.95rem;
+      }
+
+      .brand-text {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.15;
+      }
+
+      .brand-title {
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-size: clamp(0.95rem, 1.8vw, 1.12rem);
+        color: var(--text);
+        letter-spacing: -0.01em;
+      }
+
+      .brand-sub {
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        color: var(--accent);
       }
 
       .nav-links {
         display: flex;
-        gap: 0.45rem;
+        gap: 0.4rem;
         align-items: center;
-      }
-
-      .nav-logo {
-        font-weight: 700;
-        font-size: clamp(1rem, 2vw, 1.15rem);
-        color: var(--accent);
-        text-decoration: none;
-        letter-spacing: 0.01em;
+        flex-wrap: wrap;
       }
 
       .nav-menu-btn {
         display: none;
         appearance: none;
-        background: rgba(11, 17, 30, 0.85);
-        color: var(--text);
-        border: 1px solid var(--border);
-        padding: 0.4rem 0.55rem;
+        background: rgba(13, 17, 23, 0.95);
+        color: var(--accent);
+        border: 1px solid var(--border-gold);
+        padding: 0.45rem 0.7rem;
         border-radius: 0.55rem;
-        font: inherit;
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
         cursor: pointer;
+        min-height: 44px;
+        align-items: center;
       }
 
       .nav-link {
         color: var(--text);
         text-decoration: none;
-        font-size: 0.87rem;
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
         opacity: 0.9;
-        padding: 0.4rem 0.7rem;
+        padding: 0.42rem 0.7rem;
         border-radius: 0.5rem;
         border: 1px solid transparent;
-        transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+        transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
       }
 
       .nav-link:hover,
       .nav-link:focus-visible,
       .nav-link.active {
         color: var(--accent);
-        background: rgba(87, 213, 255, 0.08);
-        border-color: rgba(87, 213, 255, 0.35);
+        background: rgba(245, 184, 46, 0.1);
+        border-color: var(--border-gold);
         opacity: 1;
       }
 
+      .coffee-link {
+        color: #080b10;
+        background: linear-gradient(120deg, var(--accent), var(--accent-strong));
+        font-family: var(--font-mono);
+        font-weight: 700;
+        font-size: 0.76rem;
+        text-decoration: none;
+        padding: 0.42rem 0.72rem;
+        border-radius: 0.5rem;
+        transition: filter 0.18s ease, transform 0.18s ease;
+      }
+
+      .coffee-link:hover {
+        filter: brightness(1.08);
+        transform: translateY(-1px);
+      }
+
       main {
-        max-width: 980px;
-        margin: 1.2rem auto;
-        padding: 0 1rem 2.5rem;
-        animation: page-in 280ms ease-out;
+        max-width: 1120px;
+        margin: 1.25rem auto;
+        padding: 0 clamp(0.85rem, 2.4vw, 1.5rem) 2.8rem;
+        animation: page-in 260ms ease-out;
       }
 
       .section {
-        margin-bottom: 1rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .surface {
+        background: linear-gradient(180deg, rgba(16, 22, 34, 0.9) 0%, rgba(11, 15, 24, 0.92) 100%);
+        border: 1px solid var(--border);
+        border-radius: 1rem;
+        box-shadow: var(--shadow);
+      }
+
+      .eyebrow {
+        margin: 0;
+        color: var(--accent);
+        font-family: var(--font-mono);
+        font-size: 0.76rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+
+      .muted {
+        color: var(--text-muted);
       }
 
       .footer {
         border-top: 1px solid var(--border);
-        text-align: center;
-        padding: 1.4rem 1rem 2rem;
+        background: rgba(5, 7, 11, 0.92);
+        padding: 1.8rem 1.2rem 2.4rem;
         color: var(--text-muted);
         font-size: 0.82rem;
+      }
+
+      .footer-inner {
+        max-width: 1080px;
+        margin: 0 auto;
+        display: grid;
+        gap: 1rem;
+      }
+
+      .footer-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+      }
+
+      .footer-links {
+        display: flex;
+        gap: 0.85rem;
+        flex-wrap: wrap;
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
       }
 
       .footer a {
@@ -185,22 +411,41 @@ const navItems = [
         text-decoration: none;
       }
 
-      .footer a:hover,
-      .footer a:focus-visible {
+      .footer a:hover {
         text-decoration: underline;
       }
 
-      .surface {
-        background: linear-gradient(180deg, var(--card-glass) 0%, rgba(15, 24, 40, 0.75) 100%);
+      .sol-tip-box {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        background: rgba(13, 17, 23, 0.95);
         border: 1px solid var(--border);
-        border-radius: 1rem;
-        box-shadow: var(--shadow);
+        border-radius: 0.5rem;
+        padding: 0.3rem 0.6rem;
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        max-width: 100%;
+        flex-wrap: wrap;
+      }
+
+      .sol-copy-btn {
+        appearance: none;
+        background: rgba(245, 184, 46, 0.14);
+        color: var(--accent);
+        border: 1px solid var(--border-gold);
+        border-radius: 0.35rem;
+        padding: 0.18rem 0.48rem;
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        cursor: pointer;
       }
 
       .mobile-drawer-backdrop {
         position: fixed;
         inset: 0;
-        background: rgba(3, 6, 12, 0.68);
+        background: rgba(3, 6, 12, 0.72);
         backdrop-filter: blur(4px);
         opacity: 0;
         pointer-events: none;
@@ -213,9 +458,9 @@ const navItems = [
         top: 0;
         right: 0;
         height: 100dvh;
-        width: min(82vw, 320px);
-        background: linear-gradient(180deg, rgba(9, 16, 31, 0.98), rgba(7, 13, 25, 0.98));
-        border-left: 1px solid var(--border);
+        width: min(84vw, 320px);
+        background: #0b0f17;
+        border-left: 1px solid var(--border-gold);
         padding: 1rem;
         transform: translateX(104%);
         transition: transform 0.24s ease;
@@ -243,6 +488,8 @@ const navItems = [
       .mobile-drawer-title {
         margin: 0;
         font-size: 1rem;
+        font-family: var(--font-mono);
+        color: var(--accent);
       }
 
       .mobile-drawer-links {
@@ -256,59 +503,42 @@ const navItems = [
         color: var(--text);
         border: 1px solid var(--border);
         border-radius: 0.7rem;
-        padding: 0.62rem 0.7rem;
-        background: rgba(6, 11, 21, 0.75);
+        padding: 0.65rem 0.75rem;
+        background: rgba(13, 17, 23, 0.9);
+        font-family: var(--font-mono);
+        font-size: 0.84rem;
       }
 
       .mobile-link:hover,
-      .mobile-link:focus-visible,
       .mobile-link.active {
         color: var(--accent);
         border-color: var(--accent);
       }
 
-      .eyebrow {
-        margin: 0;
-        color: var(--accent);
-        font-size: 0.8rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-
-      .muted {
-        color: var(--text-muted);
-      }
-
       @keyframes page-in {
         from {
           opacity: 0;
-          transform: translateY(8px);
+          transform: translateY(6px);
         }
-
         to {
           opacity: 1;
           transform: translateY(0);
         }
       }
 
-      @media (max-width: 700px) {
+      @media (max-width: 860px) {
         .app-shell {
           border-inline: none;
         }
-
-        main {
-          margin: 0.9rem auto;
-          padding: 0 0.75rem 4.1rem;
+        .top-telemetry-ribbon {
+          font-size: 0.68rem;
         }
-
-        .site-nav {
-          padding: 0.85rem 0.8rem;
+        .ribbon-links {
+          display: none;
         }
-
         .nav-links {
           display: none;
         }
-
         .nav-menu-btn {
           display: inline-flex;
         }
@@ -318,38 +548,94 @@ const navItems = [
   <body>
     <ClientRouter />
     <a href="#main-content" class="skip-link">Skip to content</a>
+    <div class="top-telemetry-ribbon">
+      <div class="ribbon-left">
+        <span class="ribbon-dot" aria-hidden="true"></span>
+        <span class="ribbon-pill">⣿ ZOTHOS × 1NC0GN30</span>
+        <span>30 DAYS OF LINUX FUNDAMENTALS · TUI (./control-panel) + WEB GUI · 90 MISSIONS</span>
+      </div>
+      <div class="ribbon-links">
+        <a href="https://1nc0gn30.si" target="_blank" rel="noopener noreferrer">1nc0gn30.si ↗</a>
+        <a href="https://zothos.nullai.tech" target="_blank" rel="noopener noreferrer">ZothOS v3.4 ↗</a>
+        <a href="https://zothos-lite.nullai.tech" target="_blank" rel="noopener noreferrer">ZothOS-Lite ↗</a>
+        <a href="https://github.com/1nc0gn30/30-days-of-Linux-Fundamentals" target="_blank" rel="noopener noreferrer">GitHub Repo ↗</a>
+      </div>
+    </div>
+
     <div class="app-shell">
       <header>
         <nav class="site-nav" aria-label="Primary navigation">
-          <a href="/" class="nav-logo">30 Days of Linux</a>
+          <a href="/" class="nav-brand">
+            <span class="brand-glyph" aria-hidden="true">⣿</span>
+            <span class="brand-text">
+              <span class="brand-title">30 Days of Linux</span>
+              <span class="brand-sub">ZothOS × 1nc0gn30 Dojo</span>
+            </span>
+          </a>
           <div class="nav-links">
             {navItems.map((item) => (
-              <a href={item.href} class:list={["nav-link", activeNav === item.id && "active"]}>{item.label}</a>
+              <a href={item.href} class:list={['nav-link', activeNav === item.id && 'active']}>{item.label}</a>
             ))}
+            <a
+              href="https://buy.stripe.com/3cIfZg27PdKo2D64Ocfw40X"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="coffee-link"
+            >
+              ☕ Buy Us a Coffee
+            </a>
           </div>
-          <button class="nav-menu-btn" type="button" data-open-menu aria-label="Open menu">Menu</button>
+          <button class="nav-menu-btn" type="button" data-open-menu aria-label="Open navigation menu">☰ Menu</button>
         </nav>
       </header>
+
       <main id="main-content">
         <slot />
       </main>
+
       <footer class="footer">
-        <p>
-          Built for hands-on Linux practice. Continue with the <a href="/curriculum">full curriculum</a>.
-        </p>
-        <p>&copy; 2026 30 Days of Linux Fundamentals</p>
+        <div class="footer-inner">
+          <div class="footer-row">
+            <div>
+              <strong style="color: var(--text);">30 Days of Linux Fundamentals — ZothOS × 1nc0gn30 Edition</strong>
+              <div style="margin-top: 0.25rem;">
+                Engineered by <a href="https://github.com/1nc0gn30" target="_blank" rel="noopener noreferrer">1nc0gn30 (@1nc0gn30)</a> • <a href="https://nullai.tech" target="_blank" rel="noopener noreferrer">NullAI Platform</a> • 100% Free & Open-Access
+              </div>
+            </div>
+            <div class="footer-links">
+              <a href="/curriculum">30-Day Curriculum</a>
+              <a href="/day/1">Day 01 Terminal</a>
+              <a href="https://github.com/1nc0gn30/30-days-of-Linux-Fundamentals" target="_blank" rel="noopener noreferrer">GitHub Source</a>
+              <a href="https://1nc0gn30.si" target="_blank" rel="noopener noreferrer">1nc0gn30.si</a>
+              <a href="https://zothos.nullai.tech" target="_blank" rel="noopener noreferrer">ZothOS</a>
+              <a href="https://buy.stripe.com/3cIfZg27PdKo2D64Ocfw40X" target="_blank" rel="noopener noreferrer">☕ Buy Us a Coffee</a>
+            </div>
+          </div>
+          <div class="footer-row">
+            <div class="sol-tip-box">
+              <span>◎ Solana Tip:</span>
+              <code id="sol-tip-addr">GG2eQbVh8ut1BK6j1A2tz7pSySdLpD38BgyEhGcxdXoK</code>
+              <button type="button" class="sol-copy-btn" data-copy-sol>Copy SOL</button>
+            </div>
+            <span class="mono" style="font-size: 0.74rem;">TUI: <code>./control-panel</code> · Web GUI: <code>cd astro-ui && npm run dev</code></span>
+          </div>
+        </div>
       </footer>
     </div>
+
     <div class="mobile-drawer-backdrop" data-menu-backdrop></div>
     <aside class="mobile-drawer" data-mobile-drawer aria-hidden="true" aria-label="Mobile navigation menu">
       <div class="mobile-drawer-head">
-        <h2 class="mobile-drawer-title">Menu</h2>
-        <button class="nav-menu-btn" type="button" data-close-menu aria-label="Close menu">Close</button>
+        <h2 class="mobile-drawer-title">⣿ DOJO MENU</h2>
+        <button class="nav-menu-btn" type="button" data-close-menu aria-label="Close navigation menu">✕ Close</button>
       </div>
       <div class="mobile-drawer-links">
         {navItems.map((item) => (
-          <a href={item.href} class:list={["mobile-link", activeNav === item.id && "active"]}>{item.label}</a>
+          <a href={item.href} class:list={['mobile-link', activeNav === item.id && 'active']}>{item.label}</a>
         ))}
+        <a href="https://github.com/1nc0gn30/30-days-of-Linux-Fundamentals" target="_blank" rel="noopener noreferrer" class="mobile-link">GitHub Repo ↗</a>
+        <a href="https://1nc0gn30.si" target="_blank" rel="noopener noreferrer" class="mobile-link">1nc0gn30.si ↗</a>
+        <a href="https://buy.stripe.com/3cIfZg27PdKo2D64Ocfw40X" target="_blank" rel="noopener noreferrer" class="mobile-link" style="color: var(--accent); border-color: var(--border-gold);">☕ Buy Us a Coffee</a>
       </div>
     </aside>
 
@@ -359,25 +645,35 @@ const navItems = [
         const closeBtn = document.querySelector('[data-close-menu]');
         const drawer = document.querySelector('[data-mobile-drawer]');
         const backdrop = document.querySelector('[data-menu-backdrop]');
-        if (!openBtn || !closeBtn || !drawer || !backdrop) return;
-        if (openBtn.dataset.bound === 'true') return;
-        openBtn.dataset.bound = 'true';
+        if (openBtn && closeBtn && drawer && backdrop && openBtn.getAttribute('data-bound') !== 'true') {
+          openBtn.setAttribute('data-bound', 'true');
+          const close = () => {
+            drawer.classList.remove('open');
+            backdrop.classList.remove('open');
+            drawer.setAttribute('aria-hidden', 'true');
+          };
+          const open = () => {
+            drawer.classList.add('open');
+            backdrop.classList.add('open');
+            drawer.setAttribute('aria-hidden', 'false');
+          };
+          openBtn.addEventListener('click', open);
+          closeBtn.addEventListener('click', close);
+          backdrop.addEventListener('click', close);
+          drawer.querySelectorAll('a').forEach((a) => a.addEventListener('click', close));
+        }
 
-        const close = () => {
-          drawer.classList.remove('open');
-          backdrop.classList.remove('open');
-          drawer.setAttribute('aria-hidden', 'true');
-        };
-        const open = () => {
-          drawer.classList.add('open');
-          backdrop.classList.add('open');
-          drawer.setAttribute('aria-hidden', 'false');
-        };
-
-        openBtn.addEventListener('click', open);
-        closeBtn.addEventListener('click', close);
-        backdrop.addEventListener('click', close);
-        drawer.querySelectorAll('a').forEach((a) => a.addEventListener('click', close));
+        const solBtn = document.querySelector('[data-copy-sol]');
+        if (solBtn instanceof HTMLButtonElement && solBtn.dataset.bound !== 'true') {
+          solBtn.dataset.bound = 'true';
+          solBtn.addEventListener('click', async () => {
+            await navigator.clipboard.writeText('GG2eQbVh8ut1BK6j1A2tz7pSySdLpD38BgyEhGcxdXoK');
+            solBtn.textContent = 'Copied!';
+            setTimeout(() => {
+              solBtn.textContent = 'Copy SOL';
+            }, 1400);
+          });
+        }
       }
 
       function initializeCopyButtons() {
@@ -386,13 +682,11 @@ const navItems = [
           const button = document.createElement('button');
           button.innerText = 'Copy';
           button.className = 'copy-btn';
-
           block.style.position = 'relative';
           block.appendChild(button);
-
           button.onclick = async () => {
-            const text = block.querySelector('code')?.innerText || block.innerText;
-            await navigator.clipboard.writeText(text);
+            const text = block.querySelector('code')?.innerText || block.innerText.replace(/Copy$/, '');
+            await navigator.clipboard.writeText(text.trim());
             button.innerText = 'Copied';
             setTimeout(() => {
               button.innerText = 'Copy';
@@ -409,22 +703,20 @@ const navItems = [
     <style is:global>
       .copy-btn {
         position: absolute;
-        top: 0.5rem;
-        right: 0.5rem;
-        background: rgba(15, 23, 42, 0.95);
-        color: var(--text);
-        border: 1px solid var(--border);
-        padding: 0.22rem 0.62rem;
-        font-size: 0.7rem;
+        top: 0.45rem;
+        right: 0.45rem;
+        background: rgba(13, 17, 23, 0.95);
+        color: var(--accent);
+        border: 1px solid var(--border-gold);
+        padding: 0.2rem 0.58rem;
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
         border-radius: 999px;
         cursor: pointer;
-        transition: transform 0.18s ease, border-color 0.2s ease, color 0.2s ease;
       }
 
       .copy-btn:hover {
-        color: var(--accent);
-        border-color: var(--accent);
-        transform: translateY(-1px);
+        background: rgba(245, 184, 46, 0.16);
       }
     </style>
   </body>

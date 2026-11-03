@@ -1,3 +1,34 @@
+# Day 23 · Lunch — Parameterized CLI Scripts, Getopts & Production Tooling
+
+> **ZothOS × 1nc0gn30 Linux Dojo** · **Phase**: `Week 4 (Advanced Ops)` · **Session**: `Lunch (Midday Operational Workflows & Flag Mastery)`  
+> **Core Commands**: `getopts`, `shift`, `bash -x`, `shellcheck`, `printf`, `jq`
+
+### ⚡ 60-Second Mental Model (Student Digest)
+
+```text
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  ZOTHOS × 1NC0GN30 // PRODUCTION TELEMETRY, SYSTEMD & RECOVERY MATRIX        ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║                                                                              ║
+║   ┌──────────────┐   ┌──────────────┐   ┌──────────────┐   ┌──────────────┐  ║
+║   │ CPU & SCHED  │   │ MEMORY / VM  │   │ DISK & VFS   │   │ NET SOCKETS  │  ║
+║   │ top / mpstat │   │ free / vmstat│   │ iostat / df  │   │ ss -tulpen   │  ║
+║   └──────┬───────┘   └──────┬───────┘   └──────┬───────┘   └──────┬───────┘  ║
+║          └──────────────────┴─────────┬────────┴──────────────────┘          ║
+║                                       ▼                                      ║
+║                  [ Automated Remediation: systemd + cron + rsync ]           ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+```
+
+| Learning Pillar | How to Practice This Session |
+| :--- | :--- |
+| **1. Native TUI (`./control-panel`)** | Run `./control-panel` from repo root → Select **Week 4 → Day 23 → Lunch** to drill interactive C lessons & quizzes. |
+| **2. Web Workstation (`astro-ui`)** | Open `/day/23` → Select **Lunch** tab → Type each target command in the live Mission Terminal to earn XP & streak mastery. |
+| **3. Safe Local Sandbox** | Run `mkdir -p /tmp/linux-dojo-day-23 && cd /tmp/linux-dojo-day-23` to test every flag below without touching production files. |
+
+---
+<!-- ZOTH-1NC0GN30-DIGESTIBLE-BLUEPRINT -->
+
 # 🍲 Day 23 Lunch: Building Useful Scripts
 
 ## 🧠 Objective
@@ -46,7 +77,7 @@ echo "User: $user"
 echo "Path: $path"
 ```
 
-* This allows for custom flags like `-u neal -p /home/neal`
+* This allows for custom flags like `-u zoth -p /home/zoth`
 
 ---
 

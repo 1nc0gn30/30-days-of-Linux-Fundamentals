@@ -1,4 +1,35 @@
-# Day 11 Lunch: Advanced Network Configuration
+# Day 11 · Lunch — Networking Stack: Interfaces, Routing, DNS & SSH
+
+> **ZothOS × 1nc0gn30 Linux Dojo** · **Phase**: `Week 2 (System Ops)` · **Session**: `Lunch (Midday Operational Workflows & Flag Mastery)`  
+> **Core Commands**: `ip addr`, `ip route`, `ss -tulpen`, `ping`, `traceroute`, `dig`
+
+### ⚡ 60-Second Mental Model (Student Digest)
+
+```text
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  ZOTHOS × 1NC0GN30 // PROCESS, KERNEL & NETWORK OPERATIONS PIPELINE          ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║                                                                              ║
+║  ┌─────────────────┐    fork() / execve()    ┌────────────────────────────┐  ║
+║  │  PID 1: systemd │ ──────────────────────► │  Active Daemons & Tasks    │  ║
+║  └────────┬────────┘                         │  • nice / renice [-20..19] │  ║
+║           │                                  │  • SIGTERM(15) / SIGKILL(9)│  ║
+║           ▼                                  └─────────────┬──────────────┘  ║
+║  ┌─────────────────┐    /proc & sysctl       ┌─────────────▼──────────────┐  ║
+║  │ Kernel Modules  │ ◄─────────────────────► │ Network & Storage Stack    │  ║
+║  │ lsmod / modprobe│                         │ ip route • ss • /etc/fstab │  ║
+║  └─────────────────┘                         └────────────────────────────┘  ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+```
+
+| Learning Pillar | How to Practice This Session |
+| :--- | :--- |
+| **1. Native TUI (`./control-panel`)** | Run `./control-panel` from repo root → Select **Week 2 → Day 11 → Lunch** to drill interactive C lessons & quizzes. |
+| **2. Web Workstation (`astro-ui`)** | Open `/day/11` → Select **Lunch** tab → Type each target command in the live Mission Terminal to earn XP & streak mastery. |
+| **3. Safe Local Sandbox** | Run `mkdir -p /tmp/linux-dojo-day-11 && cd /tmp/linux-dojo-day-11` to test every flag below without touching production files. |
+
+---
+<!-- ZOTH-1NC0GN30-DIGESTIBLE-BLUEPRINT -->
 
 Welcome to Day 11 Lunch! Today, we continue our deep dive into **Advanced Network Configuration**. This session is packed with practical lessons on advanced IP configurations, network bonding, DHCP, managing network services, performance optimization, and troubleshooting. By the end of this session, you’ll have a strong grasp of these topics and be able to apply them confidently in real-world scenarios.
 

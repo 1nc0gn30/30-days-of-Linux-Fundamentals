@@ -87,7 +87,7 @@ int main() {
             "How to declare variables and use loops in shell scripts.",
             "for i in {1..5}; do echo \"Number: $i\"; done",
             "Shell scripting allows lightweight automation. Loops let you repeat logic over ranges, arrays, or command outputs.\n"
-            "Variables are declared like `name=Neal` without spaces, and accessed as `$name`.",
+            "Variables are declared like `name=zoth` without spaces, and accessed as `$name`.",
             {"https://tldp.org/LDP/Bash-Beginners-Guide/html/", NULL, NULL, NULL, NULL}
         },
         {

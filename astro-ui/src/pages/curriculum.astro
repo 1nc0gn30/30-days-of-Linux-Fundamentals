@@ -2,14 +2,14 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import MainLayout from '../layouts/MainLayout.astro';
-import { COURSE_WEEKS, TOTAL_DAYS, getWeekForDay } from '../lib/course';
+import { COURSE_WEEKS, DAY_METADATA, TOTAL_DAYS, getDayMeta, getWeekForDay } from '../lib/course';
 
 const lessonsDir = path.join(process.cwd(), 'src/content/lessons');
 const mealMap = new Map<number, Set<string>>();
 
 if (fs.existsSync(lessonsDir)) {
   for (const file of fs.readdirSync(lessonsDir)) {
-    const match = file.match(/^day-(\d+)-(breakfast|lunch|dinner)/);
+    const match = file.match(/^day-0*(\d+)-(breakfast|lunch|dinner)/);
     if (!match) continue;
     const day = Number.parseInt(match[1] || '', 10);
     const meal = match[2];
@@ -23,10 +23,14 @@ if (fs.existsSync(lessonsDir)) {
 const days = Array.from({ length: TOTAL_DAYS }, (_, idx) => {
   const day = idx + 1;
   const week = getWeekForDay(day);
+  const meta = getDayMeta(day);
   const meals = mealMap.get(day) ?? new Set<string>();
   return {
     day,
     weekId: week?.id ?? 0,
+    title: meta.title,
+    summary: meta.summary,
+    commands: meta.commands,
     mealCount: meals.size,
     hasBreakfast: meals.has('breakfast'),
     hasLunch: meals.has('lunch'),
@@ -38,40 +42,49 @@ const lessonsAvailable = days.reduce((sum, item) => sum + item.mealCount, 0);
 ---
 
 <MainLayout
-  title="Linux Curriculum Control Center | 30 Days"
-  description="Navigate all 30 Linux learning days with week-level progress, meal coverage, and quick resume controls."
+  title="30-Day Linux Curriculum Matrix — ZothOS × 1nc0gn30 Dojo"
+  description="Navigate all 30 Linux learning days, 90 study guides, command search filter, and progress tracking."
   activeNav="curriculum"
 >
   <section class="section surface curriculum-hero">
     <div>
-      <p class="eyebrow">Curriculum Control Center</p>
-      <h1>30-day Linux roadmap</h1>
+      <p class="eyebrow">⣿ CURRICULUM CONTROL CENTER // 5 WEEKS · 30 DAYS · 90 MISSIONS</p>
+      <h1>30-Day Sovereign Linux Roadmap</h1>
       <p class="muted">
-        Track progress, jump directly into any day, and keep momentum with a consistent study rhythm.
+        Every day includes 3 guided sessions (<strong>🍳 Breakfast</strong>, <strong>🥪 Lunch</strong>, <strong>🍽️ Dinner</strong>) with interactive C TUI binaries and browser mission terminals. Search by any command or topic below.
       </p>
+      <div class="search-bar-wrap">
+        <label for="curriculum-search" class="sr-only">Filter days by command or topic</label>
+        <input
+          id="curriculum-search"
+          type="search"
+          placeholder="Search commands or topics (e.g. chmod, iptables, awk, systemd, ssh, tar)..."
+          data-curriculum-search
+        />
+      </div>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="/day/1">Start Day 1</a>
-        <a class="btn" href="/" data-go-home>Home Overview</a>
-        <a class="btn" href="/day/1" data-resume-link>Resume Next Day</a>
+        <a class="btn btn-primary" href="/day/1">⚡ Start Day 01</a>
+        <a class="btn btn-emerald" href="/day/1" data-resume-link>▶ Resume Next Day</a>
+        <a class="btn" href="/#interactive-labs">🧪 Visual Labs</a>
       </div>
       <p class="muted hero-note" data-progress-note>Progress metrics update automatically as you train commands.</p>
     </div>
     <aside class="hero-metrics" aria-label="Curriculum metrics">
       <div class="metric">
         <span>Total Days</span>
-        <strong>{TOTAL_DAYS}</strong>
+        <strong>{TOTAL_DAYS} Days</strong>
       </div>
       <div class="metric">
         <span>Weeks</span>
-        <strong>{COURSE_WEEKS.length}</strong>
+        <strong>{COURSE_WEEKS.length} Phases</strong>
       </div>
       <div class="metric">
-        <span>Guide Files Found</span>
-        <strong>{lessonsAvailable}</strong>
+        <span>Study Guides Verified</span>
+        <strong style="color: var(--emerald);">{lessonsAvailable} / {TOTAL_DAYS * 3}</strong>
       </div>
       <div class="metric">
-        <span>Expected Guides</span>
-        <strong>{TOTAL_DAYS * 3}</strong>
+        <span>TUI Launcher</span>
+        <strong style="color: var(--accent);">./control-panel</strong>
       </div>
     </aside>
   </section>
@@ -80,13 +93,12 @@ const lessonsAvailable = days.reduce((sum, item) => sum + item.mealCount, 0);
     {COURSE_WEEKS.map((week) => {
       const weekDays = days.filter((day) => day.weekId === week.id);
       return (
-        <article class="surface week-panel" data-week={week.id}>
+        <article class="surface week-panel" data-week={week.id} style={`--week-accent: ${week.accent}`}>
           <header class="week-head">
             <div>
-              <p class="eyebrow">Week {week.id}</p>
+              <p class="eyebrow" style={`color: ${week.accent}`}>Week {week.id} · Days {week.startDay}–{week.endDay}</p>
               <h2>{week.title}</h2>
               <p class="muted">{week.summary}</p>
-              <p class="muted week-range">Days {week.startDay}-{week.endDay}</p>
             </div>
             <div class="week-progress" aria-label={`Week ${week.id} completion`}>
               <strong data-week-label={week.id}>0%</strong>
@@ -98,20 +110,31 @@ const lessonsAvailable = days.reduce((sum, item) => sum + item.mealCount, 0);
 
           <div class="day-grid">
             {weekDays.map((item) => (
-              <article class="day-card" data-day-card data-day={item.day}>
+              <article
+                class="day-card"
+                data-day-card
+                data-day={item.day}
+                data-search-text={`${item.day} ${item.title} ${item.summary} ${item.commands.join(' ')}`.toLowerCase()}
+              >
                 <div class="day-card-top">
-                  <h3>Day {item.day}</h3>
+                  <span class="day-num-badge">DAY {String(item.day).padStart(2, '0')}</span>
                   <span class="badge" data-status-badge={item.day}>Not started</span>
                 </div>
+                <h3 class="day-title">{item.title}</h3>
+                <p class="muted day-summary">{item.summary}</p>
+                <div class="cmd-preview-row" aria-label={`Day ${item.day} key commands`}>
+                  {item.commands.slice(0, 5).map((cmd) => (
+                    <code class="cmd-mini-chip">{cmd}</code>
+                  ))}
+                </div>
                 <p class="meal-row" aria-label={`Day ${item.day} meal guides`}>
-                  <span class:list={['meal-chip', item.hasBreakfast && 'available']}>Breakfast</span>
-                  <span class:list={['meal-chip', item.hasLunch && 'available']}>Lunch</span>
-                  <span class:list={['meal-chip', item.hasDinner && 'available']}>Dinner</span>
+                  <span class:list={['meal-chip', item.hasBreakfast && 'available']}>🍳 Breakfast</span>
+                  <span class:list={['meal-chip', item.hasLunch && 'available']}>🥪 Lunch</span>
+                  <span class:list={['meal-chip', item.hasDinner && 'available']}>🍽️ Dinner</span>
                 </p>
-                <p class="muted meal-count">{item.mealCount}/3 guide files available</p>
                 <div class="day-actions">
-                  <a href={`/day/${item.day}`} class="btn small">Open Day</a>
-                  <button class="btn small ghost" type="button" data-toggle-complete={item.day}>Toggle Complete</button>
+                  <a href={`/day/${item.day}`} class="btn small btn-primary">Open Terminal</a>
+                  <button class="btn small ghost" type="button" data-toggle-complete={item.day}>✓ Mark Done</button>
                 </div>
               </article>
             ))}
@@ -125,13 +148,13 @@ const lessonsAvailable = days.reduce((sum, item) => sum + item.mealCount, 0);
 <script>
   const PROGRESS_KEY = 'linux30-course-progress-v1';
 
-  function clampDay(day) {
+  function clampDay(day: unknown) {
     return Math.max(1, Math.min(30, Number(day) || 1));
   }
 
-  function normalizeProgress(progress) {
+  function normalizeProgress(progress: any) {
     const completedDays = Array.isArray(progress?.completedDays)
-      ? progress.completedDays.map((value) => clampDay(value))
+      ? progress.completedDays.map((value: unknown) => clampDay(value))
       : [];
     return {
       completedDays: Array.from(new Set(completedDays)).sort((a, b) => a - b),
@@ -148,14 +171,14 @@ const lessonsAvailable = days.reduce((sum, item) => sum + item.mealCount, 0);
     }
   }
 
-  function saveProgress(progress) {
+  function saveProgress(progress: any) {
     const value = normalizeProgress(progress);
     value.updatedAt = new Date().toISOString();
     localStorage.setItem(PROGRESS_KEY, JSON.stringify(value));
     return value;
   }
 
-  function weekRange(weekId) {
+  function weekRange(weekId: number) {
     if (weekId === 1) return { start: 1, end: 7 };
     if (weekId === 2) return { start: 8, end: 14 };
     if (weekId === 3) return { start: 15, end: 21 };
@@ -163,7 +186,7 @@ const lessonsAvailable = days.reduce((sum, item) => sum + item.mealCount, 0);
     return { start: 29, end: 30 };
   }
 
-  function renderProgress(progress) {
+  function renderProgress(progress: any) {
     const completed = new Set(progress.completedDays);
 
     document.querySelectorAll('[data-day-card]').forEach((card) => {
@@ -178,7 +201,7 @@ const lessonsAvailable = days.reduce((sum, item) => sum + item.mealCount, 0);
       card.classList.toggle('active', isActive);
 
       if (badge instanceof HTMLElement) {
-        badge.textContent = isComplete ? 'Complete' : isActive ? 'In progress' : 'Not started';
+        badge.textContent = isComplete ? '✓ Complete' : isActive ? 'In progress' : 'Ready';
       }
     });
 
@@ -207,7 +230,7 @@ const lessonsAvailable = days.reduce((sum, item) => sum + item.mealCount, 0);
       resumeLink.href = `/day/${nextDay}`;
     }
     if (progressNote instanceof HTMLElement) {
-      progressNote.textContent = `Completed days: ${progress.completedDays.length}. Last visited: Day ${progress.lastVisitedDay}.`;
+      progressNote.textContent = `Completed days: ${progress.completedDays.length}/30 · Last visited: Day ${String(progress.lastVisitedDay).padStart(2, '0')}.`;
     }
   }
 
@@ -216,6 +239,8 @@ const lessonsAvailable = days.reduce((sum, item) => sum + item.mealCount, 0);
     renderProgress(progress);
 
     document.querySelectorAll('[data-toggle-complete]').forEach((button) => {
+      if (button.getAttribute('data-bound') === 'true') return;
+      button.setAttribute('data-bound', 'true');
       button.addEventListener('click', () => {
         const day = Number(button.getAttribute('data-toggle-complete') || 0);
         if (!day) return;
@@ -236,6 +261,18 @@ const lessonsAvailable = days.reduce((sum, item) => sum + item.mealCount, 0);
         renderProgress(progress);
       });
     });
+
+    const searchInput = document.querySelector('[data-curriculum-search]');
+    if (searchInput instanceof HTMLInputElement && searchInput.dataset.bound !== 'true') {
+      searchInput.dataset.bound = 'true';
+      searchInput.addEventListener('input', () => {
+        const q = searchInput.value.trim().toLowerCase();
+        document.querySelectorAll<HTMLElement>('[data-day-card]').forEach((card) => {
+          const text = card.dataset.searchText || '';
+          card.style.display = !q || text.includes(q) ? '' : 'none';
+        });
+      });
+    }
   }
 
   document.addEventListener('DOMContentLoaded', initCurriculumProgress);
@@ -244,32 +281,62 @@ const lessonsAvailable = days.reduce((sum, item) => sum + item.mealCount, 0);
 
 <style>
   h1 {
+    font-family: var(--font-display);
     margin: 0.3rem 0 0.5rem;
-    font-size: clamp(1.7rem, 4.9vw, 2.6rem);
+    font-size: clamp(1.7rem, 4.5vw, 2.55rem);
   }
 
   h2 {
-    margin: 0.1rem 0 0.4rem;
-    font-size: clamp(1.15rem, 3vw, 1.55rem);
+    font-family: var(--font-display);
+    margin: 0.15rem 0 0.35rem;
+    font-size: clamp(1.18rem, 2.8vw, 1.5rem);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
   }
 
   .curriculum-hero {
-    padding: 1rem;
+    padding: 1.2rem;
     display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: 0.75rem;
+    grid-template-columns: 1.45fr 1fr;
+    gap: 1rem;
+    border-color: var(--border-gold);
+  }
+
+  .search-bar-wrap {
+    margin: 0.85rem 0;
+  }
+
+  .search-bar-wrap input {
+    width: 100%;
+    padding: 0.62rem 0.85rem;
+    border-radius: 0.65rem;
+    border: 1px solid var(--border-gold);
+    background: #060911;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
   }
 
   .hero-actions {
-    margin-top: 0.9rem;
+    margin-top: 0.75rem;
     display: flex;
     gap: 0.55rem;
     flex-wrap: wrap;
   }
 
   .hero-note {
-    margin: 0.75rem 0 0;
-    font-size: 0.79rem;
+    margin: 0.7rem 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
   }
 
   .btn {
@@ -279,10 +346,11 @@ const lessonsAvailable = days.reduce((sum, item) => sum + item.mealCount, 0);
     text-decoration: none;
     color: var(--text);
     border: 1px solid var(--border);
-    border-radius: 0.65rem;
-    padding: 0.45rem 0.75rem;
-    font-size: 0.8rem;
-    background: rgba(8, 14, 24, 0.75);
+    border-radius: 0.62rem;
+    padding: 0.46rem 0.78rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    background: rgba(8, 14, 24, 0.85);
     cursor: pointer;
   }
 
@@ -294,21 +362,27 @@ const lessonsAvailable = days.reduce((sum, item) => sum + item.mealCount, 0);
 
   .btn-primary {
     border-color: transparent;
-    color: #03131a;
+    color: #06080e;
     background: linear-gradient(120deg, var(--accent), var(--accent-strong));
     font-weight: 700;
   }
 
   .btn-primary:hover,
   .btn-primary:focus-visible {
-    color: #03131a;
+    color: #06080e;
     border-color: transparent;
     filter: brightness(1.06);
   }
 
+  .btn-emerald {
+    border-color: rgba(57, 211, 83, 0.45);
+    color: var(--emerald);
+    background: rgba(57, 211, 83, 0.1);
+  }
+
   .small {
-    font-size: 0.75rem;
-    padding: 0.35rem 0.55rem;
+    font-size: 0.72rem;
+    padding: 0.34rem 0.58rem;
   }
 
   .ghost {
@@ -318,36 +392,42 @@ const lessonsAvailable = days.reduce((sum, item) => sum + item.mealCount, 0);
   .hero-metrics {
     border: 1px solid var(--border);
     border-radius: 0.9rem;
-    padding: 0.75rem;
-    background: rgba(6, 10, 19, 0.84);
+    padding: 0.8rem;
+    background: #060911;
     display: grid;
-    gap: 0.45rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+    align-content: center;
   }
 
   .metric {
     border: 1px solid var(--border);
     border-radius: 0.6rem;
-    padding: 0.45rem 0.55rem;
-    background: rgba(3, 9, 18, 0.82);
+    padding: 0.55rem 0.65rem;
+    background: rgba(13, 17, 23, 0.9);
   }
 
   .metric span {
     display: block;
-    font-size: 0.74rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
     color: var(--text-muted);
+    text-transform: uppercase;
   }
 
   .metric strong {
-    font-size: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
   }
 
   .weeks-grid {
     display: grid;
-    gap: 0.75rem;
+    gap: 1rem;
   }
 
   .week-panel {
-    padding: 0.9rem;
+    padding: 1.05rem;
+    border-top: 3px solid var(--week-accent);
   }
 
   .week-head {
@@ -355,21 +435,17 @@ const lessonsAvailable = days.reduce((sum, item) => sum + item.mealCount, 0);
     justify-content: space-between;
     gap: 1rem;
     flex-wrap: wrap;
-    align-items: end;
-  }
-
-  .week-range {
-    margin: 0.2rem 0 0;
-    font-size: 0.8rem;
+    align-items: flex-end;
   }
 
   .week-progress {
-    min-width: 160px;
+    min-width: 170px;
   }
 
   .week-progress strong {
     display: block;
     text-align: right;
+    font-family: var(--font-mono);
     font-size: 0.85rem;
     color: var(--accent);
     margin-bottom: 0.2rem;
@@ -381,41 +457,43 @@ const lessonsAvailable = days.reduce((sum, item) => sum + item.mealCount, 0);
     border: 1px solid var(--border);
     border-radius: 999px;
     overflow: hidden;
-    background: #071020;
+    background: #060911;
   }
 
   .progress-track span {
     display: block;
     width: 0;
     height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+    background: linear-gradient(90deg, var(--accent), var(--emerald));
     transition: width 0.25s ease;
   }
 
   .day-grid {
-    margin-top: 0.85rem;
+    margin-top: 0.95rem;
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 0.55rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.7rem;
   }
 
   .day-card {
     border: 1px solid var(--border);
-    border-radius: 0.7rem;
-    background: rgba(5, 11, 21, 0.78);
-    padding: 0.55rem;
-    display: grid;
-    gap: 0.45rem;
+    border-radius: 0.75rem;
+    background: #070b13;
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.5rem;
   }
 
   .day-card.active {
-    border-color: #e8cd7e;
-    box-shadow: 0 0 0 1px rgba(232, 205, 126, 0.32);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px rgba(245, 184, 46, 0.28);
   }
 
   .day-card.complete {
-    border-color: #6edab4;
-    background: rgba(5, 17, 22, 0.8);
+    border-color: var(--emerald);
+    background: rgba(8, 20, 16, 0.82);
   }
 
   .day-card-top {
@@ -425,16 +503,47 @@ const lessonsAvailable = days.reduce((sum, item) => sum + item.mealCount, 0);
     align-items: center;
   }
 
-  .day-card h3 {
+  .day-num-badge {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .day-title {
     margin: 0;
-    font-size: 0.9rem;
+    font-size: 0.94rem;
+    line-height: 1.3;
+  }
+
+  .day-summary {
+    margin: 0;
+    font-size: 0.77rem;
+    line-height: 1.45;
+  }
+
+  .cmd-preview-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.28rem;
+  }
+
+  .cmd-mini-chip {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    background: #0d1320;
+    color: var(--cyan);
+    border: 1px solid rgba(88, 166, 255, 0.25);
+    border-radius: 0.35rem;
+    padding: 0.1rem 0.36rem;
   }
 
   .badge {
-    font-size: 0.68rem;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
     border: 1px solid var(--border);
     border-radius: 999px;
-    padding: 0.14rem 0.4rem;
+    padding: 0.12rem 0.42rem;
     color: var(--text-muted);
   }
 
@@ -442,58 +551,43 @@ const lessonsAvailable = days.reduce((sum, item) => sum + item.mealCount, 0);
     margin: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.25rem;
+    gap: 0.3rem;
   }
 
   .meal-chip {
-    font-size: 0.66rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
     border: 1px solid var(--border);
     border-radius: 999px;
-    padding: 0.14rem 0.34rem;
+    padding: 0.12rem 0.4rem;
     color: var(--text-muted);
-    background: rgba(2, 8, 16, 0.7);
+    background: #05080f;
   }
 
   .meal-chip.available {
-    color: #9fe7ff;
-    border-color: rgba(87, 213, 255, 0.4);
-  }
-
-  .meal-count {
-    margin: 0;
-    font-size: 0.7rem;
+    color: var(--emerald);
+    border-color: rgba(57, 211, 83, 0.35);
   }
 
   .day-actions {
     display: flex;
-    gap: 0.35rem;
+    gap: 0.4rem;
     flex-wrap: wrap;
+    margin-top: 0.2rem;
   }
 
-  @media (max-width: 1040px) {
-    .day-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-  }
-
-  @media (max-width: 900px) {
+  @media (max-width: 960px) {
     .curriculum-hero {
       grid-template-columns: 1fr;
     }
-
-    .day-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-
-  @media (max-width: 640px) {
     .day-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
-  @media (max-width: 420px) {
-    .day-grid {
+  @media (max-width: 620px) {
+    .day-grid,
+    .hero-metrics {
       grid-template-columns: 1fr;
     }
   }

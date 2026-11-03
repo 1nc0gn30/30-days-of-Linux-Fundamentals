@@ -1,4 +1,35 @@
-# Day 13 Dinner: System Monitoring and Performance Tuning
+# Day 13 · Dinner — System Logging, Journald & Scheduled Automation
+
+> **ZothOS × 1nc0gn30 Linux Dojo** · **Phase**: `Week 2 (System Ops)` · **Session**: `Dinner (Evening Hardening, Pipelines & Verification Lab)`  
+> **Core Commands**: `journalctl`, `/var/log/syslog`, `tail -f`, `logrotate`, `crontab -e`, `at`
+
+### ⚡ 60-Second Mental Model (Student Digest)
+
+```text
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  ZOTHOS × 1NC0GN30 // PROCESS, KERNEL & NETWORK OPERATIONS PIPELINE          ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║                                                                              ║
+║  ┌─────────────────┐    fork() / execve()    ┌────────────────────────────┐  ║
+║  │  PID 1: systemd │ ──────────────────────► │  Active Daemons & Tasks    │  ║
+║  └────────┬────────┘                         │  • nice / renice [-20..19] │  ║
+║           │                                  │  • SIGTERM(15) / SIGKILL(9)│  ║
+║           ▼                                  └─────────────┬──────────────┘  ║
+║  ┌─────────────────┐    /proc & sysctl       ┌─────────────▼──────────────┐  ║
+║  │ Kernel Modules  │ ◄─────────────────────► │ Network & Storage Stack    │  ║
+║  │ lsmod / modprobe│                         │ ip route • ss • /etc/fstab │  ║
+║  └─────────────────┘                         └────────────────────────────┘  ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+```
+
+| Learning Pillar | How to Practice This Session |
+| :--- | :--- |
+| **1. Native TUI (`./control-panel`)** | Run `./control-panel` from repo root → Select **Week 2 → Day 13 → Dinner** to drill interactive C lessons & quizzes. |
+| **2. Web Workstation (`astro-ui`)** | Open `/day/13` → Select **Dinner** tab → Type each target command in the live Mission Terminal to earn XP & streak mastery. |
+| **3. Safe Local Sandbox** | Run `mkdir -p /tmp/linux-dojo-day-13 && cd /tmp/linux-dojo-day-13` to test every flag below without touching production files. |
+
+---
+<!-- ZOTH-1NC0GN30-DIGESTIBLE-BLUEPRINT -->
 
 In this session, we will delve into System Monitoring and Performance Tuning. We'll explore various tools and techniques to monitor system performance and optimize system resources.
 

@@ -1,3 +1,36 @@
+# Day 09 · Lunch — Process Lifecycle, Signals, Priorities & Job Control
+
+> **ZothOS × 1nc0gn30 Linux Dojo** · **Phase**: `Week 2 (System Ops)` · **Session**: `Lunch (Midday Operational Workflows & Flag Mastery)`  
+> **Core Commands**: `ps aux`, `top`, `htop`, `nice`, `renice`, `kill`
+
+### ⚡ 60-Second Mental Model (Student Digest)
+
+```text
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  ZOTHOS × 1NC0GN30 // PROCESS, KERNEL & NETWORK OPERATIONS PIPELINE          ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║                                                                              ║
+║  ┌─────────────────┐    fork() / execve()    ┌────────────────────────────┐  ║
+║  │  PID 1: systemd │ ──────────────────────► │  Active Daemons & Tasks    │  ║
+║  └────────┬────────┘                         │  • nice / renice [-20..19] │  ║
+║           │                                  │  • SIGTERM(15) / SIGKILL(9)│  ║
+║           ▼                                  └─────────────┬──────────────┘  ║
+║  ┌─────────────────┐    /proc & sysctl       ┌─────────────▼──────────────┐  ║
+║  │ Kernel Modules  │ ◄─────────────────────► │ Network & Storage Stack    │  ║
+║  │ lsmod / modprobe│                         │ ip route • ss • /etc/fstab │  ║
+║  └─────────────────┘                         └────────────────────────────┘  ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+```
+
+| Learning Pillar | How to Practice This Session |
+| :--- | :--- |
+| **1. Native TUI (`./control-panel`)** | Run `./control-panel` from repo root → Select **Week 2 → Day 09 → Lunch** to drill interactive C lessons & quizzes. |
+| **2. Web Workstation (`astro-ui`)** | Open `/day/9` → Select **Lunch** tab → Type each target command in the live Mission Terminal to earn XP & streak mastery. |
+| **3. Safe Local Sandbox** | Run `mkdir -p /tmp/linux-dojo-day-09 && cd /tmp/linux-dojo-day-09` to test every flag below without touching production files. |
+
+---
+<!-- ZOTH-1NC0GN30-DIGESTIBLE-BLUEPRINT -->
+
 # 🌟 Day 09 Lunch: Dive into Virtualization! 🌟
 
 Welcome to Day 09 of our Linux Fundamentals journey! Today, we're going to explore the fascinating world of **Virtualization**. Get ready to learn about Virtual Machines (VMs), Hypervisors, and more in an interactive and fun way!
@@ -137,4 +170,3 @@ Now, let's see how much you've learned. Test yourself with these questions:
 ## 🎉 Congratulations!
 
 You've completed Day 09 Lunch! 🎉 Remember to review the materials and reach out if you have any questions. Keep up the great work and see you tomorrow for more learning adventures!
-

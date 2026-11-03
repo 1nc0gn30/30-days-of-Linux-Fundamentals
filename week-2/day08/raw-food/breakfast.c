@@ -108,20 +108,20 @@ Lesson lessons[] = {
         "Variables in Shell Scripts",
         "Variables in shell scripts are used to store data that your script can use later. Variables can hold numbers, strings, or the output of commands. You can assign values to variables and then reference them using the `$` symbol.",
         "Example: \n"
-        "name='Neal'\n"
+        "name='zoth'\n"
         "echo \"Hello, $name\"\n"
-        "This script prints 'Hello, Neal' using the variable `name`."
+        "This script prints 'Hello, zoth' using the variable `name`."
     },
     {
         "Control Structures",
         "Control structures like `if-else` statements and loops (`for`, `while`) allow your scripts to make decisions and repeat tasks. This makes your scripts more powerful by enabling conditional execution and iteration.",
         "Example: \n"
-        "if [ \"$name\" = \"Neal\" ]; then\n"
-        "  echo \"Hello, Neal\"\n"
+        "if [ \"$name\" = \"zoth\" ]; then\n"
+        "  echo \"Hello, zoth\"\n"
         "else\n"
         "  echo \"Hello, Stranger\"\n"
         "fi\n"
-        "This script greets Neal if the `name` variable is set to 'Neal'; otherwise, it greets a stranger."
+        "This script greets zoth if the `name` variable is set to 'zoth'; otherwise, it greets a stranger."
     },
     {
         "Functions",
@@ -130,8 +130,8 @@ Lesson lessons[] = {
         "greet() {\n"
         "  echo \"Hello, $1\"\n"
         "}\n"
-        "greet 'Neal'\n"
-        "This script defines a function `greet` and then calls it with the argument 'Neal'."
+        "greet 'zoth'\n"
+        "This script defines a function `greet` and then calls it with the argument 'zoth'."
     },
     {
         "Package Configuration",

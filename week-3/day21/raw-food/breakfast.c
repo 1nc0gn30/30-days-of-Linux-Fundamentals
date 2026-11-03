@@ -85,7 +85,7 @@ int main() {
         {
             "User Management & Permissions",
             "Create, modify, and manage users securely.",
-            "sudo useradd -m neal && sudo passwd neal",
+            "sudo useradd -m zoth && sudo passwd zoth",
             "Manage users with useradd/usermod, assign groups, and protect home directories using chmod/chown.",
             {"https://linuxize.com/post/how-to-create-users-in-linux-using-the-useradd-command/", NULL, NULL, NULL, NULL}
         },

@@ -1,4 +1,19 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://30-days-linux-fundamentals.nealfrazier.tech/sitemap.xml
+User-agent: Googlebot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+Sitemap: https://30-days-of-linux.netlify.app/sitemap.xml
