@@ -27,8 +27,8 @@
   <!-- Left Headline Block -->
   <text x="56" y="148" fill="#F0F6FC" font-size="50" font-family="Syne, Inter, sans-serif" font-weight="800">30 Days of Linux</text>
   <text x="56" y="204" fill="#F5B82E" font-size="46" font-family="Syne, Inter, sans-serif" font-weight="800">Fundamentals Dojo</text>
-  <text x="56" y="248" fill="#8B949E" font-size="19" font-family="JetBrains Mono, monospace">Digestible TUI (./control-panel) + Interactive Web GUI (astro-ui)</text>
-  <text x="56" y="280" fill="#58A6FF" font-size="17" font-family="JetBrains Mono, monospace">🍳 Breakfast (Syntax)  →  🥪 Lunch (Workflows)  →  🍽️ Dinner (Hardening)</text>
+  <text x="56" y="248" fill="#8B949E" font-size="15" font-family="JetBrains Mono, monospace">Digestible TUI (./control-panel) + Interactive Astro GUI</text>
+  <text x="56" y="278" fill="#58A6FF" font-size="14" font-family="JetBrains Mono, monospace">Breakfast (Syntax) → Lunch (Workflows) → Dinner (Ops Hardening)</text>
 
   <!-- Pill Badges -->
   <rect x="56" y="310" width="185" height="40" rx="8" fill="#121A28" stroke="#F5B82E" stroke-opacity="0.6"/>
